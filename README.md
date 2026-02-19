@@ -1,6 +1,5 @@
 # SOS2526-13
 
-## SOS2526-13
 - **Team**
    - Camila España Vildoso(https://github.com/Camiev04)
    - Claudia Páez Sollo(https://github.com/Clapaesol)
