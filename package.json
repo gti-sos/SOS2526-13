@@ -4,7 +4,8 @@
   "description": "",
   "main": "index-CPS.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index-CPS.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/gti-sos/SOS2526-13/issues"
   },
-  "homepage": "https://github.com/gti-sos/SOS2526-13#readme"
+  "homepage": "https://github.com/gti-sos/SOS2526-13#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
 }

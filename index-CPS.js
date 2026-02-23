@@ -1,3 +1,9 @@
+let express = require("express");
+let BASE_URL_API = "/api/v1"
+const app = express();
+app.use("/",express.static("./static"));
+
+
 const data = [
   { recipient: "Afghanistan", supplier: "Russia", year_of_order: 2002, number_ordered: 3, weapon_designation: "Mi-17", weapon_description: "transport helicopter", number_delivered: 3, year_of_delivery: 2002, status: "Second hand", comment: "Second-hand", tiv_unit: 2.9, tiv_total_order: 8.7, tiv_delivered_weapon: 8.7 },
   { recipient: "Algeria", supplier: "Ukraine", year_of_order: 2003, number_ordered: 116, weapon_designation: "R-27R/T", weapon_description: "", number_delivered: 116, year_of_delivery: 2004, status: "New", comment: "New", tiv_unit: 0.19, tiv_total_order: 22.04, tiv_delivered_weapon: 22.04 },
@@ -11,15 +17,29 @@ const data = [
   { recipient: "Spain", supplier: "Italy", year_of_order: 1975, number_ordered: 14, weapon_designation: "Bell-205A", weapon_description: "helicopter", number_delivered: 14, year_of_delivery: 1977, status: "New", comment: "AB-205 version", tiv_unit: 2.2, tiv_total_order: 30.8, tiv_delivered_weapon: 30.8 }
 ];
 
-const supplierTarget = "Russia";
-//filtrar por supplier
-const filtered = data.filter(item => item.supplier === supplierTarget);
-//suma 
-const total = filtered.reduce((acc, curr) => acc + curr.tiv_total_order, 0);
-//media
-const average = filtered.length > 0 ? total / filtered.length : 0;
+app.get("/", (req,res) => {
+  res.send("SOS2526-13 funciona");
+});
 
-//test
-console.log(`Datos filtrados por supplier: ${supplierTarget}`);
-console.table(filtered);
-console.log(`Media de tiv_total_order para ${supplierTarget}: ${average}`);
+
+
+app.get(BASE_URL_API+"/data", (req, res) => {
+  let jsonData = JSON.stringify(data,null,2);
+  console.log(`JSON to be sent: ${jsonData}`);
+  res.send(jsonData);
+});
+
+app.get(BASE_URL_API + "/supplier/:name", (req, res) => {
+  const supplierTarget = req.params.name;
+  const filtered = data.filter(item => item.supplier === supplierTarget);
+  const total = filtered.reduce((acc, curr) => acc + curr.tiv_total_order, 0);
+  const average = filtered.length > 0 ? total / filtered.length : 0;
+
+  res.json({ filtered, total, average });
+});
+
+// Puerto
+app.listen(3000, () => {
+  console.log('Server running on http://localhost:3000/api/v1/data');
+  console.log('http://localhost:3000/api/v1/supplier/Russia')});
+  
