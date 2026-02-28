@@ -1,8 +1,11 @@
 let cool = require('cool-ascii-faces');
 let express = require('express');
+const path = require('path');
 const app = express();
 
-app.use(express.static(require("public")));
+const port = process.env.PORT || 3000;
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/cool',(req, res) =>{
     res.send(cool())
@@ -11,17 +14,6 @@ app.get('/cool',(req, res) =>{
 app.get('/about', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'about.html'));
 });
-
-
-
-
-
-app.listen(3000, () => {
-    console.log('server running on http://localhost:3000')
-})
-
-
-
 
 app.get('/samples/CEV', (req, res) =>{
     const datosMilex =[
@@ -42,3 +34,7 @@ app.get('/samples/CEV', (req, res) =>{
     res.send(`La media del milex total de Marruecos es de: ${media_milex_total}`);
 
 });
+
+app.listen(port, () => {
+    console.log(`server running on http://localhost:${port}`)
+})
