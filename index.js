@@ -62,7 +62,7 @@ const filtered = data.filter(item => item.supplier === supplierTarget);
 const total = filtered.reduce((acc, curr) => acc + curr.tiv_total_order, 0);
 //media
 const average = filtered.length > 0 ? total / filtered.length : 0;
-  res.send(`La media del TIV total de Spain es: ${average}`);
+res.send(`La media del TIV total de Spain es: ${average}`);
 
 });
 
