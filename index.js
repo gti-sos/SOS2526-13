@@ -41,6 +41,8 @@ app.get('/samples/CEV', (req, res) =>{
     res.send(`La media del milex total de Marruecos es de: ${media_milex_total}`);
 
 });
+let cpsData = [];
+
 app.get('/samples/CPS', (req,res) => {
     const cpsData = [
   { recipient: "Afghanistan", supplier: "Russia", year_of_order: 2002, number_ordered: 3, weapon_designation: "Mi-17", weapon_description: "transport helicopter", number_delivered: 3, year_of_delivery: 2002, status: "Second hand", comment: "Second-hand", tiv_unit: 2.9, tiv_total_order: 8.7, tiv_delivered_weapon: 8.7 },
@@ -54,29 +56,31 @@ app.get('/samples/CPS', (req,res) => {
   { recipient: "Greece", supplier: "Germany", year_of_order: 2020, number_ordered: 44, weapon_designation: "DM2A4 Seehecht", weapon_description: "anti-ship/anti-submarine torpedo", number_delivered: 11, year_of_delivery: 2024, status: "New", comment: "EUR110 m deal Seahake Mod-4ER version", tiv_unit: 1.8, tiv_total_order: 79.2, tiv_delivered_weapon: 19.8 },
   { recipient: "Spain", supplier: "Italy", year_of_order: 1975, number_ordered: 14, weapon_designation: "Bell-205A", weapon_description: "helicopter", number_delivered: 14, year_of_delivery: 1977, status: "New", comment: "AB-205 version", tiv_unit: 2.2, tiv_total_order: 30.8, tiv_delivered_weapon: 30.8 }
 ];
-
-const supplierTarget = "Spain";
-//filtrar por supplier
-const filtered = cpsData.filter(item => item.supplier === supplierTarget);
-//suma 
-const total = filtered.reduce((acc, curr) => acc + curr.tiv_total_order, 0);
-//media
-const average = filtered.length > 0 ? total / filtered.length : 0;
-res.send(`La media del TIV total de Spain es: ${average}`);
-
+});
 const BASE_URL = '/api/v1/cps';
-// Crea 10 o más datos si está vacío
+
+
+
+// Devuelve todos los datos de CPS
+app.get(BASE_URL, (req, res) => {
+  res.json(cpsData);
+});
+
+// Filtrar por supplier
+app.get(`${BASE_URL}/:supplier`, (req, res) => {
+  const supplier = req.params.supplier;
+  const filtered = cpsData.filter(d => d.supplier.toLowerCase() === supplier.toLowerCase());
+  res.json(filtered);
+});
+
+// Load initial data
 app.get(`${BASE_URL}/loadInitialData`, (req, res) => {
   if (!cpsData.length) {
-    // Aquí se podrían crear 10 registros iniciales
+    // Aquí puedes crear 10 registros iniciales si quieres
     return res.status(201).json({ message: 'Datos iniciales creados' });
   } else {
     return res.status(200).json(cpsData);
   }
-});
-
-app.get(BASE_URL, (req, res) => {
-  res.json(cpsData);
 });
 // Devuelve todos los datos
 app.get(BASE_URL, (req, res) => {
@@ -87,7 +91,7 @@ app.get(BASE_URL, (req, res) => {
 app.get(`${BASE_URL}/:supplier`, (req, res) => {
   const supplier = req.params.supplier;
   const filtered = cpsData.filter(d => d.supplier.toLowerCase() === supplier.toLowerCase());
-  res.json(filtered);});
+  res.json(filtered);
 });
 
 
