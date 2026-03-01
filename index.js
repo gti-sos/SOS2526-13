@@ -326,9 +326,9 @@ let dataConflicts = [];
 app.get("/api/v1/conflict-stats/loadInitialData", (req, res) => {
   if (dataConflicts.length === 0) {
     dataConflicts = datosPablo.slice();
-    res.status(201).send("Los datos han sido cargados");
+    res.sendStatus(201);
   } else {
-    res.status(409).send("Ya hay datos cargados");
+    res.sendStatus(409);
   }
 });
 
@@ -342,10 +342,15 @@ app.get("/api/v1/conflict-stats/:year", (req, res) => {
   const year = parseInt(req.params.year);
   const result = dataConflicts.filter(d => d.year === year);
 
+  //compruebo que está en el formato correcto
+  if (isNaN(year)) {
+  return res.sendStatus(400);
+  }
+
   if (result.length > 0) {
     res.json(result);
   } else {
-    res.status(404).send("No encontrado");
+    res.sendStatus(404);
   }
 });
 
@@ -375,6 +380,11 @@ app.put("/api/v1/conflict-stats/:year", (req, res) => {
   const year = parseInt(req.params.year);
   const index = dataConflicts.findIndex(c => c.year === year);
 
+  //compruebo que está en el formato correcto
+  if (isNaN(year)) {
+  return res.sendStatus(400);
+  }
+
   if (index === -1) {
     res.status(404).json({ message: "Not found" });
   } else {
@@ -396,6 +406,11 @@ app.delete("/api/v1/conflict-stats/:year", (req, res) => {
   const year = parseInt(req.params.year);
   const initialLength = dataConflicts.length;
 
+  //compruebo que está en el formato correcto
+  if (isNaN(year)) {
+  return res.sendStatus(400);
+  }
+
   dataConflicts = dataConflicts.filter(c => c.year !== year);
 
   if (dataConflicts.length < initialLength) {
@@ -403,6 +418,16 @@ app.delete("/api/v1/conflict-stats/:year", (req, res) => {
   } else {
     res.status(404).json({ message: "Not found" });
   }
+});
+
+// --- NO PERMITIDOS ---
+
+app.post("/api/v1/conflict-stats/:year", (req, res) => {
+  res.sendStatus(405);
+});
+
+app.put("/api/v1/conflict-stats", (req, res) => {
+  res.sendStatus(405);
 });
 
 
