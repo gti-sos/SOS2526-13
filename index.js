@@ -214,7 +214,8 @@ app.delete(BASE_API_URL + "/:country/:year", (req, res) => {
 
 
 //PABLO MORALEDA ÁLVAREZ
-app.get('/samples/PMA', (req, res) =>{
+
+// --- DATOS ---
 const datosPablo = [
   { location: "India", year: 2012, intensity_level: 1, conflict_type: 3, start_precision: 1 },
   { location: "Egypt, Israel", year: 1967, intensity_level: 2, conflict_type: 2, start_precision: 1 },
@@ -227,6 +228,7 @@ const datosPablo = [
   { location: "South Sudan", year: 2013, intensity_level: 1, conflict_type: 3, start_precision: 2 },
   { location: "South Sudan", year: 2014, intensity_level: 2, conflict_type: 4, start_precision: 2 }
 ];
+app.get('/samples/PMA', (req, res) =>{
 
 let egypt = datosPablo.filter(l => l.location==="Egypt, Israel");
 
