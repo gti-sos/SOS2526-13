@@ -5,6 +5,9 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
+
+//Rutas cool y about
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
@@ -15,6 +18,9 @@ app.get('/cool',(req, res) =>{
 app.get('/about', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'about.html'));
 });
+
+
+//Ruta para /samples/CEV
 
 app.get('/samples/CEV', (req, res) =>{
     const datosMilex =[
@@ -61,6 +67,8 @@ const average = filtered.length > 0 ? total / filtered.length : 0;
 });
 
 
+
+// API RESTful para Military Expenditure (Milex)
 let milex_datos = [];
 const BASE_API_URL = "/api/v1/military-stats";
 
@@ -84,13 +92,48 @@ app.get(BASE_API_URL + "/loadInitialData", (req, res) => {
     }
 });
 
+
+//GET, POST y PUT para /api/v1/military-stats
+
+//GET array completo
 app.get(BASE_API_URL, (req, res) => {
-    res.json(milex_datos);
+    const { country, year, from, to } = req.query; 
+    let filteredData = milex_datos;
+
+    if (country) {
+        filteredData = filteredData.filter(d => d.country === country);
+    }
+    if (year) {
+        filteredData = filteredData.filter(d => d.year == year);
+    }
+    if (from && to) {
+        filteredData = filteredData.filter(d => d.year >= parseInt(from) && d.year <= parseInt(to));
+    }
+
+    res.json(filteredData); 
 });
 
+//GET recurso concreto
+app.get(BASE_API_URL + "/:country/:year", (req, res) => {
+    const {country ,year} = req.params;
+    const resource = milex_datos.find(d => d.country === country && d.year == year);
+    if(resource){
+        res.json(resource);
+    }else{
+        res.status(404).send("Recurso no encontrado");
+    }
+});
+
+
+// POST nuevo recurso
 app.post(BASE_API_URL, (req, res) => {
     let newData = req.body;
-    if(milex_datos.find(d => d.country === newData.country && d.year === newData.year)){
+    if(!newData.country || !newData.year || newData.milex_total === undefined || newData.milex_gdp === undefined || newData.milex_per_capita === undefined){
+        res.status(400).send("Faltan campos obligatorios o están mal formados");
+    } 
+
+    const exists = milex_datos.find(d => d.country.toLowerCase() === newData.country.toLowerCase() && d.year == newData.year);
+    if(exists){
         res.sendStatus(409);
     } else {
         milex_datos.push(newData);
@@ -98,10 +141,47 @@ app.post(BASE_API_URL, (req, res) => {
     }
 });
 
-app.delete(BASE_API_URL, (req, res) => {
-    milex_datos = [];
-    res.sendStatus(200);
+
+// PUT para actualizar recurso existente
+app.put(BASE_API_URL + "/:country/:year", (req, res) => {
+    const {country ,year} = req.params;
+    const updatedData = req.body; 
+    
+    if(country !== updatedData.country || parseInt(year) !== updatedData.year){
+        return res.status(400).send("El país y el año en la URL deben coincidir con los del cuerpo de la solicitud");
+    }
+
+    const index = milex_datos.findIndex(d => d.country === country && d.year == year);
+    if(index !== -1){
+        milex_datos[index] = updatedData;
+        res.sendStatus(200);
+    }else{
+        res.status(404).send("El recurso que se desea actualizar no existe");
+    }
 });
+
+//DELETE para eliminar recurso concreto
+app.delete(BASE_API_URL + "/:country/:year", (req, res) => {
+    const { country, year } = req.params;
+    const exists = milex_datos.find(d => d.country === country && d.year == year);
+
+    if (exists) {
+        milex_datos = milex_datos.filter(d => {
+            return d.country !== country || d.year != year;
+        });
+        res.sendStatus(200); 
+    } else {
+        res.status(404).send("No existe el recurso que intentas borrar");
+    }
+});
+
+//DELETE para eliminar todos los recursos
+    app.delete(BASE_API_URL, (req, res) => {
+    milex_datos = []; 
+    res.sendStatus(200);
+    console.log("Se han borrado todos los datos de la lista");
+});
+
 
 app.listen(port, () => {
 
