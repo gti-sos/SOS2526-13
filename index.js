@@ -42,22 +42,22 @@ app.get('/samples/CEV', (req, res) =>{
 
 });
 
+//Ruta para /samples/CPS
+let cpsData = [];
+
 app.get('/samples/CPS', (req,res) => {
     const cpsData = [
-    { recipient: "Afghanistan", supplier: "Russia", year_of_order: 2002, number_ordered: 3, weapon_designation: "Mi-17", weapon_description: "transport helicopter", number_delivered: 3, year_of_delivery: 2002, status: "Second hand", comment: "Second-hand", tiv_unit: 2.9, tiv_total_order: 8.7, tiv_delivered_weapon: 8.7 },
-    { recipient: "Algeria", supplier: "Ukraine", year_of_order: 2003, number_ordered: 116, weapon_designation: "R-27R/T", weapon_description: "", number_delivered: 116, year_of_delivery: 2004, status: "New", comment: "New", tiv_unit: 0.19, tiv_total_order: 22.04, tiv_delivered_weapon: 22.04 },
-    { recipient: "Angola", supplier: "Cuba", year_of_order: 1975, number_ordered: 1, weapon_designation: "MiG-15UTI", weapon_description: "trainer aircraft", number_delivered: 1, year_of_delivery: 1975, status: "Second hand", comment: "aid", tiv_unit: 1.2, tiv_total_order: 1.2, tiv_delivered_weapon: 1.2 },
-    { recipient: "Egypt", supplier: "Spain", year_of_order: 1982, number_ordered: 2, weapon_designation: "Descubierta", weapon_description: "frigate", number_delivered: 2, year_of_delivery: 1984, status: "New", comment: "Partly financed by Saudi Arabia and USA", tiv_unit: 93.7, tiv_total_order: 187.4, tiv_delivered_weapon: 187.4 },
-    { recipient: "El Salvador", supplier: "United States", year_of_order: 1969, number_ordered: 3, weapon_designation: "C-47 Skytrain", weapon_description: "transport aircraft", number_delivered: 3, year_of_delivery: 1969, status: "Second hand", comment: "Second-hand", tiv_unit: 1, tiv_total_order: 3, tiv_delivered_weapon: 3 },
-    { recipient: "Equatorial Guinea", supplier: "Israel", year_of_order: 2008, number_ordered: 2, weapon_designation: "Saar-4", weapon_description: "patrol boat", number_delivered: 2, year_of_delivery: 2011, status: "New", comment: "", tiv_unit: 22.5, tiv_total_order: 45, tiv_delivered_weapon: 45 },
-    { recipient: "Estonia", supplier: "France", year_of_order: 2007, number_ordered: 100, weapon_designation: "Mistral", weapon_description: "portable SAM", number_delivered: 100, year_of_delivery: 2008, status: "New", comment: "Part of EUR60 m deal Mistral-2 version", tiv_unit: 0.09, tiv_total_order: 9, tiv_delivered_weapon: 9 },
-    { recipient: "Ethiopia", supplier: "China", year_of_order: 2019, number_ordered: 10, weapon_designation: "BP-12A", weapon_description: "surface-to-surface missile", number_delivered: 10, year_of_delivery: 2020, status: "New", comment: "For A-200 MRL", tiv_unit: 2.25, tiv_total_order: 22.5, tiv_delivered_weapon: 22.5 },
-    { recipient: "Greece", supplier: "Germany", year_of_order: 2020, number_ordered: 44, weapon_designation: "DM2A4 Seehecht", weapon_description: "anti-ship/anti-submarine torpedo", number_delivered: 11, year_of_delivery: 2024, status: "New", comment: "EUR110 m deal Seahake Mod-4ER version", tiv_unit: 1.8, tiv_total_order: 79.2, tiv_delivered_weapon: 19.8 },
-    { recipient: "Spain", supplier: "Italy", year_of_order: 1975, number_ordered: 14, weapon_designation: "Bell-205A", weapon_description: "helicopter", number_delivered: 14, year_of_delivery: 1977, status: "New", comment: "AB-205 version", tiv_unit: 2.2, tiv_total_order: 30.8, tiv_delivered_weapon: 30.8 }
-    ];
-    const filtered = cpsData.filter(d => d.supplier === "Spain");
-    const average = filtered.reduce((acc,d) => acc + d.tiv_total_order, 0) / filtered.length;
-    res.send(`La media del TIV total de Spain es: ${average}`);
+  { recipient: "Afghanistan", supplier: "Russia", year_of_order: 2002, number_ordered: 3, weapon_designation: "Mi-17", weapon_description: "transport helicopter", number_delivered: 3, year_of_delivery: 2002, status: "Second hand", comment: "Second-hand", tiv_unit: 2.9, tiv_total_order: 8.7, tiv_delivered_weapon: 8.7 },
+  { recipient: "Algeria", supplier: "Ukraine", year_of_order: 2003, number_ordered: 116, weapon_designation: "R-27R/T", weapon_description: "", number_delivered: 116, year_of_delivery: 2004, status: "New", comment: "New", tiv_unit: 0.19, tiv_total_order: 22.04, tiv_delivered_weapon: 22.04 },
+  { recipient: "Angola", supplier: "Cuba", year_of_order: 1975, number_ordered: 1, weapon_designation: "MiG-15UTI", weapon_description: "trainer aircraft", number_delivered: 1, year_of_delivery: 1975, status: "Second hand", comment: "aid", tiv_unit: 1.2, tiv_total_order: 1.2, tiv_delivered_weapon: 1.2 },
+  { recipient: "Egypt", supplier: "Spain", year_of_order: 1982, number_ordered: 2, weapon_designation: "Descubierta", weapon_description: "frigate", number_delivered: 2, year_of_delivery: 1984, status: "New", comment: "Partly financed by Saudi Arabia and USA", tiv_unit: 93.7, tiv_total_order: 187.4, tiv_delivered_weapon: 187.4 },
+  { recipient: "El Salvador", supplier: "United States", year_of_order: 1969, number_ordered: 3, weapon_designation: "C-47 Skytrain", weapon_description: "transport aircraft", number_delivered: 3, year_of_delivery: 1969, status: "Second hand", comment: "Second-hand", tiv_unit: 1, tiv_total_order: 3, tiv_delivered_weapon: 3 },
+  { recipient: "Equatorial Guinea", supplier: "Israel", year_of_order: 2008, number_ordered: 2, weapon_designation: "Saar-4", weapon_description: "patrol boat", number_delivered: 2, year_of_delivery: 2011, status: "New", comment: "", tiv_unit: 22.5, tiv_total_order: 45, tiv_delivered_weapon: 45 },
+  { recipient: "Estonia", supplier: "France", year_of_order: 2007, number_ordered: 100, weapon_designation: "Mistral", weapon_description: "portable SAM", number_delivered: 100, year_of_delivery: 2008, status: "New", comment: "Part of EUR60 m deal Mistral-2 version", tiv_unit: 0.09, tiv_total_order: 9, tiv_delivered_weapon: 9 },
+  { recipient: "Ethiopia", supplier: "China", year_of_order: 2019, number_ordered: 10, weapon_designation: "BP-12A", weapon_description: "surface-to-surface missile", number_delivered: 10, year_of_delivery: 2020, status: "New", comment: "For A-200 MRL", tiv_unit: 2.25, tiv_total_order: 22.5, tiv_delivered_weapon: 22.5 },
+  { recipient: "Greece", supplier: "Germany", year_of_order: 2020, number_ordered: 44, weapon_designation: "DM2A4 Seehecht", weapon_description: "anti-ship/anti-submarine torpedo", number_delivered: 11, year_of_delivery: 2024, status: "New", comment: "EUR110 m deal Seahake Mod-4ER version", tiv_unit: 1.8, tiv_total_order: 79.2, tiv_delivered_weapon: 19.8 },
+  { recipient: "Spain", supplier: "Italy", year_of_order: 1975, number_ordered: 14, weapon_designation: "Bell-205A", weapon_description: "helicopter", number_delivered: 14, year_of_delivery: 1977, status: "New", comment: "AB-205 version", tiv_unit: 2.2, tiv_total_order: 30.8, tiv_delivered_weapon: 30.8 }
+];
 });
 
 
@@ -65,26 +65,40 @@ app.get('/samples/CPS', (req,res) => {
 const BASE_URL = '/api/v1/exportations-stats';
 let exportationsData = []; 
 
-// Load initial data
-app.get(`${BASE_URL}/loadInitialData`, (req,res) => {
-    if (exportationsData.length === 0) {
-        exportationsData = [
-            { recipient: "Afghanistan", supplier: "Russia", year_of_order: 2002, tiv_total_order: 8.7 },
-            { recipient: "Algeria", supplier: "Ukraine", year_of_order: 2003, tiv_total_order: 22.04 },
-            { recipient: "Angola", supplier: "Cuba", year_of_order: 1975, tiv_total_order: 1.2 },
-            { recipient: "Egypt", supplier: "Spain", year_of_order: 1982, tiv_total_order: 187.4 },
-            { recipient: "El Salvador", supplier: "United States", year_of_order: 1969, tiv_total_order: 3 },
-            { recipient: "Equatorial Guinea", supplier: "Israel", year_of_order: 2008, tiv_total_order: 45 },
-            { recipient: "Estonia", supplier: "France", year_of_order: 2007, tiv_total_order: 9 },
-            { recipient: "Ethiopia", supplier: "China", year_of_order: 2019, tiv_total_order: 22.5 },
-            { recipient: "Greece", supplier: "Germany", year_of_order: 2020, tiv_total_order: 79.2 },
-            { recipient: "Spain", supplier: "Italy", year_of_order: 1975, tiv_total_order: 30.8 }
-        ];
-        res.status(201).json({ message: "Datos iniciales creados", data: exportationsData });
-    } else {
-        res.status(200).json({ message: "Los datos ya existen", data: exportationsData });
-    }
+// Devuelve todos los datos de CPS
+app.get(BASE_URL, (req, res) => {
+  res.json(cpsData);
 });
+
+// Filtrar por supplier
+app.get(`${BASE_URL}/:supplier`, (req, res) => {
+  const supplier = req.params.supplier;
+  const filtered = cpsData.filter(d => d.supplier.toLowerCase() === supplier.toLowerCase());
+  res.json(filtered);
+});
+
+// Load initial data
+app.get(`${BASE_URL}/loadInitialData`, (req, res) => {
+  if (!cpsData.length) {
+    // Aquí puedes crear 10 registros iniciales si quieres
+    return res.status(201).json({ message: 'Datos iniciales creados' });
+  } else {
+    return res.status(200).json(cpsData);
+  }
+});
+// Devuelve todos los datos
+app.get(BASE_URL, (req, res) => {
+  res.json(cpsData);
+});
+
+// Filtrar por supplier
+app.get(`${BASE_URL}/:supplier`, (req, res) => {
+  const supplier = req.params.supplier;
+  const filtered = cpsData.filter(d => d.supplier.toLowerCase() === supplier.toLowerCase());
+  res.json(filtered);
+});
+
+
 
 app.get(BASE_URL, (req,res) => {
     res.status(200).json(exportationsData);
@@ -278,6 +292,115 @@ app.delete(BASE_API_URL + "/:country/:year", (req, res) => {
     milex_datos = []; 
     res.sendStatus(200);
     console.log("Se han borrado todos los datos de la lista");
+});
+
+
+//PABLO MORALEDA ÁLVAREZ
+app.get('/samples/PMA', (req, res) =>{
+const datosPablo = [
+  { location: "India", year: 2012, intensity_level: 1, conflict_type: 3, start_precision: 1 },
+  { location: "Egypt, Israel", year: 1967, intensity_level: 2, conflict_type: 2, start_precision: 1 },
+  { location: "Egypt, Israel", year: 1969, intensity_level: 1, conflict_type: 2, start_precision: 1 },
+  { location: "Egypt, Israel", year: 1970, intensity_level: 1, conflict_type: 2, start_precision: 1 },
+  { location: "Egypt, Israel", year: 1973, intensity_level: 2, conflict_type: 2, start_precision: 1 },
+  { location: "Sudan", year: 2011, intensity_level: 1, conflict_type: 3, start_precision: 1 },
+  { location: "South Sudan", year: 2011, intensity_level: 1, conflict_type: 3, start_precision: 2 },
+  { location: "South Sudan", year: 2012, intensity_level: 1, conflict_type: 3, start_precision: 2 },
+  { location: "South Sudan", year: 2013, intensity_level: 1, conflict_type: 3, start_precision: 2 },
+  { location: "South Sudan", year: 2014, intensity_level: 2, conflict_type: 4, start_precision: 2 }
+];
+
+let egypt = datosPablo.filter(l => l.location==="Egypt, Israel");
+
+let media_intensityLevel = egypt.reduce((acc, l) => acc + l.intensity_level, 0) / egypt.length;
+//--- ENVÍO RESULTADO ---
+res.send(`The average intensity level on Egypt conflicts is ${media_intensityLevel}`)
+})
+
+// --- COPIA DE TRABAJO ---
+let dataConflicts = [];
+
+// --- CARGA INICIAL ---
+app.get("/api/v1/conflict-stats/loadInitialData", (req, res) => {
+  if (dataConflicts.length === 0) {
+    dataConflicts = datosPablo.slice();
+    res.status(201).send("Los datos han sido cargados");
+  } else {
+    res.status(409).send("Ya hay datos cargados");
+  }
+});
+
+// --- GET COLECCIÓN ---
+app.get("/api/v1/conflict-stats", (req, res) => {
+  res.json(dataConflicts);
+});
+
+// --- GET POR AÑO ---
+app.get("/api/v1/conflict-stats/:year", (req, res) => {
+  const year = parseInt(req.params.year);
+  const result = dataConflicts.filter(d => d.year === year);
+
+  if (result.length > 0) {
+    res.json(result);
+  } else {
+    res.status(404).send("No encontrado");
+  }
+});
+
+// --- POST ---
+app.post("/api/v1/conflict-stats", (req, res) => {
+
+  const newConflict = req.body;
+
+  if (!newConflict.year || !newConflict.location) {
+    res.status(400).json({ message: "Bad request" });
+    return;
+  }
+
+  const exists = dataConflicts.some(c => c.year === newConflict.year);
+
+  if (exists) {
+    res.status(409).json({ message: "Conflict already exists" });
+  } else {
+    dataConflicts.push(newConflict);
+    res.status(201).json(newConflict);
+  }
+});
+
+// --- PUT ---
+app.put("/api/v1/conflict-stats/:year", (req, res) => {
+
+  const year = parseInt(req.params.year);
+  const index = dataConflicts.findIndex(c => c.year === year);
+
+  if (index === -1) {
+    res.status(404).json({ message: "Not found" });
+  } else {
+    dataConflicts[index] = req.body;
+    res.status(200).json(req.body);
+  }
+});
+
+// --- DELETE DATA ---
+app.delete("/api/v1/conflict-stats", (req, res) => {
+  dataConflicts = [];
+  res.status(200).json({ message: "All data deleted" });
+});
+
+// --- DELETE RECURSO CONCRETO ---
+
+app.delete("/api/v1/conflict-stats/:year", (req, res) => {
+
+  const year = parseInt(req.params.year);
+  const initialLength = dataConflicts.length;
+
+  dataConflicts = dataConflicts.filter(c => c.year !== year);
+
+  if (dataConflicts.length < initialLength) {
+    res.status(200).json({ message: "Deleted" });
+  } else {
+    res.status(404).json({ message: "Not found" });
+  }
 });
 
 
