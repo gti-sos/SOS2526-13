@@ -65,17 +65,6 @@ app.get('/samples/CPS', (req,res) => {
 const BASE_URL = '/api/v1/exportations-stats';
 let exportationsData = []; 
 
-app.get(BASE_URL, (req,res) => {
-    res.json(exportationsData);
-});
-
-// Filtrar por supplier
-app.get(`${BASE_URL}/:supplier`, (req,res) => {
-    const supplier = req.params.supplier.toLowerCase();
-    const filtered = exportationsData.filter(d => d.supplier.toLowerCase() === supplier);
-    res.json(filtered);
-});
-
 // Load initial data
 app.get(`${BASE_URL}/loadInitialData`, (req,res) => {
     if (exportationsData.length === 0) {
@@ -96,6 +85,86 @@ app.get(`${BASE_URL}/loadInitialData`, (req,res) => {
         res.status(200).json({ message: "Los datos ya existen", data: exportationsData });
     }
 });
+
+app.get(BASE_URL, (req,res) => {
+    res.status(200).json(exportationsData);
+});
+app.get(`${BASE_URL}/:recipient/:year_of_order`, (req, res) => {
+    const { recipient, year_of_order } = req.params;
+    const data = exportationsData.find(d =>
+        d.recipient.toLowerCase() === recipient.toLowerCase() &&
+        d.year_of_order == year_of_order
+    );
+
+    if (!data) return res.status(404).json({ error: "Not found" });
+
+    res.status(200).json(data);
+});
+
+app.post(BASE_URL, (req, res) => {
+    const newData = req.body;
+
+    if (!newData.recipient || !newData.year_of_order)
+        return res.status(400).json({ error: "Bad request" });
+
+    const exists = exportationsData.find(d =>
+        d.recipient.toLowerCase() === newData.recipient.toLowerCase() &&
+        d.year_of_order == newData.year_of_order
+    );
+
+    if (exists) return res.sendStatus(409);
+
+    exportationsData.push(newData);
+    res.sendStatus(201);
+});
+
+// PUT
+app.put(`${BASE_URL}/:recipient/:year_of_order`, (req, res) => {
+    const { recipient, year_of_order } = req.params;
+    const updated = req.body;
+
+    if (recipient !== updated.recipient || parseInt(year_of_order) !== updated.year_of_order)
+        return res.status(400).json({ error: "URL and body mismatch" });
+
+    const index = exportationsData.findIndex(d =>
+        d.recipient === recipient &&
+        d.year_of_order == year_of_order
+    );
+
+    if (index === -1) return res.sendStatus(404);
+
+    exportationsData[index] = updated;
+    res.sendStatus(200);
+});
+
+// DELETE ONE
+app.delete(`${BASE_URL}/:recipient/:year_of_order`, (req, res) => {
+    const { recipient, year_of_order } = req.params;
+
+    const index = exportationsData.findIndex(d =>
+        d.recipient === recipient &&
+        d.year_of_order == year_of_order
+    );
+
+    if (index === -1) return res.sendStatus(404);
+
+    exportationsData.splice(index, 1);
+    res.sendStatus(200);
+});
+// DELETE ALL
+app.delete(BASE_URL, (req, res) => {
+    exportationsData = [];
+    res.sendStatus(200);
+});
+
+// Filtrar por supplier
+app.get(`${BASE_URL}/:supplier`, (req,res) => {
+    const supplier = req.params.supplier.toLowerCase();
+    const filtered = exportationsData.filter(d => d.supplier.toLowerCase() === supplier);
+    res.json(filtered);
+});
+
+
 
 // API RESTful para Military Expenditure (Milex)
 let milex_datos = [];
