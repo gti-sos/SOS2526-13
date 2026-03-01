@@ -59,9 +59,11 @@ app.get('/samples/CPS', (req,res) => {
   { recipient: "Spain", supplier: "Italy", year_of_order: 1975, number_ordered: 14, weapon_designation: "Bell-205A", weapon_description: "helicopter", number_delivered: 14, year_of_delivery: 1977, status: "New", comment: "AB-205 version", tiv_unit: 2.2, tiv_total_order: 30.8, tiv_delivered_weapon: 30.8 }
 ];
 });
-const BASE_URL = '/api/v1/cps';
 
 
+
+const BASE_URL = '/api/v1/exportations-stats';
+let exportationsData = []; 
 
 // Devuelve todos los datos de CPS
 app.get(BASE_URL, (req, res) => {
@@ -94,6 +96,86 @@ app.get(`${BASE_URL}/:supplier`, (req, res) => {
   const supplier = req.params.supplier;
   const filtered = cpsData.filter(d => d.supplier.toLowerCase() === supplier.toLowerCase());
   res.json(filtered);
+});
+
+
+
+app.get(BASE_URL, (req,res) => {
+    res.status(200).json(exportationsData);
+});
+app.get(`${BASE_URL}/:recipient/:year_of_order`, (req, res) => {
+    const { recipient, year_of_order } = req.params;
+    const data = exportationsData.find(d =>
+        d.recipient.toLowerCase() === recipient.toLowerCase() &&
+        d.year_of_order == year_of_order
+    );
+
+    if (!data) return res.status(404).json({ error: "Not found" });
+
+    res.status(200).json(data);
+});
+
+app.post(BASE_URL, (req, res) => {
+    const newData = req.body;
+
+    if (!newData.recipient || !newData.year_of_order)
+        return res.status(400).json({ error: "Bad request" });
+
+    const exists = exportationsData.find(d =>
+        d.recipient.toLowerCase() === newData.recipient.toLowerCase() &&
+        d.year_of_order == newData.year_of_order
+    );
+
+    if (exists) return res.sendStatus(409);
+
+    exportationsData.push(newData);
+    res.sendStatus(201);
+});
+
+// PUT
+app.put(`${BASE_URL}/:recipient/:year_of_order`, (req, res) => {
+    const { recipient, year_of_order } = req.params;
+    const updated = req.body;
+
+    if (recipient !== updated.recipient || parseInt(year_of_order) !== updated.year_of_order)
+        return res.status(400).json({ error: "URL and body mismatch" });
+
+    const index = exportationsData.findIndex(d =>
+        d.recipient === recipient &&
+        d.year_of_order == year_of_order
+    );
+
+    if (index === -1) return res.sendStatus(404);
+
+    exportationsData[index] = updated;
+    res.sendStatus(200);
+});
+
+// DELETE ONE
+app.delete(`${BASE_URL}/:recipient/:year_of_order`, (req, res) => {
+    const { recipient, year_of_order } = req.params;
+
+    const index = exportationsData.findIndex(d =>
+        d.recipient === recipient &&
+        d.year_of_order == year_of_order
+    );
+
+    if (index === -1) return res.sendStatus(404);
+
+    exportationsData.splice(index, 1);
+    res.sendStatus(200);
+});
+// DELETE ALL
+app.delete(BASE_URL, (req, res) => {
+    exportationsData = [];
+    res.sendStatus(200);
+});
+
+// Filtrar por supplier
+app.get(`${BASE_URL}/:supplier`, (req,res) => {
+    const supplier = req.params.supplier.toLowerCase();
+    const filtered = exportationsData.filter(d => d.supplier.toLowerCase() === supplier);
+    res.json(filtered);
 });
 
 
