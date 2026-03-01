@@ -65,8 +65,8 @@ let milex_datos = [];
 const BASE_API_URL = "/api/v1/military-stats";
 
 app.get(BASE_API_URL + "/loadInitialData", (req, res) => {
-    if (milex_data.length === 0) {
-        milex_data = [
+    if (milex_datos.length === 0) {
+        milex_datos = [
             { country: "poland", year: 2010, milex_total: 19710.8, milex_gdp: 1.84, milex_per_capita: 231.2 },
             { country: "morocco", year: 2022, milex_total: 4995, milex_gdp: 3.81, milex_per_capita: 132.7 },
             { country: "cuba", year: 2015, milex_total: 118.4, milex_gdp: 3.08, milex_per_capita: 10.5 },
@@ -85,26 +85,26 @@ app.get(BASE_API_URL + "/loadInitialData", (req, res) => {
 });
 
 app.get(BASE_API_URL, (req, res) => {
-    res.json(milex_data);
+    res.json(milex_datos);
 });
 
 app.post(BASE_API_URL, (req, res) => {
     let newData = req.body;
-    if (milex_data.find(d => d.country === newData.country && d.year === newData.year)) {
+    if(milex_datos.find(d => d.country === newData.country && d.year === newData.year)){
         res.sendStatus(409);
     } else {
-        milex_data.push(newData);
+        milex_datos.push(newData);
         res.sendStatus(201);
     }
 });
 
 app.delete(BASE_API_URL, (req, res) => {
-    milex_data = [];
+    milex_datos = [];
     res.sendStatus(200);
 });
 
 app.listen(port, () => {
 
     console.log(`server running on http://localhost:${port}`)
-})
+});
 
