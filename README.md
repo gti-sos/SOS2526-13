@@ -7,3 +7,7 @@
 - **Project description**: Our project analyzes the relationship between military expenses, arms export and military personnel.
 - **Repository**:[gti-sos/SOS2526-13](https://github.com/gti-sos/SOS2526-13)  
 (https://sos2526-13.onrender.com)
+
+-**APIS**
+- Camila España Vildoso - military stats
+  https://sos2526-13.onrender.com/api/v1/military-stats
