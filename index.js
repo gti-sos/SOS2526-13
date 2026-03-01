@@ -265,6 +265,63 @@ app.get("/api/v1/conflict-stats/:year", (req, res) => {
   }
 });
 
+// --- POST ---
+app.post("/api/v1/conflict-stats", (req, res) => {
+
+  const newConflict = req.body;
+
+  if (!newConflict.year || !newConflict.location) {
+    res.status(400).json({ message: "Bad request" });
+    return;
+  }
+
+  const exists = dataConflicts.some(c => c.year === newConflict.year);
+
+  if (exists) {
+    res.status(409).json({ message: "Conflict already exists" });
+  } else {
+    dataConflicts.push(newConflict);
+    res.status(201).json(newConflict);
+  }
+});
+
+// --- PUT ---
+app.put("/api/v1/conflict-stats/:year", (req, res) => {
+
+  const year = parseInt(req.params.year);
+  const index = dataConflicts.findIndex(c => c.year === year);
+
+  if (index === -1) {
+    res.status(404).json({ message: "Not found" });
+  } else {
+    dataConflicts[index] = req.body;
+    res.status(200).json(req.body);
+  }
+});
+
+// --- DELETE DATA ---
+app.delete("/api/v1/conflict-stats", (req, res) => {
+  dataConflicts = [];
+  res.status(200).json({ message: "All data deleted" });
+});
+
+// --- DELETE RECURSO CONCRETO ---
+
+app.delete("/api/v1/conflict-stats/:year", (req, res) => {
+
+  const year = parseInt(req.params.year);
+  const initialLength = dataConflicts.length;
+
+  dataConflicts = dataConflicts.filter(c => c.year !== year);
+
+  if (dataConflicts.length < initialLength) {
+    res.status(200).json({ message: "Deleted" });
+  } else {
+    res.status(404).json({ message: "Not found" });
+  }
+});
+
+
 app.listen(port, () => {
 
     console.log(`server running on http://localhost:${port}`)
