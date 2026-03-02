@@ -61,7 +61,7 @@ app.get('/samples/CPS', (req,res) => {
 
 const supplierTarget = "Russia";
 //filtrar por supplier
-const filtered = data.filter(item => item.supplier === supplierTarget);
+const filtered = cpsData.filter(item => item.supplier === supplierTarget);
 //suma 
 const total = filtered.reduce((acc, curr) => acc + curr.tiv_total_order, 0);
 //media
@@ -90,18 +90,15 @@ app.get(`${BASE_URL}/:supplier`, (req, res) => {
 });
 
 // Load initial data
-app.get(`${BASE_URL}/loadInitialData`, (req, res) => {
-  if (!cpsData.length) {
-    // Aquí puedes crear 10 registros iniciales si quieres
-    return res.status(201).json({ message: 'Datos iniciales creados' });
-  } else {
-    return res.status(200).json(cpsData);
-  }
+app.get(BASE_URL + "/loadInitialData",(req,res)=>{
+if(exportationsData.length===0){
+exportationsData = initialExportations;
+res.sendStatus(201);
+}else{
+res.sendStatus(409);
+}
 });
-// Devuelve todos los datos
-app.get(BASE_URL, (req, res) => {
-  res.json(cpsData);
-});
+
 
 // Filtrar por supplier
 app.get(`${BASE_URL}/:supplier`, (req, res) => {
