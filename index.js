@@ -67,10 +67,8 @@ const total = filtered.reduce((acc, curr) => acc + curr.tiv_total_order, 0);
 //media
 const average = filtered.length > 0 ? total / filtered.length : 0;
 
-//test
-console.log(`Datos filtrados por supplier: ${supplierTarget}`);
-console.table(filtered);
-console.log(`Media de tiv_total_order para ${supplierTarget}: ${average}`);
+res.send(`La media del milex total de Marruecos es de: ${average}`);
+
 
 });
 
