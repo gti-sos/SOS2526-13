@@ -58,6 +58,20 @@ app.get('/samples/CPS', (req,res) => {
   { recipient: "Greece", supplier: "Germany", year_of_order: 2020, number_ordered: 44, weapon_designation: "DM2A4 Seehecht", weapon_description: "anti-ship/anti-submarine torpedo", number_delivered: 11, year_of_delivery: 2024, status: "New", comment: "EUR110 m deal Seahake Mod-4ER version", tiv_unit: 1.8, tiv_total_order: 79.2, tiv_delivered_weapon: 19.8 },
   { recipient: "Spain", supplier: "Italy", year_of_order: 1975, number_ordered: 14, weapon_designation: "Bell-205A", weapon_description: "helicopter", number_delivered: 14, year_of_delivery: 1977, status: "New", comment: "AB-205 version", tiv_unit: 2.2, tiv_total_order: 30.8, tiv_delivered_weapon: 30.8 }
 ];
+
+const supplierTarget = "Russia";
+//filtrar por supplier
+const filtered = data.filter(item => item.supplier === supplierTarget);
+//suma 
+const total = filtered.reduce((acc, curr) => acc + curr.tiv_total_order, 0);
+//media
+const average = filtered.length > 0 ? total / filtered.length : 0;
+
+//test
+console.log(`Datos filtrados por supplier: ${supplierTarget}`);
+console.table(filtered);
+console.log(`Media de tiv_total_order para ${supplierTarget}: ${average}`);
+
 });
 
 
