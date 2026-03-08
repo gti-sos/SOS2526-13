@@ -142,9 +142,7 @@ app.delete(`${BASE_URL}/:recipient/:year_of_order`, (req, res) => {
         d.recipient === recipient &&
         d.year_of_order == year_of_order
     );
-
     if (index === -1) return res.sendStatus(404);
-
     exportationsData.splice(index, 1);
     res.sendStatus(200);
 });
