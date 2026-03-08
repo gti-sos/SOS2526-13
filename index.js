@@ -142,9 +142,7 @@ app.delete(`${BASE_URL}/:recipient/:year_of_order`, (req, res) => {
         d.recipient === recipient &&
         d.year_of_order == year_of_order
     );
-
     if (index === -1) return res.sendStatus(404);
-
     exportationsData.splice(index, 1);
     res.sendStatus(200);
 });
@@ -160,6 +158,15 @@ app.get(`${BASE_URL}/:supplier`, (req,res) => {
     const supplier = req.params.supplier.toLowerCase();
     const filtered = exportationsData.filter(d => d.supplier.toLowerCase() === supplier);
     res.json(filtered);
+});
+
+//405 no permitidos 
+app.post(`${BASE_URL}/:recipient/:year_of_order`, (req, res) => {
+  res.sendStatus(405);
+});
+
+app.put(BASE_URL, (req, res) => {
+  res.sendStatus(405);
 });
 
 
