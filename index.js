@@ -198,6 +198,12 @@ app.get(BASE_API_URL + "/loadInitialData", (req, res) => {
 
 //GET, POST y PUT para /api/v1/military-stats
 
+//GET
+app.get(BASE_API_URL, (req, res) => {
+    res.status(200).json(milex_datos);
+});
+
+
 //GET array completo
 app.get(BASE_API_URL, (req, res) => {
     const { country, year, from, to } = req.query; 
@@ -221,7 +227,7 @@ app.get(BASE_API_URL + "/:country/:year", (req, res) => {
     const {country ,year} = req.params;
     const resource = milex_datos.find(d => d.country === country && d.year == year);
     if(resource){
-        res.json(resource);
+        res.status(200).json(resource);
     }else{
         res.status(404).send("Recurso no encontrado");
     }
@@ -229,6 +235,11 @@ app.get(BASE_API_URL + "/:country/:year", (req, res) => {
 
 
 // POST nuevo recurso
+
+app.post(BASE_API_URL + "/:country/:year", (req, res) => {
+    res.sendStatus(405);
+});
+
 app.post(BASE_API_URL, (req, res) => {
     let newData = req.body;
     if(!newData.country || !newData.year || newData.milex_total === undefined || newData.milex_gdp === undefined || newData.milex_per_capita === undefined){
@@ -284,15 +295,14 @@ app.delete(BASE_API_URL + "/:country/:year", (req, res) => {
         });
         res.sendStatus(200); 
     } else {
-        res.status(404).send("No existe el recurso que intentas borrar");
+        res.status(404).send("No existe el recurso que intentas borrar no existe");
     }
 });
 
 //DELETE para eliminar todos los recursos
     app.delete(BASE_API_URL, (req, res) => {
     milex_datos = []; 
-    res.sendStatus(200);
-    console.log("Se han borrado todos los datos de la lista");
+    res.status(200).send("Se han borrado todos los datos de la lista");
 });
 
 
