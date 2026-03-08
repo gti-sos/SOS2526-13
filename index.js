@@ -237,11 +237,21 @@ app.post(BASE_API_URL, (req, res) => {
 
     const exists = milex_datos.find(d => d.country.toLowerCase() === newData.country.toLowerCase() && d.year == newData.year);
     if(exists){
-        res.sendStatus(409);
+        res.status(409).send("El recurso ya existe");
     } else {
         milex_datos.push(newData);
         res.sendStatus(201);
     }
+});
+//POST no permitido para recurso concreto
+app.post(BASE_API_URL + "/:country/:year", (req, res) => {
+    res.status(405).send("No se permite POST en un recurso concreto");
+});
+
+
+//PUT no permitido para la colección
+app.put(BASE_API_URL, (req, res) => {
+    res.status(405).send("No se permite PUT en la colección");
 });
 
 
