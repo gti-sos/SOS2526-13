@@ -1,11 +1,8 @@
 import dataStore from "nedb";
 
 export function loadExportations(app){
-
     let db = new dataStore({filename:"exportations.db", autoload:true});
-
     const BASE_URL = '/api/v1/exportations-stats';
-
     let exportationsInitial =  [
                 { recipient: "Afghanistan", supplier: "Russia", year_of_order: 2002, tiv_total_order: 8.7 },
                 { recipient: "Algeria", supplier: "Ukraine", year_of_order: 2003, tiv_total_order: 22.04 },
@@ -104,7 +101,7 @@ export function loadExportations(app){
         }
         db.update(
             {recipient:recipient,year_of_order:year},
-            updated,
+            {$set: updated},
             {},(err,numUpdated)=>{
                 if(numUpdated===0){
                     res.sendStatus(404);
