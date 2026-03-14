@@ -145,7 +145,7 @@ app.put(BASE_API_URL + "/:country/:year", (req, res) => {
     const {country ,year} = req.params;
     const updatedData = req.body; 
     
-    if(country !== updatedData.country || year !== updatedData.year){
+    if(country !== updatedData.country || year != updatedData.year){
         return res.status(400).send("El país y el año en la URL deben coincidir con los del cuerpo de la solicitud");
     }
 
