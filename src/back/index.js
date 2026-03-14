@@ -181,7 +181,14 @@ app.delete(BASE_API_URL + "/:country/:year", (req, res) => {
 
 
 //PABLO MORALEDA ÁLVAREZ
-
+// --- Función para comprobar json de entrada ---
+function isValidConflict(c){
+  return c.location &&
+         c.year &&
+         c.intensity_level !== undefined &&
+         c.conflict_type !== undefined &&
+         c.start_precision !== undefined;
+}
 // --- DATOS ---
 const datosPablo = [
   { location: "India", year: 2012, intensity_level: 1, conflict_type: 3, start_precision: 1 },
@@ -219,6 +226,11 @@ app.get("/api/v1/conflict-stats/loadInitialData", (req, res) => {
 
 // --- GET COLECCIÓN ---
 app.get("/api/v1/conflict-stats", (req, res) => {
+
+  if (dataConflicts.length === 0) {
+    return res.sendStatus(404);
+  }
+
   res.json(dataConflicts);
 });
 
@@ -244,9 +256,9 @@ app.post("/api/v1/conflict-stats", (req, res) => {
 
   const newConflict = req.body;
 
-  if (!newConflict.year || !newConflict.location) {
-    res.status(400).json({ message: "Bad request" });
-    return;
+  // JSON incompleto
+  if (!isValidConflict(newConflict)) {
+    return res.sendStatus(400);
   }
 
   const exists = dataConflicts.some(c => c.year === newConflict.year);
@@ -265,9 +277,13 @@ app.put("/api/v1/conflict-stats/:year", (req, res) => {
   const year = parseInt(req.params.year);
   const index = dataConflicts.findIndex(c => c.year === year);
 
-  //compruebo que está en el formato correcto
-  if (isNaN(year)) {
-  return res.sendStatus(400);
+  // JSON incorrecto
+  if (!isValidConflict(req.body)) {
+    return res.sendStatus(400);
+  }
+  // ID distinto al de la URL
+  if (req.body.year !== year) {
+    return res.sendStatus(400);
   }
 
   if (index === -1) {
