@@ -15,7 +15,7 @@ const __dirname = dirname(__filename);
 
 //Rutas cool y about
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static("public"));
 app.use(express.json());
 
 loadBackend(app);
