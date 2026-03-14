@@ -290,7 +290,7 @@ app.put("/api/v1/conflict-stats/:year", (req, res) => {
     res.status(404).json({ message: "Not found" });
   } else {
     dataConflicts[index] = req.body;
-    res.status(200).json(req.body);
+    res.status(201).json(req.body);
   }
 });
 
