@@ -85,17 +85,12 @@ export function loadExportations(app){
     });
 
 
-    // PUT no permitido en colección
-    app.put(BASE_URL,(req,res)=>{
-        res.sendStatus(405);
-    });
-
     // PUT actualizar recurso
     app.put(BASE_URL+"/:recipient/:year_of_order",(req,res)=>{
         let recipient=req.params.recipient;
         let year=parseInt(req.params.year_of_order);
         let updated=req.body;
-
+        updated.year_of_order = parseInt(updated.year_of_order);
         if(recipient!==updated.recipient || year!==updated.year_of_order){
             return res.sendStatus(400);
         }
@@ -110,6 +105,12 @@ export function loadExportations(app){
                 }
             });
         });
+
+     // PUT no permitido en colección
+    app.put(BASE_URL,(req,res)=>{
+        res.sendStatus(405);
+    });
+
 
     // DELETE recurso concreto
     app.delete(BASE_URL+"/:recipient/:year_of_order",(req,res)=>{
