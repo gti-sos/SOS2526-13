@@ -19,11 +19,5 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Start server
-        run: npm start &
-
-      - name: Wait server
-        run: npx wait-on http://localhost:3000
-
       - name: Run tests
         run: npm test
