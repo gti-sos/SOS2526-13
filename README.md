@@ -8,7 +8,7 @@
 - **Repository**:[gti-sos/SOS2526-13](https://github.com/gti-sos/SOS2526-13)  
 (https://sos2526-13.onrender.com)
 
--**APIS**
+- **APIS**
 - https://sos2526-13.onrender.com/api/v1/military-stats/docs (developed by Camila España Vildoso)
 - https://sos2526-13.onrender.com/api/v1/conflict-stats/docs (developed by Pablo Moraleda Álvarez)
 - https://sos2526-13.onrender.com/api/v1/exportations-stats/docs (developed by Claudia Páez Sollo)
