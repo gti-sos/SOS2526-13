@@ -1,8 +1,9 @@
 import dataStore from "nedb";
 
+let BASE_URL = '/api/v1/exportations-stats';
+let DOCS_URL = "https://documenter.getpostman.com/view/52406650/2sBXigMYhP";
 export function loadExportations(app){
     let db = new dataStore({filename:"exportations.db", autoload:true});
-    const BASE_URL = '/api/v1/exportations-stats';
     let exportationsInitial =  [
                 { recipient: "Afghanistan", supplier: "Russia", year_of_order: 2002, tiv_total_order: 8.7 },
                 { recipient: "Algeria", supplier: "Ukraine", year_of_order: 2003, tiv_total_order: 22.04 },
@@ -140,4 +141,9 @@ export function loadExportations(app){
             res.sendStatus(200);
         });
     });
+
+    app.get(BASE_URL + "/docs", (req, res) => {
+    console.log("Getting DOCS");
+    res.redirect(DOCS_URL);
+  });
 }
