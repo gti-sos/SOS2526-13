@@ -236,4 +236,11 @@ export function backendPMA(app) {
         res.sendStatus(405);
     });
 
+    // DOCS
+    app.get("/api/v1/conflict-stats/docs", (req, res) => {
+
+        res.redirect("https://documenter.getpostman.com/view/53199914/2sBXigMtL7");
+
+    });
+
 }

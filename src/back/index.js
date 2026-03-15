@@ -9,17 +9,6 @@ const __dirname = dirname(__filename);
 let db = new dataStore();
 
 export function loadBackend(app){
-
-
-
-app.get('/about', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'about.html'));
-});
-
-
 //CLAUDIA PAEZ SOLLO (Exportations-stats)
 loadExportations(app);
-
-
-
 }
