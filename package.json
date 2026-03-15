@@ -9,7 +9,8 @@
     "test-api-online": "npx newman run tests/api/api-test-exportations-stats.json -e tests/api/api-test-env-render-exportations-stats.json",
     "test-local": "start-server-and-test start http://localhost:3000 test-api-local",
     "test-online": "start-server-and-test start http://localhost:3000 test-api-online",
-    "test": "npm run test-local && npm run test-online"
+    "test": "npm run test-local",
+    "test-exportations-stats": "npm run test-local && npm run test-online"
   },
   "repository": {
     "type": "git",
