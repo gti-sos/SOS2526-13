@@ -43,6 +43,13 @@ export function loadExportations(app){
         if(limit) search=search.limit(limit);
         
         search.exec((err,data)=>{
+            if(err){
+                console.error(err);
+                return res.sendStatus(500);
+            }
+            if(!data){
+                return res.json([]);
+            }
             data.forEach(d=>delete d._id);
             res.json(data);
         });

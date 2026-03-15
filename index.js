@@ -1,12 +1,11 @@
 //let cool = require('cool-ascii-faces');
 import express from 'express';
-import path from 'path';
+import bodyParser from 'body-parser';
 import {loadBackend} from './src/back/index.js';
 
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 
-//const path = require('path');
 const app = express();
 
 let port = process.env.PORT || 3000;
