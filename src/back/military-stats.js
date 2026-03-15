@@ -4,7 +4,7 @@ let db = new dataStore();
 
 let BASE_API_URL = "/api/v1/military-stats";
 
-export function loadMilitaryStats(app){ 
+export function loadMilitaryStats(app) {
 
     const initialData = [
         { country: "poland", year: 2010, milex_total: 19710.8, milex_gdp: 1.84, milex_per_capita: 231.2 },
@@ -21,7 +21,7 @@ export function loadMilitaryStats(app){
 
     //LOAD INITIAL DATA
     app.get(BASE_API_URL + "/loadInitialData", (req, res) => {
-        
+
         db.count({}, (err, count) => {
 
             if (count === 0) {
@@ -42,29 +42,29 @@ export function loadMilitaryStats(app){
         db.find({}, (err, docs) => {
             if (docs.length === 0) {
                 return res.sendStatus(404);
-            }  
+            }
             res.json(docs);
         });
     });
 
     //Recurso concreto
     app.get(BASE_API_URL + "/:country/:year", (req, res) => {
-        const {country ,year} = req.params;
-        db.findOne({country: country, year: parseInt(year)}, (err, doc) => {
+        const { country, year } = req.params;
+        db.findOne({ country: country, year: parseInt(year) }, (err, doc) => {
             if (doc) {
                 res.status(200).json(doc);
             } else {
                 res.status(404).send("Recurso no encontrado");
             }
             res.json(doc);
-        }); 
-    }); 
+        });
+    });
     //PUT
     //Para recurso concreto
     app.put(BASE_API_URL + "/:country/:year", (req, res) => {
-        const {country ,year} = req.params;
-        const updatedData = req.body;  
-        db.update({country: country, year: parseInt(year)}, updatedData, {}, (err, numReplaced) => {
+        const { country, year } = req.params;
+        const updatedData = req.body;
+        db.update({ country: country, year: parseInt(year) }, updatedData, {}, (err, numReplaced) => {
             if (numReplaced > 0) {
                 res.status(200).json(updatedData);
             } else {
@@ -86,12 +86,12 @@ export function loadMilitaryStats(app){
     });
 
     app.post(BASE_API_URL, (req, res) => {
-        const newData = req.body;  
+        const newData = req.body;
 
-        if(!newData.country || !newData.year || newData.milex_total === undefined || newData.milex_gdp === undefined || newData.milex_per_capita === undefined){
+        if (!newData.country || !newData.year || newData.milex_total === undefined || newData.milex_gdp === undefined || newData.milex_per_capita === undefined) {
             return res.status(400).send("Faltan campos obligatorios o están mal formados");
         }
-        const exists = db.findOne({country: newData.country, year: parseInt(newData.year)}, (err, doc) => {
+        const exists = db.findOne({ country: newData.country, year: parseInt(newData.year) }, (err, doc) => {
             if (doc) {
                 res.status(409).json({ message: "El recurso ya existe" });
             } else {
@@ -106,8 +106,8 @@ export function loadMilitaryStats(app){
 
     //Recurso concreto
     app.delete(BASE_API_URL + "/:country/:year", (req, res) => {
-        const {country ,year} = req.params;
-        db.remove({country: country, year: parseInt(year)}, {}, (err, numRemoved) => {
+        const { country, year } = req.params;
+        db.remove({ country: country, year: parseInt(year) }, {}, (err, numRemoved) => {
             if (numRemoved > 0) {
                 res.sendStatus(204);
             } else {
@@ -123,12 +123,10 @@ export function loadMilitaryStats(app){
         });
     });
 
-    
 
-
+    app.get("/api/v1/military-stats/docs", (req, res) => {
+        res.redirect("https://documenter.getpostman.com/view/52632390/2sBXigMDg3");
+    });
 
 }
 
-app.get("/api/v1/military-stats/docs", (req, res) => {
-    res.redirect("https://documenter.getpostman.com/view/52632390/2sBXigMDg3");
-});
