@@ -8,6 +8,47 @@
   },
   "item": [
     {
+      "name": "Delete total Copy",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"recipient\": \"Portugal\",\r\n  \"supplier\": \"Germany\",\r\n  \"year_of_order\": 2021,\r\n  \"tiv_total_order\": 20.0\r\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/exportations-stats",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "exportations-stats"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
       "name": "Get exportations-stats",
       "event": [
         {
