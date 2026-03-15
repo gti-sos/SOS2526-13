@@ -2,6 +2,7 @@
 import express from 'express';
 import path from 'path';
 import {loadBackend} from './src/back/index.js';
+import  {backendPMA}  from './src/back/conflict-stats.js';
 
 import { fileURLToPath } from "url";
 import { dirname } from "path";
@@ -17,6 +18,8 @@ const __dirname = dirname(__filename);
 
 app.use(express.static("public"));
 app.use(express.json());
+
+backendPMA(app);
 
 loadBackend(app);
 
