@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test-api-local": "npx newman run tests/api/api-test-exportations-stats.json -e tests/api/api-test-env-local.json && npx newman run tests/api/api-test-conflict-stats.json -e tests/api/api-test-env-local.json" ,
-    "test-api-online": "npx newman run tests/api/api-test-exportations-stats.json -e tests/api/api-test-env-render.json && npx newman run tests/api/api-test-conflict-stats.json -e tests/api/api-test-env-render.json",
+    "test-api-local": "npx newman run tests/api/api-test-exportations-stats.json -e tests/api/api-test-env-local.json && npx newman run tests/api/api-test-conflict-stats.json -e tests/api/api-test-env-local.json && npx newman run tests/api/api-test-military-stats.json -e tests/api/api-test-env-local.json" ,
+    "test-api-online": "npx newman run tests/api/api-test-exportations-stats.json -e tests/api/api-test-env-render.json && npx newman run tests/api/api-test-conflict-stats.json -e tests/api/api-test-env-render.json && npx newman run tests/api/api-test-military-stats.json -e tests/api/api-test-env-render.json",
     "test-local": "start-server-and-test start http://localhost:3000 test-api-local",
     "test-online": "start-server-and-test start http://localhost:3000 test-api-online",
     "test": "npm run test-local",
     "test-exportations-stats": "npm run tests/api/api-test-exportations-stats.json -e tests/api/api-test-env-local.json && npm run tests/api/api-test-exportations-stats.json -e tests/api/api-test-env-render.json",
-    "test-conflict-stats": "npx newman run tests/api/api-test-conflict-stats.json -e tests/api/api-test-env-local.json"
+    "test-conflict-stats": "npx newman run tests/api/api-test-conflict-stats.json -e tests/api/api-test-env-local.json",
+    "test-military-stats": "npx newman run tests/api/api-test-military-stats.json -e tests/api/api-test-env-local.json"
   },
   "repository": {
     "type": "git",
