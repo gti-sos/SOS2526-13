@@ -1,0 +1,640 @@
+{
+  "info": {
+    "_postman_id": "490e9b9c-58df-4939-83a0-866de6b14735",
+    "name": "F06",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52406650",
+    "_collection_link": "https://go.postman.co/collection/52406650-490e9b9c-58df-4939-83a0-866de6b14735?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get exportations-stats",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/exportations-stats",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "exportations-stats"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Carga inicial 201",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/exportations-stats/loadInitialData",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "exportations-stats",
+            "loadInitialData"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Carga inicial err 409",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 409\", function () {\r",
+              "    pm.response.to.have.status(409);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/exportations-stats/loadInitialData",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "exportations-stats",
+            "loadInitialData"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Recurso concreto",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/exportations-stats/Egypt/1982",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "exportations-stats",
+            "Egypt",
+            "1982"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "recurso concreto err 404",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 404\", function () {\r",
+              "    pm.response.to.have.status(404);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"recipient\": \"Portugal\",\r\n  \"supplier\": \"Germany\",\r\n  \"year_of_order\": 2021,\r\n  \"tiv_total_order\": 20.0\r\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/exportations-stats/Portugal/2021",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "exportations-stats",
+            "Portugal",
+            "2021"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post creado 201",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"recipient\": \"Portugal\",\r\n  \"supplier\": \"Germany\",\r\n  \"year_of_order\": 2021,\r\n  \"tiv_total_order\": 15.2\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/exportations-stats/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "exportations-stats",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post err 409",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 409\", function () {\r",
+              "    pm.response.to.have.status(409);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"recipient\": \"Portugal\",\r\n  \"supplier\": \"Germany\",\r\n  \"year_of_order\": 2021,\r\n  \"tiv_total_order\": 15.2\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/exportations-stats/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "exportations-stats",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post err 400 (falta un campo)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"recipient\": \"Portugal\",\r\n  \"supplier\": \"Germany\",\r\n  \"year_of_order\": 2021,\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/exportations-stats/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "exportations-stats",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post err 405",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 405\", function () {\r",
+              "    pm.response.to.have.status(405);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"recipient\": \"Portugal\",\r\n  \"supplier\": \"Germany\",\r\n  \"year_of_order\": 2021,\r\n  \"tiv_total_order\": 15.2\r\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/exportations-stats/Egypt/1985",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "exportations-stats",
+            "Egypt",
+            "1985"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Put err 405",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 405\", function () {\r",
+              "    pm.response.to.have.status(405);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"recipient\": \"Portugal\",\r\n  \"supplier\": \"Germany\",\r\n  \"year_of_order\": 2021,\r\n  \"tiv_total_order\": 20.0\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/exportations-stats/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "exportations-stats",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Put err 400",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"recipient\": \"Portugal\",\r\n  \"supplier\": \"Germany\",\r\n  \"year_of_order\": 2021,\r\n  \"tiv_total_order\": 20.0\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/exportations-stats/Portugal/2025",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "exportations-stats",
+            "Portugal",
+            "2025"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Put 200 ok",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"recipient\": \"Portugal\",\r\n  \"supplier\": \"Germany\",\r\n  \"year_of_order\": 2021,\r\n  \"tiv_total_order\": 15.9\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/exportations-stats/Portugal/2021",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "exportations-stats",
+            "Portugal",
+            "2021"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete recurso 200 OK",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/exportations-stats/Portugal/2021",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "exportations-stats",
+            "Portugal",
+            "2021"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete recurso 404",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 404\", function () {\r",
+              "    pm.response.to.have.status(404);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/exportations-stats/Portugal/2028",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "exportations-stats",
+            "Portugal",
+            "2028"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete total",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"recipient\": \"Portugal\",\r\n  \"supplier\": \"Germany\",\r\n  \"year_of_order\": 2021,\r\n  \"tiv_total_order\": 20.0\r\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/exportations-stats",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "exportations-stats"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
