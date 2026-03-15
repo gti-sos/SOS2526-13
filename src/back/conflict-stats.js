@@ -25,30 +25,6 @@ export function backendPMA(app) {
         { location: "South Sudan", year: 2014, intensity_level: 2, conflict_type: 4, start_precision: 2 }
     ];
 
-    // --- Calculo de la media por pais ---
-    app.get('/samples/PMA', (req, res) => {
-
-        let egypt = datosPablo.filter(l => l.location === "Egypt, Israel");
-
-        let media_intensityLevel = egypt.reduce((acc, l) => acc + l.intensity_level, 0) / egypt.length;
-
-        res.send(`The average intensity level on Egypt conflicts is ${media_intensityLevel}`)
-    })
-
-    // --- COPIA DE TRABAJO ---
-    //let dataConflicts = [];
-
-    // --- CARGA INICIAL ---
-
-    /* app.get("/api/v1/conflict-stats/loadInitialData", (req, res) => {
-    if (dataConflicts.length === 0) {
-        dataConflicts = datosPablo.slice();
-        res.sendStatus(201);
-    } else {
-        res.sendStatus(409);
-    }
-    }); */
-
     app.get("/api/v1/conflict-stats/loadInitialData", (req, res) => {
 
         db.count({}, (err, count) => {
@@ -65,143 +41,189 @@ export function backendPMA(app) {
 
     });
 
-
     // --- GET COLECCIÓN ---
 
-    /* app.get("/api/v1/conflict-stats", (req, res) => {
-
-    if (dataConflicts.length === 0) {
-        return res.sendStatus(404);
-    }
-
-    res.json(dataConflicts);
-    }); */
-
     app.get("/api/v1/conflict-stats", (req, res) => {
-        db.find({}, (err, docs) => {
 
-            if (docs.length === 0) {
-                return res.sendStatus(404);
-            }
-            res.json(docs);
+        let query = {};
 
-        });
+        // --- FILTROS ---
+        if (req.query.location) {
+            query.location = req.query.location;
+        }
+
+        if (req.query.year) {
+            query.year = parseInt(req.query.year);
+        }
+
+        if (req.query.intensity_level) {
+            query.intensity_level = parseInt(req.query.intensity_level);
+        }
+
+        if (req.query.conflict_type) {
+            query.conflict_type = parseInt(req.query.conflict_type);
+        }
+
+        if (req.query.start_precision) {
+            query.start_precision = parseInt(req.query.start_precision);
+        }
+
+        // --- PAGINACIÓN ---
+        let limit = parseInt(req.query.limit);
+        let offset = parseInt(req.query.offset);
+
+        if (isNaN(limit)) limit = 0;
+        if (isNaN(offset)) offset = 0;
+
+        db.find(query)
+            .skip(offset)
+            .limit(limit)
+            .exec((err, docs) => {
+
+                if (err) {
+                    return res.sendStatus(500);
+                }
+
+                if (docs.length === 0) {
+                    return res.sendStatus(404);
+                }
+
+                res.json(docs.map(c => {
+                    delete c._id;
+                    return c;
+                }));
+
+            });
 
     });
 
-
-
     // --- GET POR AÑO ---
+    app.get("/api/v1/conflict-stats/:location/:year", (req, res) => {
 
-    /* app.get("/api/v1/conflict-stats/:year", (req, res) => {
-    const year = parseInt(req.params.year);
-    const result = dataConflicts.filter(d => d.year === year);
-
-    //compruebo que está en el formato correcto
-    if (isNaN(year)) {
-    return res.sendStatus(400);
-    }
-
-    if (result.length > 0) {
-        res.json(result);
-    } else {
-        res.sendStatus(404);
-    }
-    }); */
-
-    app.get("/api/v1/conflict-stats/:year", (req, res) => {
-
+        const location = req.params.location;
         const year = parseInt(req.params.year);
 
         if (isNaN(year)) {
             return res.sendStatus(400);
         }
 
-        db.find({ year: year }, (err, docs) => {
+        db.findOne({ location: location, year: year }, (err, doc) => {
 
-            if (err) {
-                return res.sendStatus(500);
-            }
+            if (err) return res.sendStatus(500);
 
-            if (docs.length === 0) {
-                return res.sendStatus(404);
-            }
+            if (!doc) return res.sendStatus(404);
 
-            res.json(docs);
+            delete doc._id;
 
+            res.json(doc);
         });
 
     });
-
 
     // --- POST ---
     app.post("/api/v1/conflict-stats", (req, res) => {
 
         const newConflict = req.body;
 
-        // JSON incompleto
         if (!isValidConflict(newConflict)) {
             return res.sendStatus(400);
         }
 
-        const exists = dataConflicts.some(c => c.year === newConflict.year);
+        db.findOne({
+            location: newConflict.location,
+            year: newConflict.year
+        }, (err, doc) => {
 
-        if (exists) {
-            res.status(409).json({ message: "Conflict already exists" });
-        } else {
-            dataConflicts.push(newConflict);
-            res.status(201).json(newConflict);
-        }
+            if (doc) {
+                return res.status(409).json({ error: "Resource already exists" });
+            }
+
+            db.insert(newConflict, (err, newDoc) => {
+
+                delete newDoc._id;
+
+                res.status(201).json(newDoc);
+            });
+
+        });
+
     });
+
 
     // --- PUT ---
-    app.put("/api/v1/conflict-stats/:year", (req, res) => {
+    app.put("/api/v1/conflict-stats/:location/:year", (req, res) => {
 
+        const location = req.params.location;
         const year = parseInt(req.params.year);
-        const index = dataConflicts.findIndex(c => c.year === year);
 
-        // JSON incorrecto
-        if (!isValidConflict(req.body)) {
-            return res.sendStatus(400);
-        }
-        // ID distinto al de la URL
-        if (req.body.year !== year) {
+        const updatedConflict = req.body;
+
+        if (!isValidConflict(updatedConflict)) {
             return res.sendStatus(400);
         }
 
-        if (index === -1) {
-            res.status(404).json({ message: "Not found" });
-        } else {
-            dataConflicts[index] = req.body;
-            res.status(201).json(req.body);
+        if (updatedConflict.location !== location || updatedConflict.year !== year) {
+            return res.sendStatus(400);
         }
+
+        db.update(
+            { location: location, year: year },
+            updatedConflict,
+            {},
+            (err, numUpdated) => {
+
+                if (err) {
+                    return res.sendStatus(500);
+                }
+
+                if (numUpdated === 0) {
+                    return res.sendStatus(404);
+                }
+
+                res.status(200).json(updatedConflict);
+            }
+        );
+
     });
+
 
     // --- DELETE DATA ---
     app.delete("/api/v1/conflict-stats", (req, res) => {
-        dataConflicts = [];
-        res.status(200).json({ message: "All data deleted" });
+
+        db.remove({}, { multi: true }, (err, numRemoved) => {
+
+            if (err) return res.sendStatus(500);
+
+            res.status(200).json({ message: "All data deleted" });
+
+        });
+
     });
 
+
     // --- DELETE RECURSO CONCRETO ---
+    app.delete("/api/v1/conflict-stats/:location/:year", (req, res) => {
 
-    app.delete("/api/v1/conflict-stats/:year", (req, res) => {
-
+        const location = req.params.location;
         const year = parseInt(req.params.year);
-        const initialLength = dataConflicts.length;
 
-        //compruebo que está en el formato correcto
         if (isNaN(year)) {
             return res.sendStatus(400);
         }
 
-        dataConflicts = dataConflicts.filter(c => c.year !== year);
+        db.remove(
+            { location: location, year: year },
+            {},
+            (err, numRemoved) => {
 
-        if (dataConflicts.length < initialLength) {
-            res.status(200).json({ message: "Deleted" });
-        } else {
-            res.status(404).json({ message: "Not found" });
-        }
+                if (numRemoved === 0) {
+                    return res.sendStatus(404);
+                }
+
+                res.status(200).json({ message: "Deleted" });
+            }
+        );
+
     });
 
     // --- NO PERMITIDOS ---
