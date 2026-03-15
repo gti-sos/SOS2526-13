@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "test-api-local": "npx newman run tests/api/api-test-exportations-stats.json -e tests/api/api-test-env-local-exportations-stats.json",
+    "test-api-online": "npx newman run tests/api/api-test-exportations-stats.json -e tests/api/api-test-env-render-exportations-stats.json",
+    "test-local": "start-server-and-test start http://localhost:3000 test-api-local",
+    "test-online": "start-server-and-test start http://localhost:3000 test-api-online",
+    "test": "npm run test-local && npm run test-online"
   },
   "repository": {
     "type": "git",
@@ -23,5 +27,8 @@
     "cool-ascii-faces": "^1.3.4",
     "express": "^5.2.1",
     "nedb": "^1.8.0"
+  },
+  "devDependencies": {
+    "start-server-and-test": "^2.1.5"
   }
 }
