@@ -1,12 +1,13 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import path from "path"
 
 import {loadBackend} from './src/back/index.js';
 import  {backendPMA}  from './src/back/conflict-stats.js';
 import {loadMilitaryStats} from './src/back/military-stats.js';
 
-import { fileURLToPath } from "url";
 import { dirname } from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
 
