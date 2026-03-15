@@ -31,9 +31,9 @@
           "raw": ""
         },
         "url": {
-          "raw": "{{base_url}}}/api/v1/military-stats",
+          "raw": "{{base_url}}/api/v1/military-stats",
           "host": [
-            "{{base_url}}}"
+            "{{base_url}}"
           ],
           "path": [
             "api",
@@ -65,9 +65,9 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{base_url}}}/api/v1/military-stats",
+          "raw": "{{base_url}}/api/v1/military-stats",
           "host": [
-            "{{base_url}}}"
+            "{{base_url}}"
           ],
           "path": [
             "api",
@@ -99,9 +99,9 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{base_url}}}/api/v1/military-stats/loadInitialData",
+          "raw": "{{base_url}}/api/v1/military-stats/loadInitialData",
           "host": [
-            "{{base_url}}}"
+            "{{base_url}}"
           ],
           "path": [
             "api",
@@ -169,9 +169,9 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{base_url}}}/api/v1/military-stats/poland/2010",
+          "raw": "{{base_url}}/api/v1/military-stats/poland/2010",
           "host": [
-            "{{base_url}}}"
+            "{{base_url}}"
           ],
           "path": [
             "api",
@@ -205,9 +205,9 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{base_url}}}/api/v1/military-stats/atlantida/2010",
+          "raw": "{{base_url}}/api/v1/military-stats/atlantida/2010",
           "host": [
-            "{{base_url}}}"
+            "{{base_url}}"
           ],
           "path": [
             "api",
@@ -250,9 +250,9 @@
           }
         },
         "url": {
-          "raw": "{{base_url}}}/api/v1/military-stats",
+          "raw": "{{base_url}}/api/v1/military-stats",
           "host": [
-            "{{base_url}}}"
+            "{{base_url}}"
           ],
           "path": [
             "api",
@@ -293,7 +293,7 @@
           }
         },
         "url": {
-          "raw": "{{base_url}}}/api/v1/military-stats",
+          "raw": "{{base_url}}/api/v1/military-stats",
           "host": [
             "{{base_url}}}"
           ],
@@ -336,7 +336,7 @@
           }
         },
         "url": {
-          "raw": "{{base_url}}}/api/v1/military-stats",
+          "raw": "{{base_url}}/api/v1/military-stats",
           "host": [
             "{{base_url}}}"
           ],
@@ -379,7 +379,7 @@
           }
         },
         "url": {
-          "raw": "{{base_url}}}/api/v1/military-stats/spain/2024",
+          "raw": "{{base_url}}/api/v1/military-stats/spain/2024",
           "host": [
             "{{base_url}}}"
           ],
@@ -424,7 +424,7 @@
           }
         },
         "url": {
-          "raw": "{{base_url}}}/api/v1/military-stats/",
+          "raw": "{{base_url}}/api/v1/military-stats/",
           "host": [
             "{{base_url}}}"
           ],
@@ -468,7 +468,7 @@
           }
         },
         "url": {
-          "raw": "{{base_url}}}/api/v1/military-stats/spain/2024",
+          "raw": "{{base_url}}/api/v1/military-stats/spain/2024",
           "host": [
             "{{base_url}}}"
           ],
@@ -513,7 +513,7 @@
           }
         },
         "url": {
-          "raw": "{{base_url}}}/api/v1/military-stats/spain/2024",
+          "raw": "{{base_url}}/api/v1/military-stats/spain/2024",
           "host": [
             "{{base_url}}}"
           ],
@@ -554,7 +554,7 @@
           "raw": "{\r\n    \"country\": \"spain\",\r\n    \"year\": 2024,\r\n    \"milex_total\": 15000.5,\r\n    \"milex_gdp\": 1.2,\r\n    \"milex_per_capita\": 320.5\r\n}"
         },
         "url": {
-          "raw": "{{base_url}}}/api/v1/military-stats/spain/2024",
+          "raw": "{{base_url}}/api/v1/military-stats/spain/2024",
           "host": [
             "{{base_url}}}"
           ],
@@ -595,7 +595,7 @@
           "raw": "{\r\n    \"country\": \"spain\",\r\n    \"year\": 2024,\r\n    \"milex_total\": 15000.5,\r\n    \"milex_gdp\": 1.2,\r\n    \"milex_per_capita\": 320.5\r\n}"
         },
         "url": {
-          "raw": "{{base_url}}}/api/v1/military-stats/spain/2024",
+          "raw": "{{base_url}}/api/v1/military-stats/spain/2024",
           "host": [
             "{{base_url}}}"
           ],
@@ -635,7 +635,7 @@
           "raw": ""
         },
         "url": {
-          "raw": "{{base_url}}}/api/v1/military-stats",
+          "raw": "{{base_url}}/api/v1/military-stats",
           "host": [
             "{{base_url}}}"
           ],
