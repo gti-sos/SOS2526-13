@@ -1,8 +1,11 @@
-//let cool = require('cool-ascii-faces');
 import express from 'express';
 import bodyParser from 'body-parser';
+
+// --- BACKEND ---
+
 import {loadBackend} from './src/back/index.js';
 import  {backendPMA}  from './src/back/conflict-stats.js';
+import { loadMilitaryStats } from './src/back/military-stats.js';
 
 import { fileURLToPath } from "url";
 import { dirname } from "path";
@@ -13,7 +16,6 @@ let port = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-//Rutas cool y about
 
 app.use(express.static("public"));
 app.use(express.json());
@@ -21,6 +23,8 @@ app.use(express.json());
 backendPMA(app);
 
 loadBackend(app);
+
+loadMilitaryStats(app);
 
 app.listen(port, () => {
 
