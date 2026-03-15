@@ -1,0 +1,29 @@
+name: CI_CD
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Start server
+        run: npm start &
+
+      - name: Wait server
+        run: npx wait-on http://localhost:3000
+
+      - name: Run tests
+        run: npm test
