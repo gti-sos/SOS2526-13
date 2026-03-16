@@ -31,56 +31,79 @@ export function loadMilitaryStats(app) {
                     res.sendStatus(201);
                 });
             } else {
-                res.sendStatus(409); 
+                res.sendStatus(409);
             }
         });
     });
 
 
-   app.get(BASE_API_URL, (req, res) => {
-    let query = {};
+    app.get(BASE_API_URL, (req, res) => {
+        let query = {};
 
-    // --- 1. FILTROS DINÁMICOS ---
-    // Filtro por país 
-    if (req.query.country) {
-        query.country = req.query.country;
-    }
+        // --- 1. FILTROS DINÁMICOS ---
+        // Filtro por país 
+        if (req.query.country) {
+            query.country = req.query.country;
+        }
 
-    // Filtro por año 
-    if (req.query.year) {
-        query.year = parseInt(req.query.year);
-    }
+        // Filtro por año 
+        if (req.query.year) {
+            query.year = parseInt(req.query.year);
+        }
 
-    // Filtro por gasto mayor
-    if (req.query.min_milex) {
-        query.milex_total = { $gte: parseFloat(req.query.min_milex) };
-    }
+        // Filtro por gasto mayor
+        if (req.query.min_milex) {
+            query.milex_total = { $gte: parseFloat(req.query.min_milex) };
+        }
 
-    // --- 2. PAGINACIÓN ---
-    let limit = parseInt(req.query.limit) || 10; 
-    let offset = parseInt(req.query.offset) || 0;
+        // --- 2. PAGINACIÓN ---
+        let limit = parseInt(req.query.limit) || 10;
+        let offset = parseInt(req.query.offset) || 0;
 
-    // --- 3. CONSULTA A LA BASE DE DATOS ---
-    db.find(query)
-        .skip(offset)
-        .limit(limit)
-        .exec((err, docs) => {
-            if (err) {
-                return res.sendStatus(500);
-            }
+        // --- 3. CONSULTA A LA BASE DE DATOS ---
+        db.find(query)
+            .skip(offset)
+            .limit(limit)
+            .exec((err, docs) => {
+                if (err) {
+                    return res.sendStatus(500);
+                }
 
-            if (docs.length === 0) {
-                return res.status(404).send("No se han encontrado estadísticas militares.");
-            }
+                if (docs.length === 0) {
+                    return res.status(404).send("No se han encontrado estadísticas militares.");
+                }
 
-            const result = docs.map(d => {
-                delete d._id;
-                return d;
+                const result = docs.map(d => {
+                    delete d._id;
+                    return d;
+                });
+
+                res.status(200).json(result);
             });
+    });
 
-            res.status(200).json(result);
+    // --- GET POR AÑO ---
+    app.get(BASE_API_URL + "/:country/:year", (req, res) => {
+
+        const country = req.params.country;
+        const year = parseInt(req.params.year);
+
+        if (isNaN(year)) {
+            return res.sendStatus(400);
+        }
+
+        db.findOne({ country: country, year: year }, (err, doc) => {
+
+            if (err) return res.sendStatus(500);
+
+            if (!doc) return res.sendStatus(404);
+
+            delete doc._id;
+
+            res.json(doc);
         });
-});
+
+    });
 
     // POST
     app.post(BASE_API_URL, (req, res) => {
