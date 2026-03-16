@@ -57,7 +57,6 @@ export function loadMilitaryStats(app) {
             } else {
                 res.status(404).send("Recurso no encontrado");
             }
-            // Eliminado el res.json(doc) extra que tenías aquí y daba error
         });
     });
 
@@ -65,7 +64,7 @@ export function loadMilitaryStats(app) {
     app.post(BASE_API_URL, (req, res) => {
         const newData = req.body;
         // Validación 400
-        if (!newData.country || !newData.year || newData.milex_total === undefined) {
+        if (!newData.country || !newData.year || newData.milex_total === undefined || newData.milex_gdp === undefined || newData.milex_per_capita === undefined) {
             return res.status(400).send("Faltan campos obligatorios");
         }
         // Validación 409 (Existe)
@@ -114,7 +113,7 @@ export function loadMilitaryStats(app) {
     // DELETE COLECCIÓN
     app.delete(BASE_API_URL, (req, res) => {
         db.remove({}, { multi: true }, (err, numRemoved) => {
-            res.sendStatus(204);
+            res.sendStatus(200);
         });
     });
 
