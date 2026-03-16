@@ -134,15 +134,14 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{base_url}}/api/v1/military-stats/loadInitialData",
+          "raw": "{{base_url}}/api/v1/military-stats",
           "host": [
             "{{base_url}}"
           ],
           "path": [
             "api",
             "v1",
-            "military-stats",
-            "loadInitialData"
+            "military-stats"
           ]
         }
       },
