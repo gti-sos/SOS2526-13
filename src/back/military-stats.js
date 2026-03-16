@@ -125,7 +125,7 @@ export function loadMilitaryStats(app) {
 
 
     app.get("/api/v1/military-stats/docs", (req, res) => {
-        res.redirect("https://documenter.getpostman.com/view/52632390/2sBXigMDg3");
+        res.redirect("https://documenter.getpostman.com/view/52632390/2sBXigMtQY");
     });
 
 }
