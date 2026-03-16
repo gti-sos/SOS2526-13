@@ -1,6 +1,7 @@
 import dataStore from "nedb";
 
-let db = new dataStore();
+// 1. IMPORTANTE: Activa la persistencia para que se cree el archivo .db
+let db = new dataStore({ filename: 'military-stats.db', autoload: true });
 
 let BASE_API_URL = "/api/v1/military-stats";
 
@@ -17,29 +18,29 @@ export function loadMilitaryStats(app) {
         { country: "cuba", year: 2018, milex_total: 128.6, milex_gdp: 2.88, milex_per_capita: 11.4 },
         { country: "australia", year: 2022, milex_total: 32445.3, milex_gdp: 1.88, milex_per_capita: 1244 },
         { country: "china", year: 2018, milex_total: 1604.4, milex_gdp: 1.67, milex_per_capita: 164.2 }
-    ]
+    ];
 
-    //LOAD INITIAL DATA
+    // --- REDIRECCIÓN DOCS (Ponla de las primeras para evitar conflictos) ---
+    app.get(BASE_API_URL + "/docs", (req, res) => {
+        res.redirect("https://documenter.getpostman.com/view/52632390/2sBXigMtQY");
+    });
+
+    // LOAD INITIAL DATA
     app.get(BASE_API_URL + "/loadInitialData", (req, res) => {
-
         db.count({}, (err, count) => {
-
             if (count === 0) {
                 db.insert(initialData, () => {
                     res.sendStatus(201);
                 });
             } else {
-                res.sendStatus(409);
+                res.sendStatus(409); // Conflict si ya hay datos
             }
         });
     });
 
-
-    //GET
-
-    //Colección
+    // GET COLECCIÓN (Añadida proyección {_id: 0} para el backlog)
     app.get(BASE_API_URL, (req, res) => {
-        db.find({}, (err, docs) => {
+        db.find({}, { _id: 0 }, (err, docs) => {
             if (docs.length === 0) {
                 return res.sendStatus(404);
             }
@@ -47,86 +48,77 @@ export function loadMilitaryStats(app) {
         });
     });
 
-    //Recurso concreto
+    // GET RECURSO CONCRETO
     app.get(BASE_API_URL + "/:country/:year", (req, res) => {
         const { country, year } = req.params;
-        db.findOne({ country: country, year: parseInt(year) }, (err, doc) => {
+        db.findOne({ country: country, year: parseInt(year) }, { _id: 0 }, (err, doc) => {
             if (doc) {
                 res.status(200).json(doc);
             } else {
                 res.status(404).send("Recurso no encontrado");
             }
-            res.json(doc);
-        });
-    });
-    //PUT
-    //Para recurso concreto
-    app.put(BASE_API_URL + "/:country/:year", (req, res) => {
-        const { country, year } = req.params;
-        const updatedData = req.body;
-        db.update({ country: country, year: parseInt(year) }, updatedData, {}, (err, numReplaced) => {
-            if (numReplaced > 0) {
-                res.status(200).json(updatedData);
-            } else {
-                res.status(404).send("Recurso no encontrado");
-            }
+            // Eliminado el res.json(doc) extra que tenías aquí y daba error
         });
     });
 
-    //Para colección --> error concreto
-    app.put(BASE_API_URL, (req, res) => {
-        res.sendStatus(405);
-    });
-
-
-    //POST
-    //nuevo recurso
-    app.post(BASE_API_URL + "/:country/:year", (req, res) => {
-        res.sendStatus(405);
-    });
-
+    // POST
     app.post(BASE_API_URL, (req, res) => {
         const newData = req.body;
-
-        if (!newData.country || !newData.year || newData.milex_total === undefined || newData.milex_gdp === undefined || newData.milex_per_capita === undefined) {
-            return res.status(400).send("Faltan campos obligatorios o están mal formados");
+        // Validación 400
+        if (!newData.country || !newData.year || newData.milex_total === undefined) {
+            return res.status(400).send("Faltan campos obligatorios");
         }
-        const exists = db.findOne({ country: newData.country, year: parseInt(newData.year) }, (err, doc) => {
+        // Validación 409 (Existe)
+        db.findOne({ country: newData.country, year: parseInt(newData.year) }, (err, doc) => {
             if (doc) {
-                res.status(409).json({ message: "El recurso ya existe" });
+                res.status(409).send("El recurso ya existe");
             } else {
                 db.insert(newData, (err, newDoc) => {
-                    res.status(201).json(newDoc);
+                    res.sendStatus(201);
                 });
             }
         });
     });
 
-    //DELETE
+    // PUT RECURSO CONCRETO
+    app.put(BASE_API_URL + "/:country/:year", (req, res) => {
+        const { country, year } = req.params;
+        const body = req.body;
 
-    //Recurso concreto
+        // Validación 400: El ID de la URL debe coincidir con el del Body
+        if (country !== body.country || parseInt(year) !== parseInt(body.year)) {
+            return res.status(400).send("ID del recurso no coincide con el cuerpo");
+        }
+
+        db.update({ country: country, year: parseInt(year) }, body, {}, (err, numReplaced) => {
+            if (numReplaced > 0) {
+                res.sendStatus(200);
+            } else {
+                res.sendStatus(404);
+            }
+        });
+    });
+
+    // DELETE RECURSO
     app.delete(BASE_API_URL + "/:country/:year", (req, res) => {
         const { country, year } = req.params;
         db.remove({ country: country, year: parseInt(year) }, {}, (err, numRemoved) => {
             if (numRemoved > 0) {
                 res.sendStatus(204);
             } else {
-                res.status(404).send("Recurso no encontrado");
+                res.sendStatus(404);
             }
         });
     });
 
-    //Colección
+    // DELETE COLECCIÓN
     app.delete(BASE_API_URL, (req, res) => {
         db.remove({}, { multi: true }, (err, numRemoved) => {
             res.sendStatus(204);
         });
     });
 
-
-    app.get("/api/v1/military-stats/docs", (req, res) => {
-        res.redirect("https://documenter.getpostman.com/view/52632390/2sBXigMtQY");
-    });
-
+    // MÉTODOS NO PERMITIDOS (405)
+    app.put(BASE_API_URL, (req, res) => res.sendStatus(405));
+    app.post(BASE_API_URL + "/:country/:year", (req, res) => res.sendStatus(405));
 }
-
