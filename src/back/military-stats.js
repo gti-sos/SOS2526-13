@@ -37,15 +37,18 @@ export function loadMilitaryStats(app) {
         });
     });
 
-    // GET COLECCIÓN (Añadida proyección {_id: 0} para el backlog)
-    app.get(BASE_API_URL, (req, res) => {
-        db.find({}, { _id: 0 }, (err, docs) => {
-            if (docs.length === 0) {
-                return res.sendStatus(404);
-            }
-            res.json(docs);
+    app.get(BASE_URL_API + "/loadInitialData", (req, res) => {
+
+    db.count({}, (err, count) => {
+      if (count === 0) {
+        db.insert(initialData, () => {
+          res.sendStatus(201);
         });
+      } else {
+        res.sendStatus(409);
+      }
     });
+  });
 
     // GET RECURSO CONCRETO
     app.get(BASE_API_URL + "/:country/:year", (req, res) => {
