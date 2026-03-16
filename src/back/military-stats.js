@@ -28,7 +28,7 @@ export function loadMilitaryStats(app) {
         db.count({}, (err, count) => {
             if (count === 0) {
                 db.insert(initialData, () => {
-                    res.sendStatus(204);
+                    res.sendStatus(201);
                 });
             } else {
                 res.sendStatus(409); // Conflict si ya hay datos
