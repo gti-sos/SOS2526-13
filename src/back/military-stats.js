@@ -20,7 +20,7 @@ export function loadMilitaryStats(app) {
     ];
 
     app.get(BASE_API_URL + "/docs", (req, res) => {
-        res.redirect("https://documenter.getpostman.com/view/52632390/2sBXigMtQY");
+        res.redirect("https://documenter.getpostman.com/view/52632390/2sBXigNECE");
     });
 
     // LOAD INITIAL DATA
