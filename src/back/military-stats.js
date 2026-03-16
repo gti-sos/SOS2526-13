@@ -126,7 +126,7 @@ export function loadMilitaryStats(app) {
         const { country, year } = req.params;
         db.remove({ country: country, year: parseInt(year) }, {}, (err, numRemoved) => {
             if (numRemoved > 0) {
-                res.sendStatus(204);
+                res.sendStatus(200);
             } else {
                 res.sendStatus(404);
             }
