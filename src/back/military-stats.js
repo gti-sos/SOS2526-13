@@ -31,12 +31,11 @@ export function loadMilitaryStats(app) {
                     res.sendStatus(201);
                 });
             } else {
-                res.sendStatus(409); // Conflict si ya hay datos
+                res.sendStatus(409); 
             }
         });
     });
 
-    // GET COLECCIÓN (Añadida proyección {_id: 0} para el backlog)
 
    app.get(BASE_API_URL, (req, res) => {
     let query = {};
