@@ -28,6 +28,7 @@ export function loadMilitaryStats(app) {
         db.count({}, (err, count) => {
             if (count === 0) {
                 db.insert(initialData, () => {
+                    console.log("Datos iniciales cargados");
                     res.sendStatus(201);
                 });
             } else {
@@ -52,8 +53,14 @@ export function loadMilitaryStats(app) {
         }
 
         // Filtro por gasto mayor
-        if (req.query.min_milex) {
-            query.milex_total = { $gte: parseFloat(req.query.min_milex) };
+        if (req.query.milex_total) {
+            query.milex_total = { $gte: parseFloat(req.query.milex_total) };
+        }
+         if (req.query.milex_gdp) {
+            query.milex_gdp = { $gte: parseFloat(req.query.milex_gdp) };
+        }
+         if (req.query.milex_per_capita) {
+            query.milex_per_capita = { $gte: parseFloat(req.query.milex_per_capita) };
         }
 
         // --- 2. PAGINACIÓN ---
@@ -69,16 +76,12 @@ export function loadMilitaryStats(app) {
                     return res.sendStatus(500);
                 }
 
-                if (docs.length === 0) {
-                    return res.status(404).send("No se han encontrado estadísticas militares.");
-                }
-
                 const result = docs.map(d => {
                     delete d._id;
                     return d;
                 });
 
-                res.status(200).json(result);
+                res.json(result);
             });
     });
 
