@@ -2,7 +2,7 @@ import dataStore from "nedb";
 
 let db = new dataStore({ filename: 'military-stats.db', autoload: true });
 
-let BASE_API_URL = "/api/v1/military-stats";
+let BASE_API_URL = '/api/v1/military-stats';
 
 export function loadMilitaryStats(app) {
 
@@ -37,7 +37,7 @@ export function loadMilitaryStats(app) {
         });
     });
 
-    app.get(BASE_URL_API + "/loadInitialData", (req, res) => {
+    app.get(BASE_API_URL + "/loadInitialData", (req, res) => {
 
     db.count({}, (err, count) => {
       if (count === 0) {
