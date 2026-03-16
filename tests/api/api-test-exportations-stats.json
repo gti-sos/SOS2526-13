@@ -32,7 +32,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"recipient\": \"Portugal\",\r\n  \"supplier\": \"Germany\",\r\n  \"year_of_order\": 2021,\r\n  \"tiv_total_order\": 20.0\r\n}"
+          "raw": ""
         },
         "url": {
           "raw": "{{base_url}}/api/v1/exportations-stats",
@@ -57,7 +57,13 @@
             "exec": [
               "pm.test(\"Status code is 200\", function () {\r",
               "    pm.response.to.have.status(200);\r",
-              "});"
+              "});\r",
+              "\r",
+              "pm.test(\"Response is an array\", function () {\r",
+              "    pm.expect(pm.response.json()).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              ""
             ],
             "type": "text/javascript",
             "packages": {},
@@ -65,9 +71,21 @@
           }
         }
       ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
       "request": {
         "method": "GET",
         "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
         "url": {
           "raw": "{{base_url}}/api/v1/exportations-stats",
           "host": [
@@ -91,7 +109,8 @@
             "exec": [
               "pm.test(\"Status code is 201\", function () {\r",
               "    pm.response.to.have.status(201);\r",
-              "});"
+              "});\r",
+              ""
             ],
             "type": "text/javascript",
             "packages": {},
@@ -112,6 +131,63 @@
             "v1",
             "exportations-stats",
             "loadInitialData"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Datos inicial",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response is an array\", function () {\r",
+              "    pm.expect(pm.response.json()).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Array is not empty\", function () {\r",
+              "    pm.expect(pm.response.json().length).to.be.above(0);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Object contains required fields\", function () {\r",
+              "    pm.expect(pm.response.json()[0]).to.have.property(\"recipient\");\r",
+              "    pm.expect(pm.response.json()[0]).to.have.property(\"supplier\");\r",
+              "    pm.expect(pm.response.json()[0]).to.have.property(\"year_of_order\");\r",
+              "    pm.expect(pm.response.json()[0]).to.have.property(\"tiv_total_order\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/exportations-stats/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "exportations-stats",
+            ""
           ]
         }
       },
@@ -161,6 +237,18 @@
             "exec": [
               "pm.test(\"Status code is 200\", function () {\r",
               "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response contains recipient\", function () {\r",
+              "    pm.expect(pm.response.json()).to.have.property(\"recipient\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response contains supplier\", function () {\r",
+              "    pm.expect(pm.response.json()).to.have.property(\"supplier\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response contains year_of_order\", function () {\r",
+              "    pm.expect(pm.response.json()).to.have.property(\"year_of_order\");\r",
               "});"
             ],
             "type": "text/javascript",
@@ -243,7 +331,8 @@
             "exec": [
               "pm.test(\"Status code is 201\", function () {\r",
               "    pm.response.to.have.status(201);\r",
-              "});"
+              "});\r",
+              ""
             ],
             "type": "text/javascript",
             "packages": {},
@@ -344,7 +433,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"recipient\": \"Portugal\",\r\n  \"supplier\": \"Germany\",\r\n  \"year_of_order\": 2021,\r\n}",
+          "raw": "{\r\n  \"recipient\": \"Portugal\",\r\n  \"supplier\": \"Germany\",\r\n  \"year_of_order\": 2021\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -635,47 +724,31 @@
         }
       },
       "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
     },
     {
-      "name": "Delete total",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"Status code is 200\", function () {\r",
-              "    pm.response.to.have.status(200);\r",
-              "});"
-            ],
-            "type": "text/javascript",
-            "packages": {},
-            "requests": {}
-          }
-        }
-      ],
-      "request": {
-        "auth": {
-          "type": "noauth"
-        },
-        "method": "DELETE",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n  \"recipient\": \"Portugal\",\r\n  \"supplier\": \"Germany\",\r\n  \"year_of_order\": 2021,\r\n  \"tiv_total_order\": 20.0\r\n}"
-        },
-        "url": {
-          "raw": "{{base_url}}/api/v1/exportations-stats",
-          "host": [
-            "{{base_url}}"
-          ],
-          "path": [
-            "api",
-            "v1",
-            "exportations-stats"
-          ]
-        }
-      },
-      "response": []
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "",
+          ""
+        ]
+      }
     }
   ]
 }
