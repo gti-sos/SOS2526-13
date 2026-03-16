@@ -1,6 +1,5 @@
 import dataStore from "nedb";
 
-// 1. IMPORTANTE: Activa la persistencia para que se cree el archivo .db
 let db = new dataStore({ filename: 'military-stats.db', autoload: true });
 
 let BASE_API_URL = "/api/v1/military-stats";
