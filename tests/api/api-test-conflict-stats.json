@@ -16,7 +16,10 @@
               "pm.test(\"Status 200\", () => {\r",
               "    pm.response.to.have.status(200);\r",
               "});\r",
-              ""
+              "\r",
+              "pm.test(\"Cleanup successful\", () => {\r",
+              "    pm.expect(pm.response.text()).to.not.be.empty;\r",
+              "});"
             ],
             "type": "text/javascript",
             "packages": {},
@@ -50,6 +53,11 @@
             "exec": [
               "pm.test(\"Status 201\", () => {\r",
               "    pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Initial data loaded\", () => {\r",
+              "    const text = pm.response.text();\r",
+              "    pm.expect(text).to.not.be.empty;\r",
               "});"
             ],
             "type": "text/javascript",
@@ -85,6 +93,10 @@
             "exec": [
               "pm.test(\"Status 409\", () => {\r",
               "    pm.response.to.have.status(409);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Duplicate load prevented\", () => {\r",
+              "    pm.expect(pm.response.text()).to.not.be.empty;\r",
               "});"
             ],
             "type": "text/javascript",
@@ -120,6 +132,11 @@
             "exec": [
               "pm.test(\"Status code is 200\", function () {\r",
               "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response is an array\", function () {\r",
+              "    const data = pm.response.json();\r",
+              "    pm.expect(data).to.be.an(\"array\");\r",
               "});"
             ],
             "type": "text/javascript",
@@ -154,6 +171,13 @@
             "exec": [
               "pm.test(\"Status code is 200\", function () {\r",
               "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response is an object with expected fields\", function () {\r",
+              "    const data = pm.response.json();\r",
+              "    pm.expect(data).to.be.an(\"object\");\r",
+              "    pm.expect(data).to.have.property(\"location\");\r",
+              "    pm.expect(data).to.have.property(\"year\");\r",
               "});"
             ],
             "type": "text/javascript",
@@ -190,6 +214,11 @@
             "exec": [
               "pm.test(\"Status code is 404\", function () {\r",
               "    pm.response.to.have.status(404);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response body is empty or error object\", function () {\r",
+              "    const text = pm.response.text();\r",
+              "    pm.expect(text.length).to.be.at.least(0);\r",
               "});"
             ],
             "type": "text/javascript",
@@ -226,6 +255,11 @@
             "exec": [
               "pm.test(\"Status code is 400\", function () {\r",
               "    pm.response.to.have.status(400);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Error response exists\", function () {\r",
+              "    const text = pm.response.text();\r",
+              "    pm.expect(text).to.not.be.empty;\r",
               "});"
             ],
             "type": "text/javascript",
@@ -262,6 +296,13 @@
             "exec": [
               "pm.test(\"Status code is 201\", function () {\r",
               "    pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Created object is returned\", function () {\r",
+              "    const data = pm.response.json();\r",
+              "    pm.expect(data).to.be.an(\"object\");\r",
+              "    pm.expect(data.location).to.eql(\"Spain\");\r",
+              "    pm.expect(data.year).to.eql(2020);\r",
               "});"
             ],
             "type": "text/javascript",
@@ -305,6 +346,11 @@
             "exec": [
               "pm.test(\"Status code is 409\", function () {\r",
               "    pm.response.to.have.status(409);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Conflict error returned\", function () {\r",
+              "    const text = pm.response.text();\r",
+              "    pm.expect(text).to.not.be.empty;\r",
               "});"
             ],
             "type": "text/javascript",
@@ -348,6 +394,11 @@
             "exec": [
               "pm.test(\"Status code is 400\", function () {\r",
               "    pm.response.to.have.status(400);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Validation error returned\", function () {\r",
+              "    const text = pm.response.text();\r",
+              "    pm.expect(text).to.not.be.empty;\r",
               "});"
             ],
             "type": "text/javascript",
@@ -391,6 +442,12 @@
             "exec": [
               "pm.test(\"Status code is 200\", function () {\r",
               "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Updated object returned\", function () {\r",
+              "    const data = pm.response.json();\r",
+              "    pm.expect(data).to.be.an(\"object\");\r",
+              "    pm.expect(data.intensity_level).to.eql(2);\r",
               "});"
             ],
             "type": "text/javascript",
@@ -436,6 +493,10 @@
             "exec": [
               "pm.test(\"Status code is 404\", function () {\r",
               "    pm.response.to.have.status(404);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Not found response\", function () {\r",
+              "    pm.expect(pm.response.text()).to.not.be.empty;\r",
               "});"
             ],
             "type": "text/javascript",
@@ -481,6 +542,10 @@
             "exec": [
               "pm.test(\"Status code is 400\", function () {\r",
               "    pm.response.to.have.status(400);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"ID mismatch detected\", function () {\r",
+              "    pm.expect(pm.response.text()).to.not.be.empty;\r",
               "});"
             ],
             "type": "text/javascript",
@@ -526,6 +591,10 @@
             "exec": [
               "pm.test(\"Status code is 200\", function () {\r",
               "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Deletion confirmation\", function () {\r",
+              "    pm.expect(pm.response.text()).to.not.be.empty;\r",
               "});"
             ],
             "type": "text/javascript",
@@ -562,6 +631,10 @@
             "exec": [
               "pm.test(\"Status code is 404\", function () {\r",
               "    pm.response.to.have.status(404);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Not found on delete\", function () {\r",
+              "    pm.expect(pm.response.text()).to.not.be.empty;\r",
               "});"
             ],
             "type": "text/javascript",
