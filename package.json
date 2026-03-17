@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test-api-local": "npx newman run tests/api/api-test-exportations-stats.json -e tests/api/api-test-env-local.json && npx newman run tests/api/api-test-conflict-stats.json -e tests/api/api-test-env-local.json && npx newman run tests/api/api-test-military-stats.json -e tests/api/api-test-env-local.json" ,
+    "test-api-local": "npx newman run tests/api/api-test-exportations-stats.json -e tests/api/api-test-env-local.json && npx newman run tests/api/api-test-conflict-stats.json -e tests/api/api-test-env-local.json && npx newman run tests/api/api-test-military-stats.json -e tests/api/api-test-env-local.json",
     "test-api-online": "npx newman run tests/api/api-test-exportations-stats.json -e tests/api/api-test-env-render.json && npx newman run tests/api/api-test-conflict-stats.json -e tests/api/api-test-env-render.json && npx newman run tests/api/api-test-military-stats.json -e tests/api/api-test-env-render.json",
     "test-local": "start-server-and-test start http://localhost:3000 test-api-local",
     "test-online": "start-server-and-test start http://localhost:3000 test-api-online",
@@ -29,7 +29,8 @@
     "body-parser": "^2.2.2",
     "cool-ascii-faces": "^1.3.4",
     "express": "^5.2.1",
-    "nedb": "^1.8.0"
+    "nedb": "^1.8.0",
+    "nvm": "^0.0.4"
   },
   "devDependencies": {
     "start-server-and-test": "^2.1.5"

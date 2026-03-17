@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "c828de1d-b81e-4b04-8814-fef11e4e2c09",
+    "_postman_id": "674f1416-41fa-4693-aa99-02011c6ecb91",
     "name": "F06 - CEV",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "52632390"
@@ -88,6 +88,11 @@
             "exec": [
               "pm.test(\"Status code is 200\", function(){\r",
               "    pm.response.to.have.status(200);\r",
+              "\r",
+              "});\r",
+              "pm.test(\"La respuesta es un array\", function () {\r",
+              "    const jsonData = pm.response.json();\r",
+              "    pm.expect(jsonData).to.be.an('array');\r",
               "});"
             ],
             "type": "text/javascript",
@@ -157,7 +162,16 @@
             "exec": [
               "pm.test(\"Status code is 200\", function () {\r",
               "    pm.response.to.have.status(200);\r",
-              "    });"
+              "    });\r",
+              "pm.test(\"La respuesta es un objeto válido\", function () {\r",
+              "    const jsonData = pm.response.json();\r",
+              "    \r",
+              "    // Verifica que sea un objeto\r",
+              "    pm.expect(jsonData).to.be.an('object');\r",
+              "    \r",
+              "    // Verifica que no sea un objeto vacío\r",
+              "    pm.expect(Object.keys(jsonData).length).to.be.at.least(1);\r",
+              "});"
             ],
             "type": "text/javascript",
             "packages": {},
