@@ -1,6 +1,9 @@
 <script>
   let datos = $state([]);
+  let dato = $state({});
   let mensaje = $state("");
+  let pais= $state("");
+  let año= $state("");
 
 
 
@@ -24,7 +27,18 @@
     datos = data;
   }
   //BORRAR UN DATO EN CONCRETO
-
+  async function deleteMilitaryData(dato){
+    const res = await fetch("http://localhost:3000/api/v1/military-stats/"+{pais}+"/"+{año},
+        {
+            method: "DELETE"
+        }
+    );
+    if(res.status == 404){
+        mensaje = "Dato no encontrado";
+    }else{
+        mensaje = "Dato borrado correctamente";
+    }
+  }
 
   //DELETE TODOS LOS DATOS
   async function deleteMilitaryDataColeccion(){
@@ -35,7 +49,6 @@
     );
      mensaje = "Datos borrados correctamente";
   }
-
 
   
     
