@@ -83,11 +83,6 @@ export function backendPMA(app) {
                 if (err) {
                     return res.sendStatus(500);
                 }
-
-                if (docs.length === 0) {
-                    return res.sendStatus(404);
-                }
-
                 res.json(docs.map(c => {
                     delete c._id;
                     return c;
