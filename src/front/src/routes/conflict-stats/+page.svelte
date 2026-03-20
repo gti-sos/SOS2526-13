@@ -3,7 +3,7 @@
 
 	let data = $state([]);
 	let mensaje = $state('');
-	const API = 'http://localhost:3000/api/v1/conflict-stats';
+	const API = '/api/v1/conflict-stats';
 
 	//GET COLECCIÓN
 	async function getData() {
@@ -63,30 +63,41 @@
 	}
 
 	async function insertConflict() {
-		const response = await fetch(API, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			//body a recibir
-			body: JSON.stringify({
-				location: newLocation,
-				year: Number(newYear),
-				intensity_level: Number(newIntensity),
-				conflict_type: Number(newType),
-				start_precision: Number(newPrecision)
-			})
-		});
-		if (response.status === 201) {
-			mensaje = 'Elemento insertado correctamente';
-			await getData();
-			showNew = false;
-		} else if (response.status === 409) {
-			mensaje = 'Elemento ya insertado';
-		} else if (response.status === 400) {
-			mensaje = 'Formato incorrecto';
+		if (
+			newLocation === '' ||
+			newYear === '' ||
+			newIntensity === '' ||
+			newType === '' ||
+			newPrecision === ''
+		) {
+			mensaje = 'Faltan campos obligatorios';
+			return;
 		} else {
-			mensaje = `Error inesperado ${response.status}`;
+			const response = await fetch(API, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				//body a recibir
+				body: JSON.stringify({
+					location: newLocation,
+					year: Number(newYear),
+					intensity_level: Number(newIntensity),
+					conflict_type: Number(newType),
+					start_precision: Number(newPrecision)
+				})
+			});
+			if (response.status === 201) {
+				mensaje = 'Elemento insertado correctamente';
+				await getData();
+				showNew = false;
+			} else if (response.status === 409) {
+				mensaje = 'Elemento ya insertado';
+			} else if (response.status === 400) {
+				mensaje = 'Formato incorrecto';
+			} else {
+				mensaje = `Error inesperado ${response.status}`;
+			}
 		}
 	}
 
@@ -111,30 +122,35 @@
 	}
 
 	async function editarFila() {
-		const res = await fetch(API + `/${editLocation}/${editYear}`, {
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				location: editLocation,
-				year: Number(editYear),
-				intensity_level: Number(editIntensity),
-				conflict_type: Number(editType),
-				start_precision: Number(editPrecision)
-			})
-		});
-
-		if (res.status === 200) {
-			mensaje = 'Elemento actualizado';
-			await getData(); // refresca tabla
-			showEditar = false;
-		} else if (res.status === 400) {
-			mensaje = 'Datos incorrectos';
-		} else if (res.status === 404) {
-			mensaje = 'Elemento no encontrado';
+		if (editIntensity === null || editType === null || editPrecision === null) {
+			mensaje = 'Faltan campos obligatorios';
+			return;
 		} else {
-			mensaje = `Error inesperado ${res.status}`;
+			const res = await fetch(API + `/${editLocation}/${editYear}`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					location: editLocation,
+					year: Number(editYear),
+					intensity_level: Number(editIntensity),
+					conflict_type: Number(editType),
+					start_precision: Number(editPrecision)
+				})
+			});
+
+			if (res.status === 200) {
+				mensaje = 'Elemento actualizado';
+				await getData(); // refresca tabla
+				showEditar = false;
+			} else if (res.status === 400) {
+				mensaje = 'Datos incorrectos';
+			} else if (res.status === 404) {
+				mensaje = 'Elemento no encontrado';
+			} else {
+				mensaje = `Error inesperado ${res.status}`;
+			}
 		}
 	}
 </script>
@@ -179,11 +195,11 @@
 		<div class="modal-content">
 			<h2>Insertar conflicto</h2>
 
-			<input bind:value={newLocation} placeholder="Location" />
-			<input type="number" bind:value={newYear} placeholder="Year" />
-			<input type="number" bind:value={newIntensity} placeholder="Intensity" />
-			<input type="number" bind:value={newType} placeholder="Type" />
-			<input type="number" bind:value={newPrecision} placeholder="Precision" />
+			<input bind:value={newLocation} placeholder="Location" required />
+			<input type="number" bind:value={newYear} placeholder="Year" required />
+			<input type="number" bind:value={newIntensity} placeholder="Intensity" required />
+			<input type="number" bind:value={newType} placeholder="Type" required />
+			<input type="number" bind:value={newPrecision} placeholder="Precision" required />
 
 			<br /><br />
 			<button onclick={() => (showNew = false)}>Cancelar</button>
@@ -199,9 +215,9 @@
 
 			<p><b>{editLocation}</b> - {editYear}</p>
 
-			<input type="number" bind:value={editIntensity} placeholder="Intensity" />
-			<input type="number" bind:value={editType} placeholder="Type" />
-			<input type="number" bind:value={editPrecision} placeholder="Precision" />
+			<input type="number" bind:value={editIntensity} placeholder="Intensity" required />
+			<input type="number" bind:value={editType} placeholder="Type" required />
+			<input type="number" bind:value={editPrecision} placeholder="Precision" required />
 
 			<br /><br />
 			<button onclick={() => (showEditar = false)}>Cancelar</button>
