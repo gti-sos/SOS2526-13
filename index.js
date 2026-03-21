@@ -4,7 +4,7 @@ import path from "path"
 import cors from 'cors';
 import {handler} from './src/front/build/handler.js';
 
-import {loadBackend} from './src/back/index.js';
+import {loadExportations} from './src/back/exportations-stats.js';
 import  {backendPMA}  from './src/back/conflict-stats.js';
 import {loadMilitaryStats} from './src/back/military-stats.js';
 
@@ -24,14 +24,10 @@ const __dirname = dirname(__filename);
 app.use(express.json());
 
 backendPMA(app);
-loadBackend(app);
+loadExportations(app);
 loadMilitaryStats(app);
 
 app.use(handler);
-
-//app.get('/about', (req, res) => {
-//    res.sendFile(path.join(__dirname, 'public', 'about.html'));
-//});
 
 app.listen(port, () => {
 
