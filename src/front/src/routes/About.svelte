@@ -1,4 +1,3 @@
-
 <h1>SOS2526-13</h1>
 
 <!-- 👥 EQUIPO -->
@@ -15,7 +14,7 @@
 <section>
   <h2>🌐 Frontends</h2>
   <ul>
-    <li><a href="https://sos2526-13.onrender.com/conflict-stats" target="_blank">Frontend de Pablo Moraleda Álvarez</a></li>
+    <li><a href="/conflict-stats" target="_blank">Frontend de Pablo Moraleda Álvarez</a></li>
     <li><a href="URL_FRONTEND_2" target="_blank">Frontend Miembro 2</a></li>
     <li><a href="URL_FRONTEND_3" target="_blank">Frontend Miembro 3</a></li>
   </ul>
@@ -26,19 +25,19 @@
   <h2>🔌 APIs</h2>
   <ul>
     <li>
-      <a href="https://sos2526-13.onrender.com/api/v1/conflict-stats" target="_blank">
+      <a href="/api/v1/conflict-stats" target="_blank">
         api-conflict-stats
       </a>
       by Pablo Moraleda Álvarez
     </li>
     <li>
-      <a href="https://sos2526-13.onrender.com/api/v1/conflict-stats" target="_blank">
+      <a href="API Camila" target="_blank">
         api-military-stats
       </a>
       by Camila España Vildoso
     </li>
     <li>
-      <a href="https://sos2526-13.onrender.com/api/v1/conflict-stats" target="_blank">
+      <a href="API Claudia" target="_blank">
         api-exportations-stats
       </a>
       by Claudia Páez Sollo
