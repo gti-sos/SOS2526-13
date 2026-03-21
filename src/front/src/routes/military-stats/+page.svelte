@@ -26,9 +26,28 @@
     const data = await res.json();
     datos = data;
   }
+
+  //ACTUALIZAR UN DATO EN CONCRETO
+  async function updateMilitaryData(dato){
+    const res = await fetch(`http://localhost:3000/api/v1/military-stats/${pais}/${año}`,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dato)
+        }
+    );
+    if(res.status == 404){
+        mensaje = "Dato no encontrado";
+    }else{
+        mensaje = "Dato actualizado correctamente";
+    }
+  }
+
   //BORRAR UN DATO EN CONCRETO
   async function deleteMilitaryData(dato){
-    const res = await fetch("http://localhost:3000/api/v1/military-stats/"+{pais}+"/"+{año},
+    const res = await fetch(`http://localhost:3000/api/v1/military-stats/${pais}/${año}`,
         {
             method: "DELETE"
         }
