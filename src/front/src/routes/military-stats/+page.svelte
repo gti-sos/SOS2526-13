@@ -28,6 +28,15 @@
   }
 
   //ACTUALIZAR UN DATO EN CONCRETO
+
+  let actPais = $state('');
+  let actAño = $state('');
+  let actMilexTotal = $state('');
+  let actMilexPerCapita = $state('');
+  let actMilexGDP = $state('');
+
+
+
   async function updateMilitaryData(dato){
     const res = await fetch(`http://localhost:3000/api/v1/military-stats/${pais}/${año}`,
         {
@@ -46,11 +55,12 @@
   }
 
   //BORRAR UN DATO EN CONCRETO
-  async function deleteMilitaryData(dato){
+  async function deleteMilitaryData(pais, año){
     const res = await fetch(`http://localhost:3000/api/v1/military-stats/${pais}/${año}`,
         {
             method: "DELETE"
         }
+
     );
     if(res.status == 404){
         mensaje = "Dato no encontrado";
@@ -69,9 +79,10 @@
      mensaje = "Datos borrados correctamente";
   }
 
-  
-    
-
-
-
 </script>
+
+<h1>Military Stats</h1>
+
+<button on:click={loadMilitaryDataColeccion}>Cargar datos</button>
+<button on:click={getMilitaryDataColeccion}>Mostrar datos</button>
+

@@ -15,7 +15,7 @@
   <h2>🌐 Frontends</h2>
   <ul>
     <li><a href="/conflict-stats" target="_blank">Frontend de Pablo Moraleda Álvarez</a></li>
-    <li><a href="URL_FRONTEND_2" target="_blank">Frontend Miembro 2</a></li>
+    <li><a href="/military-stats" target="_blank">Frontend Camila España Vildoso</a></li>
     <li><a href="URL_FRONTEND_3" target="_blank">Frontend Miembro 3</a></li>
   </ul>
 </section>
