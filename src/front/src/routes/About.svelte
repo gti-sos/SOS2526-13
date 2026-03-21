@@ -15,8 +15,13 @@
   <h2>🌐 Frontends</h2>
   <ul>
     <li><a href="/conflict-stats" target="_blank">Frontend de Pablo Moraleda Álvarez</a></li>
+<<<<<<< HEAD
     <li><a href="/military-stats" target="_blank">Frontend Camila España Vildoso</a></li>
     <li><a href="URL_FRONTEND_3" target="_blank">Frontend Miembro 3</a></li>
+=======
+    <li><a href="URL_FRONTEND_2" target="_blank">Frontend Miembro 2</a></li>
+    <li><a href="/exportations-stats" target="_blank">Frontend Claudia Páez Sollo</a></li>
+>>>>>>> c69d599af1e6782a3c8468bbbd7d7c6d26240313
   </ul>
 </section>
 
@@ -37,7 +42,7 @@
       by Camila España Vildoso
     </li>
     <li>
-      <a href="API Claudia" target="_blank">
+      <a href="/api/v1/exportations-stats" target="_blank">
         api-exportations-stats
       </a>
       by Claudia Páez Sollo

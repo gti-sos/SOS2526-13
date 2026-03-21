@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {"recipient":"Greece","supplier":"Germany","year_of_order":2020,"tiv_total_order":79.2,"_id":"4PAAfXl52YshWnHr"}
 {"recipient":"Egypt","supplier":"Spain","year_of_order":1982,"tiv_total_order":187.4,"_id":"OtBCAmuaPeycc90P"}
 {"recipient":"Angola","supplier":"Cuba","year_of_order":1975,"tiv_total_order":1.2,"_id":"QOP2YQpkOz5brStb"}
@@ -7,3 +8,60 @@
 {"recipient":"Afghanistan","supplier":"Russia","year_of_order":2002,"tiv_total_order":8.7,"_id":"oxKgUJ4dz1vEeau4"}
 {"recipient":"Equatorial Guinea","supplier":"Israel","year_of_order":2008,"tiv_total_order":45,"_id":"pcKrYX98OWdC58Y9"}
 {"recipient":"Spain","supplier":"Italy","year_of_order":1975,"tiv_total_order":30.8,"_id":"xvr34p20W6OaaZZG"}
+=======
+{"recipient":"Greece","supplier":"Germany","year_of_order":2020,"tiv_total_order":79.2,"_id":"1y68pMh5ssNIUKPR"}
+{"recipient":"Estonia","supplier":"France","year_of_order":2007,"tiv_total_order":9,"_id":"2SO1ABDjxqrESGXM"}
+{"recipient":"Angola","supplier":"Cuba","year_of_order":1975,"tiv_total_order":3,"_id":"AbzNYrBe6eFQ9EkV"}
+{"recipient":"Algeria","supplier":"Ukraine","year_of_order":2003,"tiv_total_order":22.04,"_id":"LMsrl1T4WSJnPv1g"}
+{"recipient":"Afghanistan","supplier":"Russia","year_of_order":2002,"tiv_total_order":8.7,"_id":"Owa8EioZiJ5kPEY5"}
+{"recipient":"Equatorial Guinea","supplier":"Israel","year_of_order":2008,"tiv_total_order":45,"_id":"PotDr0C08G0toHfo"}
+{"recipient":"Egypt","supplier":"Spain","year_of_order":1982,"tiv_total_order":187.4,"_id":"XwysSi7NLm77NNl1"}
+{"recipient":"El Salvador","supplier":"United States","year_of_order":1969,"tiv_total_order":3,"_id":"ZtXAsChlllvQ8736"}
+{"recipient":"Ethiopia","supplier":"China","year_of_order":2019,"tiv_total_order":22.5,"_id":"a0mlas9EsPnGFgmC"}
+{"recipient":"Spain","supplier":"Italy","year_of_order":1975,"tiv_total_order":30.8,"_id":"paCmM7RVnaCtGOst"}
+{"$$deleted":true,"_id":"1y68pMh5ssNIUKPR"}
+{"$$deleted":true,"_id":"2SO1ABDjxqrESGXM"}
+{"$$deleted":true,"_id":"AbzNYrBe6eFQ9EkV"}
+{"$$deleted":true,"_id":"LMsrl1T4WSJnPv1g"}
+{"$$deleted":true,"_id":"Owa8EioZiJ5kPEY5"}
+{"$$deleted":true,"_id":"PotDr0C08G0toHfo"}
+{"$$deleted":true,"_id":"XwysSi7NLm77NNl1"}
+{"$$deleted":true,"_id":"ZtXAsChlllvQ8736"}
+{"$$deleted":true,"_id":"a0mlas9EsPnGFgmC"}
+{"$$deleted":true,"_id":"paCmM7RVnaCtGOst"}
+{"recipient":"Afghanistan","supplier":"Russia","year_of_order":2002,"tiv_total_order":8.7,"_id":"76f4HqHx661PIDJY"}
+{"recipient":"Algeria","supplier":"Ukraine","year_of_order":2003,"tiv_total_order":22.04,"_id":"AUeHYu7MTfb0NpHy"}
+{"recipient":"Angola","supplier":"Cuba","year_of_order":1975,"tiv_total_order":1.2,"_id":"KqffjIVeCmtaowUU"}
+{"recipient":"Egypt","supplier":"Spain","year_of_order":1982,"tiv_total_order":187.4,"_id":"aXQgLQ16F69QHymV"}
+{"recipient":"El Salvador","supplier":"United States","year_of_order":1969,"tiv_total_order":3,"_id":"ATiHVflczKDFdJaY"}
+{"recipient":"Equatorial Guinea","supplier":"Israel","year_of_order":2008,"tiv_total_order":45,"_id":"DWqLwjVQRY2niOyw"}
+{"recipient":"Estonia","supplier":"France","year_of_order":2007,"tiv_total_order":9,"_id":"X2IUWSmq5Vj1EV3P"}
+{"recipient":"Ethiopia","supplier":"China","year_of_order":2019,"tiv_total_order":22.5,"_id":"JeTpZp7aMhCnQg0k"}
+{"recipient":"Greece","supplier":"Germany","year_of_order":2020,"tiv_total_order":79.2,"_id":"N2gxNj9Jsti8J2Q4"}
+{"recipient":"Spain","supplier":"Italy","year_of_order":1975,"tiv_total_order":30.8,"_id":"fcpYpx6ZN5k1VOst"}
+{"$$deleted":true,"_id":"76f4HqHx661PIDJY"}
+{"$$deleted":true,"_id":"ATiHVflczKDFdJaY"}
+{"$$deleted":true,"_id":"AUeHYu7MTfb0NpHy"}
+{"$$deleted":true,"_id":"DWqLwjVQRY2niOyw"}
+{"$$deleted":true,"_id":"JeTpZp7aMhCnQg0k"}
+{"$$deleted":true,"_id":"KqffjIVeCmtaowUU"}
+{"$$deleted":true,"_id":"N2gxNj9Jsti8J2Q4"}
+{"$$deleted":true,"_id":"X2IUWSmq5Vj1EV3P"}
+{"$$deleted":true,"_id":"aXQgLQ16F69QHymV"}
+{"$$deleted":true,"_id":"fcpYpx6ZN5k1VOst"}
+{"recipient":"Afghanistan","supplier":"Russia","year_of_order":2002,"tiv_total_order":8.7,"_id":"3mJpaeXnm0MSInBf"}
+{"recipient":"Algeria","supplier":"Ukraine","year_of_order":2003,"tiv_total_order":22.04,"_id":"gLMsd3NyIlN1XaFM"}
+{"recipient":"Angola","supplier":"Cuba","year_of_order":1975,"tiv_total_order":1.2,"_id":"JLC9U2s1xr7ro10u"}
+{"recipient":"Egypt","supplier":"Spain","year_of_order":1982,"tiv_total_order":187.4,"_id":"HaA7XpIEYLTFQF3X"}
+{"recipient":"El Salvador","supplier":"United States","year_of_order":1969,"tiv_total_order":3,"_id":"FZgB1A3TM8i6DcYx"}
+{"recipient":"Equatorial Guinea","supplier":"Israel","year_of_order":2008,"tiv_total_order":45,"_id":"0G1qg8HigSL9tqQR"}
+{"recipient":"Estonia","supplier":"France","year_of_order":2007,"tiv_total_order":9,"_id":"8NFf9mzf13ZL34vT"}
+{"recipient":"Ethiopia","supplier":"China","year_of_order":2019,"tiv_total_order":22.5,"_id":"br28x68WVvw3i18q"}
+{"recipient":"Greece","supplier":"Germany","year_of_order":2020,"tiv_total_order":79.2,"_id":"OZ20d72JTvyQwpQw"}
+{"recipient":"Spain","supplier":"Italy","year_of_order":1975,"tiv_total_order":30.8,"_id":"f4OxyZqFkm3vu2r0"}
+{"recipient":"España","supplier":"Italia","year_of_order":2000,"tiv_total_order":6,"_id":"UUDCl3niXIAkv4tz"}
+{"$$deleted":true,"_id":"0G1qg8HigSL9tqQR"}
+{"recipient":"Greece","supplier":"Germany","year_of_order":2020,"tiv_total_order":7,"_id":"OZ20d72JTvyQwpQw"}
+{"recipient":"Greece","supplier":"Germany","year_of_order":2020,"tiv_total_order":7,"_id":"OZ20d72JTvyQwpQw"}
+{"recipient":"Estonia","supplier":"Frane","year_of_order":2007,"tiv_total_order":9,"_id":"8NFf9mzf13ZL34vT"}
+>>>>>>> c69d599af1e6782a3c8468bbbd7d7c6d26240313

@@ -12,9 +12,8 @@
 		API = "http://localhost:3000" + API;
 	}
 
-	// =====================
 	// GET
-	// =====================
+
 	async function getData() {
 		const res = await fetch(API);
 		data = await res.json();
@@ -24,9 +23,8 @@
 		getData();
 	});
 
-	// =====================
 	// LOAD INITIAL DATA
-	// =====================
+	// 
 	async function loadData() {
 		const response = await fetch(`${API}/loadInitialData`);
 
@@ -41,9 +39,8 @@
 		await getData();
 	}
 
-	// =====================
+
 	// CREATE
-	// =====================
 	let newRecipient = $state("");
 	let newSupplier = $state("");
 	let newYear = $state("");
@@ -161,23 +158,20 @@
 		}
 	}
 
-	// =====================
 	// DELETE TODOS
-	// =====================
 	async function deleteData() {
 		await fetch(API, { method: "DELETE" });
 		mensaje = "Todos los datos eliminados";
 		await getData();
 	}
 </script>
-<h1>Exportaciones</h1>
 
 <p><strong>{mensaje}</strong></p>
 
 <!-- BOTONES GENERALES -->
-<button on:click={loadData}>Cargar datos iniciales</button>
-<button on:click={deleteData}>Eliminar todos</button>
-<button on:click={abrirInsertar}>Añadir nuevo</button>
+<button onclick={loadData}>Cargar datos iniciales</button>
+<button onclick={deleteData}>Eliminar todos</button>
+<button onclick={abrirInsertar}>Añadir nuevo</button>
 
 <hr />
 
@@ -192,8 +186,8 @@
 
 	<br /><br />
 
-	<button on:click={insertData}>Guardar</button>
-	<button on:click={() => (showNew = false)}>Cancelar</button>
+	<button onclick={insertData}>Guardar</button>
+	<button onclick={() => (showNew = false)}>Cancelar</button>
 
 	<hr />
 {/if}
@@ -201,16 +195,16 @@
 <!-- FORMULARIO EDITAR -->
 {#if showEditar}
 	<h2>Editar recurso</h2>
+	
+	<p><b>{editRecipient}</b> - {editYear}</p>
 
-	<input placeholder="País" bind:value={editRecipient} />
 	<input placeholder="Proveedor" bind:value={editSupplier} />
-	<input placeholder="Año" bind:value={editYear} />
 	<input placeholder="Valor" bind:value={editTiv} />
 
 	<br /><br />
 
-	<button on:click={editarFila}>Actualizar</button>
-	<button on:click={() => (showEditar = false)}>Cancelar</button>
+	<button onclick={editarFila}>Actualizar</button>
+	<button onclick={() => (showEditar = false)}>Cancelar</button>
 
 	<hr />
 {/if}
@@ -238,13 +232,8 @@
 				<td>{d.tiv_total_order}</td>
 
 				<td>
-					<button on:click={() => abrirEditor(d)}>Editar</button>
-
-					<button on:click={() => deleteRecurso(d.recipient, d.year_of_order)}>Eliminar</button>
-
-					<a href={`${API}/edit/${d.recipient}/${d.year_of_order}`}>
-						<button>Editar (vista)</button>
-					</a>
+					<button onclick={() => abrirEditor(d)}>Editar</button>
+					<button onclick={() => deleteRecurso(d.recipient, d.year_of_order)}>Eliminar</button>
 				</td>
 			</tr>
 		{/each}
