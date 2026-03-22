@@ -25,10 +25,13 @@
   <h2>🔌 APIs</h2>
   <ul>
     <li>
-      <a href="/api/v1/conflict-stats" target="_blank">
-        api-conflict-stats
+      <a href="/api/v2/conflict-stats" target="_blank">
+        api-v2-conflict-stats
       </a>
       by Pablo Moraleda Álvarez
+      <a href="/api/v1/conflict-stats" target="_blank">
+        api-v1-conflict-stats
+      </a>
     </li>
     <li>
       <a href="API Camila" target="_blank">
@@ -50,6 +53,9 @@
   <h2>📄 Documentación Postman</h2>
   <ul>
     <li>
+    <a href="https://documenter.getpostman.com/view/53199914/2sBXijJXMJ" target="_blank">
+        conflict-stats-api-v2
+      </a>
       <a href="https://documenter.getpostman.com/view/53199914/2sBXigMtL7" target="_blank">
         conflict-stats-api-v1
       </a>

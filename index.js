@@ -5,6 +5,7 @@ import cors from 'cors';
 import {handler} from './src/front/build/handler.js';
 
 import {loadExportations} from './src/back/exportations-stats.js';
+import  {backendPMA_v1}  from './src/back/conflict-stats-v1.js';
 import  {backendPMA}  from './src/back/conflict-stats.js';
 import {loadMilitaryStats} from './src/back/military-stats.js';
 
@@ -23,7 +24,8 @@ const __dirname = dirname(__filename);
 //app.use(express.static("public"));
 app.use(express.json());
 
-backendPMA(app);
+backendPMA(app)
+backendPMA_v1(app);
 loadExportations(app);
 loadMilitaryStats(app);
 

@@ -1,9 +1,14 @@
 <script>
 	import { onMount } from 'svelte';
+	import{dev} from "$app/environment";
 
 	let data = $state([]);
 	let mensaje = $state('');
-	const API = '/api/v1/conflict-stats';
+	let API = '/api/v2/conflict-stats';
+
+	if(dev){
+		API = "http://localhost:3000"+API;
+	}
 
 	//GET COLECCIÓN
 	async function getData() {

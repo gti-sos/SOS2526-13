@@ -1,8 +1,6 @@
 import Datastore from "nedb";
 const db = new Datastore({ filename: "conflict-stats.db", autoload: true });
 
-const API = "/api/v2/conflict-stats"
-
 // --- Función para comprobar json de entrada ---
 function isValidConflict(c) {
     return c.location &&
@@ -12,7 +10,7 @@ function isValidConflict(c) {
         c.start_precision !== undefined;
 }
 
-export function backendPMA(app) {
+export function backendPMA_v1(app) {
     // --- DATOS ---
     const datosPablo = [
         { location: "India", year: 2012, intensity_level: 1, conflict_type: 3, start_precision: 1 },
@@ -27,7 +25,7 @@ export function backendPMA(app) {
         { location: "South Sudan", year: 2014, intensity_level: 2, conflict_type: 4, start_precision: 2 }
     ];
 
-    app.get(API + "/loadInitialData", (req, res) => {
+    app.get("/api/v1/conflict-stats/loadInitialData", (req, res) => {
 
         db.count({}, (err, count) => {
 
@@ -45,7 +43,7 @@ export function backendPMA(app) {
 
     // --- GET COLECCIÓN ---
 
-    app.get(API, (req, res) => {
+    app.get("/api/v1/conflict-stats", (req, res) => {
 
         let query = {};
 
@@ -85,6 +83,11 @@ export function backendPMA(app) {
                 if (err) {
                     return res.sendStatus(500);
                 }
+
+                if (docs.length === 0) {
+                    return res.sendStatus(404);
+                }
+
                 res.json(docs.map(c => {
                     delete c._id;
                     return c;
@@ -95,7 +98,7 @@ export function backendPMA(app) {
     });
 
     // --- GET POR AÑO ---
-    app.get(API + "/:location/:year", (req, res) => {
+    app.get("/api/v1/conflict-stats/:location/:year", (req, res) => {
 
         const location = req.params.location;
         const year = parseInt(req.params.year);
@@ -118,7 +121,7 @@ export function backendPMA(app) {
     });
 
     // --- POST ---
-    app.post(API, (req, res) => {
+    app.post("/api/v1/conflict-stats", (req, res) => {
 
         const newConflict = req.body;
 
@@ -148,7 +151,7 @@ export function backendPMA(app) {
 
 
     // --- PUT ---
-    app.put(API + "/:location/:year", (req, res) => {
+    app.put("/api/v1/conflict-stats/:location/:year", (req, res) => {
 
         const location = req.params.location;
         const year = parseInt(req.params.year);
@@ -185,7 +188,7 @@ export function backendPMA(app) {
 
 
     // --- DELETE DATA ---
-    app.delete(API, (req, res) => {
+    app.delete("/api/v1/conflict-stats", (req, res) => {
 
         db.remove({}, { multi: true }, (err, numRemoved) => {
 
@@ -199,7 +202,7 @@ export function backendPMA(app) {
 
 
     // --- DELETE RECURSO CONCRETO ---
-    app.delete(API + "/:location/:year", (req, res) => {
+    app.delete("/api/v1/conflict-stats/:location/:year", (req, res) => {
 
         const location = req.params.location;
         const year = parseInt(req.params.year);
@@ -225,18 +228,18 @@ export function backendPMA(app) {
 
     // --- NO PERMITIDOS ---
 
-    app.post(API + "/:year", (req, res) => {
+    app.post("/api/v1/conflict-stats/:year", (req, res) => {
         res.sendStatus(405);
     });
 
-    app.put(API, (req, res) => {
+    app.put("/api/v1/conflict-stats", (req, res) => {
         res.sendStatus(405);
     });
 
     // DOCS
-    app.get(API + "/docs", (req, res) => {
+    app.get("/api/v1/conflict-stats/docs", (req, res) => {
 
-        res.redirect("https://documenter.getpostman.com/view/53199914/2sBXijJXMJ");
+        res.redirect("https://documenter.getpostman.com/view/53199914/2sBXigMtL7");
 
     });
 
