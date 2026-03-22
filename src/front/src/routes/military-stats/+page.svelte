@@ -31,16 +31,60 @@
 
   //ACTUALIZAR UN DATO EN CONCRETO
 
+  let editDato = $state({
+    country: '',
+    year: '',
+    milex_total: '',
+    milex_per_capita: '',
+    milex_gdp: ''
+  });
+ 
+
+  function limipioForm(){
+    actPais = '';
+    actAño = '';
+    actMilexTotal = '';
+    actMilexPerCapita = '';
+    actMilexGDP = '';
+  }
+
+  let esEdicion = $state(false);
+  let filaEditada = $state('');
+
+  function abrirEditor(dato){
+
+    esEdicion = true;
+    filaEditada = `${dato.country}-${dato.year}`;
+    editDato.country = dato.country;
+    editDato.year = dato.year;
+    editDato.milex_total = dato.milex_total;
+    editDato.milex_per_capita = dato.milex_per_capita;
+    editDato.milex_gdp = dato.milex_gdp;
+
+    mensaje = "Editando dato: " + dato.country + " - " + dato.year;
+  }
+
   let actPais = $state('');
   let actAño = $state('');
   let actMilexTotal = $state('');
   let actMilexPerCapita = $state('');
   let actMilexGDP = $state('');
-
-
-
-  async function updateMilitaryData(dato){
-    const res = await fetch(`http://localhost:3000/api/v1/military-stats/${pais}/${año}`,
+  
+  async function updateMilitaryData(){
+    
+    const dato = {
+        country:editDato.country.trim(),
+        year: parseInt(editDato.year),
+        milex_total: parseFloat(editDato.milex_total),
+        milex_gdp: parseFloat(editDato.milex_gdp),
+        milex_per_capita: parseFloat(editDato.milex_per_capita)
+    };
+    if(dato.country === '' || isNaN(dato.year) || isNaN(dato.milex_total) || isNaN(dato.milex_per_capita) || isNaN(dato.milex_gdp)){
+        mensaje = "Por favor, rellena todos los campos correctamente";
+        return;
+    }   
+    
+    const res = await fetch(`http://localhost:3000/api/v1/military-stats/${editDato.country}/${editDato.year}`,
         {
             method: "PUT",
             headers: {
@@ -51,8 +95,12 @@
     );
     if(res.status == 404){
         mensaje = "Dato no encontrado";
-    }else{
+    }else if(res.ok){
         mensaje = "Dato actualizado correctamente";
+        await getMilitaryDataColeccion();
+        filaEditada = '';
+        limipioForm();
+
     }
   }
 
@@ -81,11 +129,7 @@
     );
     if(res.status == 201){
         mensaje = "Dato añadido correctamente";
-        actPais = '';
-        actAño = '';    
-        actMilexTotal = '';
-        actMilexPerCapita = '';
-        actMilexGDP = '';
+        limipioForm();
         await getMilitaryDataColeccion();
 
     }else if(res.status == 409){
@@ -147,19 +191,31 @@
 <p>{mensaje}</p>
 
 {#if datos.length > 0}
-    <table>
-        <thead>
+   <table>
+    <thead>
+        <tr>
+            <th>Country</th>
+            <th>Year</th>
+            <th>Milex total</th>
+            <th>Milex per capita</th>
+            <th>Milex GDP</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {#each datos as item (item.country + '-' + item.year)}
             <tr>
-                <th>Country</th>
-                <th>Year</th>
-                <th>Milex total</th>
-                <th>Milex per capita</th>
-                <th>Milex GDP</th>
-            </tr>
-        </thead>
-        <tbody>
-            {#each datos as item}
-                <tr>
+                {#if filaEditada === item.country + '-' + item.year}
+                    <td>{item.country}</td>
+                    <td>{item.year}</td>
+                    <td><input type="number" bind:value={editDato.milex_total} style="width: 70px;"></td>
+                    <td><input type="number" bind:value={editDato.milex_per_capita} style="width: 70px;"></td>
+                    <td><input type="number" bind:value={editDato.milex_gdp} style="width: 70px;"></td>
+                    <td>
+                        <button onclick={updateMilitaryData}>Guardar</button>
+                        <button onclick={() => filaEditada = ''}>Cancelar</button>
+                    </td>
+                {:else}
                     <td>{item.country}</td>
                     <td>{item.year}</td>
                     <td>{item.milex_total}</td>
@@ -167,14 +223,13 @@
                     <td>{item.milex_gdp}</td>
                     <td>
                         <button onclick={() => abrirEditor(item)}>Editar</button>
-                    </td>
-                    <td>
                         <button onclick={() => deleteMilitaryData(item.country, item.year)}>Borrar</button>
                     </td>
-                </tr>
-            {/each}
-        </tbody>
-    </table>
+                {/if}
+            </tr>
+        {/each}
+    </tbody>
+</table>
 {:else}
     <p>Haz clic en "Ver Tabla" para mostrar los resultados.</p>
 {/if}

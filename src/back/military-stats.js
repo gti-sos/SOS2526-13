@@ -64,8 +64,16 @@ export function loadMilitaryStats(app) {
         }
 
         // --- 2. PAGINACIÓN ---
-        let limit = parseInt(req.query.limit) || 10;
-        let offset = parseInt(req.query.offset) || 0;
+        let offset = Number(req.query.offset);
+        let limit = Number(req.query.limit);
+
+        if (offset) {
+            result = result.slice(offset);
+        }
+
+        if (limit) {
+        result = result.slice(0, limit);
+      }
 
         // --- 3. CONSULTA A LA BASE DE DATOS ---
         db.find(query)
