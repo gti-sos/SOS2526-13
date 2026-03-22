@@ -1,5 +1,5 @@
 import Datastore from "nedb";
-const db = new Datastore({ filename: "conflict-stats.db", autoload: true });
+const db = new Datastore({ filename: "conflict-stats-v1.db", autoload: true });
 
 // --- Función para comprobar json de entrada ---
 function isValidConflict(c) {
