@@ -5,11 +5,12 @@
   let pais= $state("");
   let año= $state("");
 
+  let API = "api/v1/military-stats"; 
      
 
   //CARGAR TODOS LOS DATOS
   async function loadMilitaryDataColeccion(){
-        const res = await fetch("http://localhost:3000/api/v1/military-stats/loadInitialData",
+        const res = await fetch(`${API}/loadInitialData`,
         {
             method: "GET"
         });
@@ -20,7 +21,7 @@
   }
   //GET TODOS LOS DATOS
   async function getMilitaryDataColeccion(){
-    const res = await fetch("http://localhost:3000/api/v1/military-stats",
+    const res = await fetch(`${API}`,
         {
             method: "GET"
         }
@@ -84,7 +85,7 @@
         return;
     }   
     
-    const res = await fetch(`http://localhost:3000/api/v1/military-stats/${editDato.country}/${editDato.year}`,
+    const res = await fetch(`${API}/${editDato.country}/${editDato.year}`,
         {
             method: "PUT",
             headers: {
@@ -118,7 +119,7 @@
         milex_gdp: parseFloat(actMilexGDP),
         milex_per_capita: parseFloat(actMilexPerCapita)
     };
-    const res = await fetch("http://localhost:3000/api/v1/military-stats",
+    const res = await fetch(`${API}`,
         {
             method: "POST",
             headers: {
@@ -143,7 +144,7 @@
 
   //BORRAR UN DATO EN CONCRETO
   async function deleteMilitaryData(pais, año){
-    const res = await fetch(`http://localhost:3000/api/v1/military-stats/${pais}/${año}`,
+    const res = await fetch(`${API}/${pais}/${año}`,
         {
             method: "DELETE"
         }
@@ -161,7 +162,7 @@
 
   //DELETE TODOS LOS DATOS
   async function deleteMilitaryDataColeccion(){
-    const res = await fetch("http://localhost:3000/api/v1/military-stats",
+    const res = await fetch(`${API}`,
         {
             method: "DELETE"
         }
