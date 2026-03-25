@@ -114,9 +114,9 @@
 	let editType = $state('');
 	let editPrecision = $state('');
 
-	let showEditar = $state(false);
+	//let showEditar = $state(false);
 
-	function abrirEditor(item) {
+	/*function abrirEditor(item) {
 		showEditar = true;
 
 		editLocation = item.location;
@@ -124,7 +124,7 @@
 		editIntensity = item.intensity_level;
 		editType = item.conflict_type;
 		editPrecision = item.start_precision;
-	}
+	}*/
 
 	async function editarFila() {
 		if (editIntensity === null || editType === null || editPrecision === null) {
@@ -148,7 +148,6 @@
 			if (res.status === 200) {
 				mensaje = 'Elemento actualizado';
 				await getData(); // refresca tabla
-				showEditar = false;
 			} else if (res.status === 400) {
 				mensaje = 'Datos incorrectos';
 			} else if (res.status === 404) {
@@ -185,7 +184,7 @@
 				<td>{item.start_precision}</td>
 				<td>
 					<button onclick={() => deleteRecurso(item.location, item.year)}> Borrar fila </button>
-					<button onclick={() => abrirEditor(item)}> Editar Fila </button>
+					<a href={`/conflict-stats/${item.location}/${item.year}`}> Editar </a>
 				</td>
 			</tr>
 		{/each}
@@ -209,24 +208,6 @@
 			<br /><br />
 			<button onclick={() => (showNew = false)}>Cancelar</button>
 			<button onclick={() => insertConflict()}> Insertar </button>
-		</div>
-	</div>
-{/if}
-
-{#if showEditar}
-	<div class="modal">
-		<div class="modal-content">
-			<h2>Editar conflicto</h2>
-
-			<p><b>{editLocation}</b> - {editYear}</p>
-
-			<input type="number" bind:value={editIntensity} placeholder="Intensity" required />
-			<input type="number" bind:value={editType} placeholder="Type" required />
-			<input type="number" bind:value={editPrecision} placeholder="Precision" required />
-
-			<br /><br />
-			<button onclick={() => (showEditar = false)}>Cancelar</button>
-			<button onclick={() => editarFila()}> Guardar </button>
 		</div>
 	</div>
 {/if}
