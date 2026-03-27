@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {"country":"poland","year":2010,"milex_total":19710.8,"milex_gdp":1.84,"milex_per_capita":231.2,"_id":"v9lashV4omL0kQOx"}
 {"country":"morocco","year":2022,"milex_total":4995,"milex_gdp":3.81,"milex_per_capita":132.7,"_id":"Y2Kh6pPtMoDyIQwt"}
 {"country":"cuba","year":2015,"milex_total":118.4,"milex_gdp":3.08,"milex_per_capita":10.5,"_id":"7AXAhAVe1o9FmIPx"}
@@ -31,3 +32,5 @@
 {"country":"australia","year":2022,"milex_total":32445.3,"milex_gdp":1.88,"milex_per_capita":1244,"_id":"T17ec7AOfwIW0f5d"}
 {"country":"china","year":2018,"milex_total":1604.4,"milex_gdp":1.67,"milex_per_capita":164.2,"_id":"b6VQpLOLJIkRuvLH"}
 {"$$deleted":true,"_id":"1RCg4msrs0aeFzUt"}
+=======
+>>>>>>> 03ee6a6cc259a2557c544206f4a2796d6ef9d9c2
