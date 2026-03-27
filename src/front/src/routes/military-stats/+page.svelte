@@ -171,7 +171,9 @@
   }
 
 </script>
-
+<svelte:head>
+    <title>Military Stats</title>
+</svelte:head>
 <h1>Military Stats</h1>
 
 <button onclick={loadMilitaryDataColeccion}>Cargar datos</button>
