@@ -1,7 +1,7 @@
 import dataStore from "nedb";
 
-let BASE_URL = '/api/v1/exportations-stats';
-let DOCS_URL = "https://documenter.getpostman.com/view/52406650/2sBXigMYhP";
+let BASE_URL = '/api/v2/exportations-stats';
+//let DOCS_URL = "https://documenter.getpostman.com/view/52406650/2sBXigMYhP";
 export function loadExportations(app){
     let db = new dataStore({filename:"exportations.db", autoload:true});
     let exportationsInitial =  [
@@ -36,6 +36,7 @@ export function loadExportations(app){
         if(req.query.recipient) query.recipient=req.query.recipient;
         if(req.query.supplier) query.supplier=req.query.supplier;
         if(req.query.year_of_order) query.year_of_order=parseInt(req.query.year_of_order);
+        if(req.query.tiv_total_order) query.tiv_total_order=parseFloat(req.query.tiv_total_order);
 
         let limit=parseInt(req.query.limit);
         let offset=parseInt(req.query.offset);
@@ -93,26 +94,39 @@ export function loadExportations(app){
     });
 
 
-    // PUT actualizar recurso
-    app.put(BASE_URL+"/:recipient/:year_of_order",(req,res)=>{
-        let recipient=req.params.recipient;
-        let year=parseInt(req.params.year_of_order);
-        let updated=req.body;
-        updated.year_of_order = parseInt(updated.year_of_order);
-        if(recipient!==updated.recipient || year!==updated.year_of_order){
-            return res.sendStatus(400);
-        }
-        db.update(
-            {recipient:recipient,year_of_order:year},
-            {$set: updated},
-            {},(err,numUpdated)=>{
-                if(numUpdated===0){
-                    res.sendStatus(404);
-                }else{
-                    res.sendStatus(200);
-                }
-            });
+    // PUT actualizar recurso MODIFICACION DE V1 A V2
+   app.put(BASE_URL+"/:recipient/:year_of_order",(req,res)=>{
+
+    let recipient=req.params.recipient;
+    let year=parseInt(req.params.year_of_order);
+    let updated=req.body;
+
+    updated.year_of_order = parseInt(updated.year_of_order);
+    updated.tiv_total_order = parseFloat(updated.tiv_total_order);
+
+    if(typeof updated.recipient !== "string" || typeof updated.supplier !== "string" || !isNaN(updated.supplier) || isNaN(updated.year_of_order) || isNaN(updated.tiv_total_order)){
+        return res.sendStatus(400);
+    }
+
+    if(recipient !== updated.recipient || year !== updated.year_of_order){
+        return res.sendStatus(400);
+    }
+
+    if( !updated.recipient || !updated.supplier || isNaN(updated.year_of_order) || isNaN(updated.tiv_total_order) ){
+    return res.sendStatus(400);
+    }
+
+    db.update(
+        {recipient:recipient,year_of_order:year},
+        {$set: updated},
+        {},(err,numUpdated)=>{
+            if(numUpdated===0){
+                res.sendStatus(404);
+            }else{
+                res.sendStatus(200);
+            }
         });
+});
 
      // PUT no permitido en colección
     app.put(BASE_URL,(req,res)=>{

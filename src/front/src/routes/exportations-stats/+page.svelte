@@ -6,14 +6,15 @@
 	import { dev } from "$app/environment";
 	import { onMount } from "svelte";
 
-	let API = "/api/v1/exportations-stats";
+	let API = "/api/v2/exportations-stats";
 
 	if (dev) {
 		API = "http://localhost:3000" + API;
 	}
 
-	// GET
-
+	// =====================
+	// CARGA DATOS
+	// =====================
 	async function getData() {
 		const res = await fetch(API);
 		data = await res.json();
@@ -23,8 +24,9 @@
 		getData();
 	});
 
-	// LOAD INITIAL DATA
-	// 
+	// =====================
+	// CARGA INICIAL
+	// =====================
 	async function loadData() {
 		const response = await fetch(`${API}/loadInitialData`);
 
@@ -40,7 +42,9 @@
 	}
 
 
+	// =====================
 	// CREATE
+	// =====================
 	let newRecipient = $state("");
 	let newSupplier = $state("");
 	let newYear = $state("");
@@ -89,57 +93,33 @@
 	}
 
 	// =====================
-	// EDITAR
+	// BUSCAR
 	// =====================
-	let editRecipient = $state("");
-	let editSupplier = $state("");
-	let editYear = $state("");
-	let editTiv = $state("");
+	let searchRecipient = $state("");
+	let searchSupplier = $state("");
+	let searchYear = $state("");
+	let searchTiv = $state("");
+	let showSearch= $state(false);
 
-	let showEditar = $state(false);
 
-	function abrirEditor(item) {
-		showEditar = true;
+	async function buscar(){
 
-		editRecipient = item.recipient;
-		editSupplier = item.supplier;
-		editYear = item.year_of_order;
-		editTiv = item.tiv_total_order;
+		let url = API + "?";
+
+		if(searchRecipient) url += `recipient=${searchRecipient}&`;
+		if(searchSupplier) url += `supplier=${searchSupplier}&`;
+		if(searchYear) url += `year_of_order=${searchYear}&`;
+
+		const res = await fetch(url);
+		data = await res.json();
 	}
+	function abrirBuscar() {
+		showSearch = true;
 
-	async function editarFila() {
-		if (!editRecipient || !editSupplier || !editYear || !editTiv) {
-			mensaje = "Faltan campos obligatorios";
-			return;
-		}
-
-		const res = await fetch(
-			`${API}/${editRecipient}/${editYear}`,
-			{
-				method: "PUT",
-				headers: {
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify({
-					recipient: editRecipient,
-					supplier: editSupplier,
-					year_of_order: parseInt(editYear),
-					tiv_total_order: parseFloat(editTiv)
-				})
-			}
-		);
-
-		if (res.status === 200) {
-			mensaje = "Elemento actualizado correctamente";
-			await getData();
-			showEditar = false;
-		} else if (res.status === 400) {
-			mensaje = "Datos incorrectos";
-		} else if (res.status === 404) {
-			mensaje = "Elemento no encontrado";
-		} else {
-			mensaje = `Error inesperado ${res.status}`;
-		}
+		searchRecipient = "";
+		searchSupplier = "";
+		searchYear = "";
+		searchTiv = "";
 	}
 
 	// =====================
@@ -172,41 +152,36 @@
 <button onclick={loadData}>Cargar datos iniciales</button>
 <button onclick={deleteData}>Eliminar todos</button>
 <button onclick={abrirInsertar}>Añadir nuevo</button>
+<button onclick={abrirBuscar}>Buscar</button>
 
 <hr />
 
 <!-- FORMULARIO CREAR -->
 {#if showNew}
 	<h2>Nuevo recurso</h2>
-
-	<input placeholder="País" bind:value={newRecipient} />
+	<input placeholder="País destinatario" bind:value={newRecipient} />
 	<input placeholder="Proveedor" bind:value={newSupplier} />
 	<input placeholder="Año" bind:value={newYear} />
-	<input placeholder="Valor" bind:value={newTiv} />
+	<input placeholder="Valor TIV" bind:value={newTiv} />
 
 	<br /><br />
 
 	<button onclick={insertData}>Guardar</button>
 	<button onclick={() => (showNew = false)}>Cancelar</button>
-
 	<hr />
 {/if}
 
-<!-- FORMULARIO EDITAR -->
-{#if showEditar}
-	<h2>Editar recurso</h2>
-	
-	<p><b>{editRecipient}</b> - {editYear}</p>
-
-	<input placeholder="Proveedor" bind:value={editSupplier} />
-	<input placeholder="Valor" bind:value={editTiv} />
-
+<!-- FORMULARIO BUSCAR -->
+{#if showSearch}
+	<h2>Buscar</h2>
+	<input placeholder="País destinatario" bind:value={searchRecipient} />
+	<input placeholder="Proveedor" bind:value={searchSupplier} />
+	<input placeholder="Año" bind:value={searchYear} />
+	<input placeholder="Valor TIV" bind:value={searchTiv} />
 	<br /><br />
-
-	<button onclick={editarFila}>Actualizar</button>
-	<button onclick={() => (showEditar = false)}>Cancelar</button>
-
-	<hr />
+	<button onclick={buscar}>Buscar</button>
+	<button onclick={getData}>Reset</button>
+	<button onclick={() => (showSearch = false)}>Cancelar</button>
 {/if}
 
 <!-- LISTA DE DATOS -->
@@ -215,10 +190,10 @@
 <table border="1" cellpadding="5">
 	<thead>
 		<tr>
-			<th>País</th>
+			<th>País Destinatario</th>
 			<th>Proveedor</th>
 			<th>Año</th>
-			<th>Valor</th>
+			<th>Valor TIV</th>
 			<th>Acciones</th>
 		</tr>
 	</thead>
@@ -232,8 +207,10 @@
 				<td>{d.tiv_total_order}</td>
 
 				<td>
-					<button onclick={() => abrirEditor(d)}>Editar</button>
-					<button onclick={() => deleteRecurso(d.recipient, d.year_of_order)}>Eliminar</button>
+  					<a href={`/exportations-stats/${d.recipient}/${d.year_of_order}`}>
+  						<button>Editar</button>
+					</a>
+  					<button onclick={() => deleteRecurso(d.recipient, d.year_of_order)}>Eliminar</button>
 				</td>
 			</tr>
 		{/each}
