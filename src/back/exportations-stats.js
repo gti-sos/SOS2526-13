@@ -1,7 +1,7 @@
 import dataStore from "nedb";
 
 let BASE_URL = '/api/v2/exportations-stats';
-//let DOCS_URL = "https://documenter.getpostman.com/view/52406650/2sBXigMYhP";
+let DOCS_URL = "https://documenter.getpostman.com/view/52406650/2sBXiomVBY";
 export function loadExportations(app){
     let db = new dataStore({filename:"exportations.db", autoload:true});
     let exportationsInitial =  [
