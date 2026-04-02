@@ -74,5 +74,5 @@ test("buscar recurso", async ({ page }) => {
     await page.getByPlaceholder("País destinatario").fill("Spain");
     await page.getByTestId("buscar-datos").waitFor({ state: 'visible' });
     await page.getByTestId("buscar-datos").click();
-    await expect(page.getByText("Spain")).toBeVisible();
+    await expect(page.getByText("Spain").first()).toBeVisible();
 });
