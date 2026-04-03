@@ -34,7 +34,7 @@
       </a>
     </li>
     <li>
-      <a href="API Camila" target="_blank">
+      <a href="api/v1/military-stats" target="_blank">
         api-military-stats
       </a>
       by Camila España Vildoso

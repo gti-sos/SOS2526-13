@@ -1,4 +1,9 @@
 <script>
+
+  import {onMount} from 'svelte';
+  import {dev} from '$app/environment';
+
+
   let datos = $state([]);
   let dato = $state({});
   let mensaje = $state("");
@@ -6,7 +11,10 @@
   let año= $state("");
 
   let API = "api/v1/military-stats"; 
-     
+  
+  if (dev) {
+		API = 'http://localhost:3000' + API;
+	}
 
   //CARGAR TODOS LOS DATOS
   async function loadMilitaryDataColeccion(){
@@ -15,9 +23,10 @@
             method: "GET"
         });
         if(res.ok){
-            await getMilitaryDataColeccion();
             mensaje = "Datos cargados correctamente";
         }
+        await getMilitaryDataColeccion();
+
   }
   //GET TODOS LOS DATOS
   async function getMilitaryDataColeccion(){
@@ -182,7 +191,6 @@
 <h1>Military Stats</h1>
 
 <button onclick={loadMilitaryDataColeccion}>Cargar datos</button>
-<button onclick={getMilitaryDataColeccion}>Ver/Refrescar tabla</button>
 <button onclick={deleteMilitaryDataColeccion}>Borrar todos los datos</button>
 
 <div>
@@ -239,6 +247,5 @@
     </tbody>
 </table>
 {:else}
-    <p>Haz clic en "Ver Tabla" para mostrar los resultados.</p>
 {/if}
 
