@@ -1,30 +1,10 @@
-{"location":"South Sudan","year":2013,"intensity_level":1,"conflict_type":3,"start_precision":2,"_id":"89n6YqSpIQ6z3PbT"}
-{"location":"South Sudan","year":2012,"intensity_level":1,"conflict_type":3,"start_precision":2,"_id":"9O8OfCBVv3ufB0FM"}
-{"location":"Egypt, Israel","year":1970,"intensity_level":1,"conflict_type":2,"start_precision":1,"_id":"D9SeK3ktJ0F8mlFG"}
-{"location":"India","year":2012,"intensity_level":1,"conflict_type":3,"start_precision":1,"_id":"JOowgH4Dz6GMhTJw"}
-{"location":"South Sudan","year":2011,"intensity_level":1,"conflict_type":3,"start_precision":2,"_id":"JrpDTInP7BOiwCSH"}
-{"location":"South Sudan","year":2014,"intensity_level":2,"conflict_type":4,"start_precision":2,"_id":"P3XyPNm3D6HpGTML"}
-{"location":"Egypt, Israel","year":1967,"intensity_level":2,"conflict_type":2,"start_precision":1,"_id":"W5W1fdKnmKVNPSZy"}
-{"location":"Egypt, Israel","year":1969,"intensity_level":1,"conflict_type":2,"start_precision":1,"_id":"nC6XTOY9dn4pJTTW"}
-{"location":"Sudan","year":2011,"intensity_level":1,"conflict_type":3,"start_precision":1,"_id":"sRSTdGxR0Jl9ExJH"}
-{"location":"Egypt, Israel","year":1973,"intensity_level":2,"conflict_type":2,"start_precision":1,"_id":"y9y8GU1DBe9bh76S"}
-{"$$deleted":true,"_id":"89n6YqSpIQ6z3PbT"}
-{"$$deleted":true,"_id":"9O8OfCBVv3ufB0FM"}
-{"$$deleted":true,"_id":"D9SeK3ktJ0F8mlFG"}
-{"$$deleted":true,"_id":"JOowgH4Dz6GMhTJw"}
-{"$$deleted":true,"_id":"JrpDTInP7BOiwCSH"}
-{"$$deleted":true,"_id":"P3XyPNm3D6HpGTML"}
-{"$$deleted":true,"_id":"W5W1fdKnmKVNPSZy"}
-{"$$deleted":true,"_id":"nC6XTOY9dn4pJTTW"}
-{"$$deleted":true,"_id":"sRSTdGxR0Jl9ExJH"}
-{"$$deleted":true,"_id":"y9y8GU1DBe9bh76S"}
-{"location":"India","year":2012,"intensity_level":1,"conflict_type":3,"start_precision":1,"_id":"hIxqUsY9anXkrxFH"}
-{"location":"Egypt, Israel","year":1967,"intensity_level":2,"conflict_type":2,"start_precision":1,"_id":"TIKDGZ9KUhrG8MxL"}
-{"location":"Egypt, Israel","year":1969,"intensity_level":1,"conflict_type":2,"start_precision":1,"_id":"5ZoYIwuKLvjUcvYR"}
-{"location":"Egypt, Israel","year":1970,"intensity_level":1,"conflict_type":2,"start_precision":1,"_id":"I7RJmaf0XFnB1CiI"}
-{"location":"Egypt, Israel","year":1973,"intensity_level":2,"conflict_type":2,"start_precision":1,"_id":"VfsxeEHmE9xY1Wkp"}
-{"location":"Sudan","year":2011,"intensity_level":1,"conflict_type":3,"start_precision":1,"_id":"FImjIR7r4SWffyWd"}
-{"location":"South Sudan","year":2011,"intensity_level":1,"conflict_type":3,"start_precision":2,"_id":"qlNUtDZfRblKWs5T"}
-{"location":"South Sudan","year":2012,"intensity_level":1,"conflict_type":3,"start_precision":2,"_id":"XTjFxDDJlsPmUJlc"}
 {"location":"South Sudan","year":2013,"intensity_level":1,"conflict_type":3,"start_precision":2,"_id":"41aTAGNhmrbHXmhW"}
+{"location":"Egypt, Israel","year":1969,"intensity_level":1,"conflict_type":2,"start_precision":1,"_id":"5ZoYIwuKLvjUcvYR"}
+{"location":"Sudan","year":2011,"intensity_level":1,"conflict_type":3,"start_precision":1,"_id":"FImjIR7r4SWffyWd"}
+{"location":"Egypt, Israel","year":1970,"intensity_level":1,"conflict_type":2,"start_precision":1,"_id":"I7RJmaf0XFnB1CiI"}
 {"location":"South Sudan","year":2014,"intensity_level":2,"conflict_type":4,"start_precision":2,"_id":"QTVhIORWZITXzeGj"}
+{"location":"Egypt, Israel","year":1967,"intensity_level":2,"conflict_type":2,"start_precision":1,"_id":"TIKDGZ9KUhrG8MxL"}
+{"location":"Egypt, Israel","year":1973,"intensity_level":2,"conflict_type":2,"start_precision":1,"_id":"VfsxeEHmE9xY1Wkp"}
+{"location":"South Sudan","year":2012,"intensity_level":1,"conflict_type":3,"start_precision":2,"_id":"XTjFxDDJlsPmUJlc"}
+{"location":"India","year":2012,"intensity_level":1,"conflict_type":3,"start_precision":1,"_id":"hIxqUsY9anXkrxFH"}
+{"location":"South Sudan","year":2011,"intensity_level":1,"conflict_type":3,"start_precision":2,"_id":"qlNUtDZfRblKWs5T"}
