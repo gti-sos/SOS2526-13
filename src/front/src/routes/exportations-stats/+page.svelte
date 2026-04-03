@@ -149,8 +149,8 @@
 <p><strong>{mensaje}</strong></p>
 
 <!-- BOTONES GENERALES -->
-<button onclick={loadData}>Cargar datos iniciales</button>
-<button onclick={deleteData}>Eliminar todos</button>
+<button data-testid="cargar-datos" onclick={loadData}>Cargar datos iniciales</button>
+<button data-testid="borrar-datos" onclick={deleteData}>Eliminar todos</button>
 <button onclick={abrirInsertar}>Añadir nuevo</button>
 <button onclick={abrirBuscar}>Buscar</button>
 
@@ -179,7 +179,7 @@
 	<input placeholder="Año" bind:value={searchYear} />
 	<input placeholder="Valor TIV" bind:value={searchTiv} />
 	<br /><br />
-	<button onclick={buscar}>Buscar</button>
+	<button data-testid="buscar-datos" onclick={buscar}>Buscar</button>
 	<button onclick={getData}>Reset</button>
 	<button onclick={() => (showSearch = false)}>Cancelar</button>
 {/if}
@@ -200,7 +200,7 @@
 
 	<tbody>
 		{#each data as d}
-			<tr>
+			<tr data-testid="fila-tabla">
 				<td>{d.recipient}</td>
 				<td>{d.supplier}</td>
 				<td>{d.year_of_order}</td>

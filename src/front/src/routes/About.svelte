@@ -43,6 +43,9 @@
       <a href="/api/v1/exportations-stats" target="_blank">
         api-exportations-stats
       </a>
+      <a href="/api/v2/exportations-stats" target="_blank">
+        api-v2-exportations-stats
+      </a>
       by Claudia Páez Sollo
     </li>
   </ul>
@@ -68,6 +71,9 @@
     <li>
       <a href="https://documenter.getpostman.com/view/52406650/2sBXigMYhP" target="_blank">
         exportations-stats-api-v1
+      </a>
+      <a href="https://documenter.getpostman.com/view/52406650/2sBXiomVBY" target="_blank">
+        exportations-stats-api-v2
       </a>
     </li>
   </ul>
