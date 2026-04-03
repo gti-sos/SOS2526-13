@@ -58,21 +58,8 @@
     actMilexGDP = '';
   }
 
-  let esEdicion = $state(false);
-  let filaEditada = $state('');
-
-  function abrirEditor(dato){
-
-    esEdicion = true;
-    filaEditada = `${dato.country}-${dato.year}`;
-    editDato.country = dato.country;
-    editDato.year = dato.year;
-    editDato.milex_total = dato.milex_total;
-    editDato.milex_per_capita = dato.milex_per_capita;
-    editDato.milex_gdp = dato.milex_gdp;
-
-    mensaje = "Editando dato: " + dato.country + " - " + dato.year;
-  }
+ 
+  
 
   let actPais = $state('');
   let actAño = $state('');
@@ -80,40 +67,7 @@
   let actMilexPerCapita = $state('');
   let actMilexGDP = $state('');
   
-  async function updateMilitaryData(){
-    
-    const dato = {
-        country:editDato.country.trim(),
-        year: parseInt(editDato.year),
-        milex_total: parseFloat(editDato.milex_total),
-        milex_gdp: parseFloat(editDato.milex_gdp),
-        milex_per_capita: parseFloat(editDato.milex_per_capita)
-    };
-    if(dato.country === '' || isNaN(dato.year) || isNaN(dato.milex_total) || isNaN(dato.milex_per_capita) || isNaN(dato.milex_gdp)){
-        mensaje = "Por favor, rellena todos los campos correctamente";
-        return;
-    }   
-    
-    const res = await fetch(`${API}/${editDato.country}/${editDato.year}`,
-        {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(dato)
-        }
-    );
-    if(res.status == 404){
-        mensaje = "Dato no encontrado";
-    }else if(res.ok){
-        mensaje = "Dato actualizado correctamente";
-        await getMilitaryDataColeccion();
-        filaEditada = '';
-        limipioForm();
-
-    }
-  }
-
+  
   //AÑADIR UN NUEVO DATO
   async function addMilitaryData(){
 
@@ -238,7 +192,7 @@
                     <td>{item.milex_per_capita}</td>
                     <td>{item.milex_gdp}</td>
                     <td>
-                        <button onclick={() => abrirEditor(item)}>Editar</button>
+                        <a href={`/military-stats/${item.country}/${item.year}`}>Editar</a>
                         <button onclick={() => deleteMilitaryData(item.country, item.year)}>Borrar</button>
                     </td>
                 {/if}
