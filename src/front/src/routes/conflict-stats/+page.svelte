@@ -1,24 +1,21 @@
 <script>
 	import { onMount } from 'svelte';
-	import{dev} from "$app/environment";
+	import { dev } from '$app/environment';
 
 	let data = $state([]);
 	let mensaje = $state('');
 	let API = '/api/v2/conflict-stats';
 
-	if(dev){
-		API = "http://localhost:3000"+API;
+	if (dev) {
+		API = 'http://localhost:3000' + API;
 	}
 
 	//GET COLECCIÓN
 	async function getData() {
 		const response = await fetch(API, { method: 'GET' });
 		data = await response.json();
+		updateSelectors();
 	}
-
-	onMount(() => {
-		getData();
-	});
 
 	//CARGA DATOS INICIALES
 	async function loadData() {
@@ -106,57 +103,55 @@
 		}
 	}
 
-	//EDITA UN RECURSO
+	// Busquedas que permite la API
 
-	let editLocation = $state('');
-	let editYear = $state('');
-	let editIntensity = $state('');
-	let editType = $state('');
-	let editPrecision = $state('');
+	// FILTROS
+	let filterLocation = $state('');
+	let filterYear = $state('');
+	let filterIntensity = $state('');
+	let filterType = $state('');
+	let filterPrecision = $state('');
 
-	//let showEditar = $state(false);
+	// OPCIONES SELECT
+	let locations = $state([]);
+	let years = $state([]);
 
-	/*function abrirEditor(item) {
-		showEditar = true;
-
-		editLocation = item.location;
-		editYear = item.year;
-		editIntensity = item.intensity_level;
-		editType = item.conflict_type;
-		editPrecision = item.start_precision;
-	}*/
-
-	async function editarFila() {
-		if (editIntensity === null || editType === null || editPrecision === null) {
-			mensaje = 'Faltan campos obligatorios';
-			return;
-		} else {
-			const res = await fetch(API + `/${editLocation}/${editYear}`, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					location: editLocation,
-					year: Number(editYear),
-					intensity_level: Number(editIntensity),
-					conflict_type: Number(editType),
-					start_precision: Number(editPrecision)
-				})
-			});
-
-			if (res.status === 200) {
-				mensaje = 'Elemento actualizado';
-				await getData(); // refresca tabla
-			} else if (res.status === 400) {
-				mensaje = 'Datos incorrectos';
-			} else if (res.status === 404) {
-				mensaje = 'Elemento no encontrado';
-			} else {
-				mensaje = `Error inesperado ${res.status}`;
-			}
-		}
+	// GENERAR OPCIONES ÚNICAS
+	function updateSelectors() {
+		locations = [...new Set(data.map((d) => d.location))];
+		years = [...new Set(data.map((d) => d.year))];
 	}
+
+	// BUSCADOR
+	async function searchData() {
+		let params = new URLSearchParams();
+
+		if (filterLocation) params.append('location', filterLocation);
+		if (filterYear) params.append('year', filterYear);
+		if (filterIntensity) params.append('intensity_level', filterIntensity);
+		if (filterType) params.append('conflict_type', filterType);
+		if (filterPrecision) params.append('start_precision', filterPrecision);
+
+		const query = params.toString();
+
+		const res = await fetch(API + '?' + query); //genera la URL
+		data = await res.json();
+	}
+
+	// --- RESET ---
+	function resetFilters() {
+		filterLocation = '';
+		filterYear = '';
+		filterIntensity = '';
+		filterType = '';
+		filterPrecision = '';
+		getData();
+	}
+
+	onMount(() => {
+		getData();
+	});
+
 </script>
 
 <svelte:head>
@@ -164,6 +159,36 @@
 </svelte:head>
 
 <h1>Test API Conflict Stats</h1>
+
+<h2>Buscar conflictos</h2>
+
+<div style="margin-bottom: 20px;">
+	<!-- LOCATION -->
+	<select bind:value={filterLocation}>
+		<option value="">Todas las localizaciones</option>
+		{#each locations as loc}
+			<option value={loc}>{loc}</option>
+		{/each}
+	</select>
+
+	<!-- YEAR -->
+	<select bind:value={filterYear}>
+		<option value="">Todos los años</option>
+		{#each years as y}
+			<option value={y}>{y}</option>
+		{/each}
+	</select>
+
+	<!-- NUMÉRICOS -->
+	<input type="number" bind:value={filterIntensity} placeholder="Intensity level" />
+	<input type="number" bind:value={filterType} placeholder="Conflict type" />
+	<input type="number" bind:value={filterPrecision} placeholder="Start precision" />
+
+	<br /><br />
+
+	<button onclick={searchData}>Buscar</button>
+	<button onclick={resetFilters}>Reset</button>
+</div>
 
 <button onclick={loadData}> Cargar datos iniciales </button>
 
@@ -180,7 +205,10 @@
 	</thead>
 	<tbody>
 		{#each data as item (item.location + item.year)}
-			<tr data-testid="filas tabla" style="border: 1px solid black;padding: 8px;text-align: center;">
+			<tr
+				data-testid="filas tabla"
+				style="border: 1px solid black;padding: 8px;text-align: center;"
+			>
 				<td>{item.location}</td>
 				<td>{item.year}</td>
 				<td>{item.intensity_level}</td>
