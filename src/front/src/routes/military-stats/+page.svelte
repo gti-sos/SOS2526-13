@@ -15,7 +15,11 @@
   if (dev) {
 		API = 'http://localhost:3000' + API;
 	}
+    onMount(() => {
+      getMilitaryDataColeccion(); 
+  });
 
+  
   //CARGAR TODOS LOS DATOS
   async function loadMilitaryDataColeccion(){
         const res = await fetch(`${API}/loadInitialData`,

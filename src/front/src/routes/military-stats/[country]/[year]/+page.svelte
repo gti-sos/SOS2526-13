@@ -50,7 +50,7 @@
     }
 
     onMount(async() =>{
-        const res = await fetch('${API}/${country}/${year}');
+        const res = await fetch(`${API}/${country}/${year}`);
         if (res.status === 200){
             const data = await res.json();
 
@@ -71,7 +71,7 @@
     <input type="number" bind:value={milex_gdp} placeholder="Milex gdp" required>
     <input type="number" bind:value={milex_per_capita} placeholder="Milex per capita" required>
 
-    <a href={'/military-stats'}>Volver</a>
+    <a href='/military-stats' data-sveltekit-reload>Volver</a>
     <button onclick={()=> editarFila()}> Guardar</button>
 
 
