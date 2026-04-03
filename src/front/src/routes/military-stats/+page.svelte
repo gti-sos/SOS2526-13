@@ -167,7 +167,12 @@
             method: "DELETE"
         }
     );
-     mensaje = "Datos borrados correctamente";
+    if (res.ok){
+         mensaje = "Datos borrados correctamente";
+        datos = [];
+    }else{
+        mensaje = "Error al borrar los datos";
+    }
   }
 
 </script>
