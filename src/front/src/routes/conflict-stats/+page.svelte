@@ -159,6 +159,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Conflict Stats</title>
+</svelte:head>
+
 <h1>Test API Conflict Stats</h1>
 
 <button onclick={loadData}> Cargar datos iniciales </button>
@@ -176,7 +180,7 @@
 	</thead>
 	<tbody>
 		{#each data as item (item.location + item.year)}
-			<tr style="border: 1px solid black;padding: 8px;text-align: center;">
+			<tr data-testid="filas tabla" style="border: 1px solid black;padding: 8px;text-align: center;">
 				<td>{item.location}</td>
 				<td>{item.year}</td>
 				<td>{item.intensity_level}</td>
