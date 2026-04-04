@@ -160,11 +160,11 @@
 
 <h1>Test API Conflict Stats</h1>
 
-<h2>Buscar conflictos</h2>
-
+<fieldset style="display: inline-block;">
+<legend>Buscador</legend>
 <div style="margin-bottom: 20px;">
 	<!-- LOCATION -->
-	<select bind:value={filterLocation}>
+	<select bind:value={filterLocation} data-testid="location-select">
 		<option value="">Todas las localizaciones</option>
 		{#each locations as loc}
 			<option value={loc}>{loc}</option>
@@ -189,10 +189,12 @@
 	<button onclick={searchData}>Buscar</button>
 	<button onclick={resetFilters}>Reset</button>
 </div>
+</fieldset>
+<br /><br />
 
 <button onclick={loadData}> Cargar datos iniciales </button>
 
-<table style="border-collapse: collapse; width: 100%;">
+<table style="border-collapse: collapse; width: 53%;">
 	<thead>
 		<tr style="border: 1px solid black;padding: 8px;text-align: center;">
 			<th>Location</th>
@@ -205,8 +207,7 @@
 	</thead>
 	<tbody>
 		{#each data as item (item.location + item.year)}
-			<tr
-				data-testid="filas tabla"
+			<tr data-testid="filas tabla"
 				style="border: 1px solid black;padding: 8px;text-align: center;"
 			>
 				<td>{item.location}</td>
@@ -231,7 +232,7 @@
 		<div class="modal-content">
 			<h2>Insertar conflicto</h2>
 
-			<input bind:value={newLocation} placeholder="Location" required />
+			<input type="text" bind:value={newLocation} placeholder="Location" required />
 			<input type="number" bind:value={newYear} placeholder="Year" required />
 			<input type="number" bind:value={newIntensity} placeholder="Intensity" required />
 			<input type="number" bind:value={newType} placeholder="Type" required />
