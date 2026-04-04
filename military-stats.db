@@ -8,6 +8,7 @@
 {"country":"cuba","year":2018,"milex_total":128.6,"milex_gdp":2.88,"milex_per_capita":11.4,"_id":"kIPjyMeB5Uak78bx"}
 {"country":"australia","year":2015,"milex_total":24046.2,"milex_gdp":1.95,"milex_per_capita":1011.7,"_id":"mXLeNqtUont1xanc"}
 {"country":"morocco","year":2010,"milex_total":3160.8,"milex_gdp":3.39,"milex_per_capita":98,"_id":"zb5rGxcwXqEnuQ0q"}
+<<<<<<< HEAD
 {"country":"morocco","year":2022,"milex_total":1,"milex_gdp":1,"milex_per_capita":1,"_id":"4v7X1W5kxUYXz1zA"}
 {"$$deleted":true,"_id":"4v7X1W5kxUYXz1zA"}
 {"$$deleted":true,"_id":"8c6WWIh7KUamGmGl"}
@@ -100,3 +101,5 @@
 {"$$deleted":true,"_id":"lAM6E15BnGSeTaWP"}
 {"$$deleted":true,"_id":"x4gNPsVccc12DhjN"}
 {"$$deleted":true,"_id":"yXiPkpPSTqNpLbWi"}
+=======
+>>>>>>> 453db19930b7842054b3a537ee5e6962ea791a26
