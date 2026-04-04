@@ -4,7 +4,7 @@
 	import{dev} from "$app/environment";
 
 
-    let API = '/api/v1/military-stats';
+    let API = '/api/v2/military-stats';
     if(dev){
 		API = "http://localhost:3000"+API;
 	}
