@@ -1,6 +1,6 @@
 import dataStore from "nedb";
 
-let db = new dataStore({ filename: 'military-stats.db', autoload: true });
+const db = new Datastore({ filename: "military-stats-v1.db", autoload: true });
 
 let BASE_API_URL = "/api/v1/military-stats";
 
