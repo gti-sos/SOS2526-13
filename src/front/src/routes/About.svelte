@@ -34,10 +34,10 @@
       </a>
     </li>
     <li>
-      <a href="api/v1/military-stats" target="_blank">
+      <a href="/api/v1/military-stats" target="_blank">
         api-military-stats
       </a>
-      <a href="api/v2/military-stats" target="_blank">
+      <a href="/api/v2/military-stats" target="_blank">
         api-v2-military-stats
       </a>
       by Camila España Vildoso
