@@ -251,7 +251,6 @@
                         <a href={`/military-stats/${item.country}/${item.year}`}>Editar</a>
                         <button onclick={() => deleteMilitaryData(item.country, item.year)}>Borrar</button>
                     </td>
-                {/if}
             </tr>
         {/each}
     </tbody>
