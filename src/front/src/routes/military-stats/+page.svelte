@@ -55,15 +55,39 @@
 
   }
   //GET TODOS LOS DATOS
-  async function getMilitaryDataColeccion(){
-    const res = await fetch(`${API}`,
-        {
-            method: "GET"
+  // GET CON FILTROS Y BUSCADOR
+  async function getMilitaryDataColeccion() {
+    // 1. Creamos un objeto para construir la URL con parámetros
+    const queryParams = new URLSearchParams();
+
+    // 2. Añadimos solo los filtros que tengan contenido
+    if (searchCountry) queryParams.append("country", searchCountry);
+    if (searchYear) queryParams.append("year", searchYear);
+    
+    // Si tu API soporta rangos (from/to), añádelos:
+    if (searchFrom) queryParams.append("from", searchFrom);
+    if (searchTo) queryParams.append("to", searchTo);
+
+    // Paginación
+    if (searchLimit) queryParams.append("limit", searchLimit);
+    if (searchOffset) queryParams.append("offset", searchOffset);
+
+    // 3. Construimos la URL final: ej. "api/v2/military-stats?country=cuba&year=2015"
+    const finalURL = queryParams.toString() 
+        ? `${API}?${queryParams.toString()}` 
+        : API;
+
+    
+    const res = await fetch(finalURL, { method: "GET" });
+        
+        if (res.ok) {
+            const data = await res.json();
+            datos = data;
+            mensaje = datos.length > 0 ? "" : "No se han encontrado resultados.";
+        } else {
+            mensaje = "Error al buscar: " + res.status;
         }
-    );
-    const data = await res.json();
-    datos = data;
-  }
+  }
 
   //ACTUALIZAR UN DATO EN CONCRETO
 
@@ -218,17 +242,6 @@
     <tbody>
         {#each datos as item (item.country + '-' + item.year)}
             <tr>
-                {#if filaEditada === item.country + '-' + item.year}
-                    <td>{item.country}</td>
-                    <td>{item.year}</td>
-                    <td><input type="number" bind:value={editDato.milex_total} style="width: 70px;"></td>
-                    <td><input type="number" bind:value={editDato.milex_per_capita} style="width: 70px;"></td>
-                    <td><input type="number" bind:value={editDato.milex_gdp} style="width: 70px;"></td>
-                    <td>
-                        <button onclick={updateMilitaryData}>Guardar</button>
-                        <button onclick={() => filaEditada = ''}>Cancelar</button>
-                    </td>
-                {:else}
                     <td>{item.country}</td>
                     <td>{item.year}</td>
                     <td>{item.milex_total}</td>
