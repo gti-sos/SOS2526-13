@@ -2,7 +2,7 @@ import dataStore from "nedb";
 
 let db = new dataStore({ filename: 'military-stats.db', autoload: true });
 
-let BASE_API_URL = "/api/v2/military-stats";
+let BASE_API_URL = "/api/v1/military-stats";
 
 export function loadMilitaryStats(app) {
 
@@ -38,31 +38,21 @@ export function loadMilitaryStats(app) {
     });
 
 
-   app.get(BASE_API_URL, (req, res) => {
+    app.get(BASE_API_URL, (req, res) => {
         let query = {};
 
         // --- 1. FILTROS DINÁMICOS ---
-        // Filtro por país (búsqueda exacta)
+        // Filtro por país 
         if (req.query.country) {
             query.country = req.query.country;
         }
 
-        // Filtros por Año (Exacto o por Rangos)
+        // Filtro por año 
         if (req.query.year) {
-            // Si piden un año exacto
             query.year = parseInt(req.query.year);
-        } else if (req.query.from || req.query.to) {
-            // Si piden un rango de años, preparamos el objeto
-            query.year = {};
-            if (req.query.from) {
-                query.year.$gte = parseInt(req.query.from); // Mayor o igual que 'from'
-            }
-            if (req.query.to) {
-                query.year.$lte = parseInt(req.query.to);   // Menor o igual que 'to'
-            }
         }
 
-        // Filtro por gastos mayores
+        // Filtro por gasto mayor
         if (req.query.milex_total) {
             query.milex_total = { $gte: parseFloat(req.query.milex_total) };
         }
@@ -74,11 +64,16 @@ export function loadMilitaryStats(app) {
         }
 
         // --- 2. PAGINACIÓN ---
-        // Si no nos pasan offset o limit, NeDB usa 0 (que significa "traer todo desde el principio")
-        let offset = req.query.offset ? parseInt(req.query.offset) : 0;
-        let limit = req.query.limit ? parseInt(req.query.limit) : 0; 
-        
-        // (Borradas las líneas de result.slice() que daban error)
+        let offset = Number(req.query.offset);
+        let limit = Number(req.query.limit);
+
+        if (offset) {
+            result = result.slice(offset);
+        }
+
+        if (limit) {
+        result = result.slice(0, limit);
+      }
 
         // --- 3. CONSULTA A LA BASE DE DATOS ---
         db.find(query)
@@ -87,11 +82,6 @@ export function loadMilitaryStats(app) {
             .exec((err, docs) => {
                 if (err) {
                     return res.sendStatus(500);
-                }
-
-                // Si no se encuentra nada que coincida con los filtros
-                if (docs.length === 0) {
-                    return res.json([]); // Devolvemos un array vacío para el frontend
                 }
 
                 const result = docs.map(d => {

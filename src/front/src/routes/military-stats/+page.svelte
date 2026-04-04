@@ -10,7 +10,29 @@
   let pais= $state("");
   let año= $state("");
 
-  let API = "api/v1/military-stats"; 
+  
+//variables para buscar
+
+ let searchCountry = $state("");
+ let searchYear = $state("");
+ let searchFrom = $state("");
+ let searchTo = $state("");
+ let searchLimit = $state("");
+ let searchOffset = $state("");
+
+ function limpiarBusqueda() {
+      searchCountry = "";
+      searchYear = "";
+      searchFrom = "";
+      searchTo = "";
+      searchLimit = "";
+      searchOffset = "";
+      getMilitaryDataColeccion(); 
+  }
+
+
+
+  let API = "api/v2/military-stats"; 
   
   if (dev) {
 		API = 'http://localhost:3000' + API;
@@ -62,21 +84,9 @@
     actMilexGDP = '';
   }
 
-  let esEdicion = $state(false);
   let filaEditada = $state('');
 
-  function abrirEditor(dato){
-
-    esEdicion = true;
-    filaEditada = `${dato.country}-${dato.year}`;
-    editDato.country = dato.country;
-    editDato.year = dato.year;
-    editDato.milex_total = dato.milex_total;
-    editDato.milex_per_capita = dato.milex_per_capita;
-    editDato.milex_gdp = dato.milex_gdp;
-
-    mensaje = "Editando dato: " + dato.country + " - " + dato.year;
-  }
+  
 
   let actPais = $state('');
   let actAño = $state('');
@@ -84,39 +94,7 @@
   let actMilexPerCapita = $state('');
   let actMilexGDP = $state('');
   
-  async function updateMilitaryData(){
-    
-    const dato = {
-        country:editDato.country.trim(),
-        year: parseInt(editDato.year),
-        milex_total: parseFloat(editDato.milex_total),
-        milex_gdp: parseFloat(editDato.milex_gdp),
-        milex_per_capita: parseFloat(editDato.milex_per_capita)
-    };
-    if(dato.country === '' || isNaN(dato.year) || isNaN(dato.milex_total) || isNaN(dato.milex_per_capita) || isNaN(dato.milex_gdp)){
-        mensaje = "Por favor, rellena todos los campos correctamente";
-        return;
-    }   
-    
-    const res = await fetch(`${API}/${editDato.country}/${editDato.year}`,
-        {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(dato)
-        }
-    );
-    if(res.status == 404){
-        mensaje = "Dato no encontrado";
-    }else if(res.ok){
-        mensaje = "Dato actualizado correctamente";
-        await getMilitaryDataColeccion();
-        filaEditada = '';
-        limipioForm();
-
-    }
-  }
+  
 
   //AÑADIR UN NUEVO DATO
   async function addMilitaryData(){
@@ -197,6 +175,21 @@
 <button onclick={loadMilitaryDataColeccion}>Cargar datos</button>
 <button onclick={deleteMilitaryDataColeccion}>Borrar todos los datos</button>
 
+<div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+    <h3>Buscador</h3>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
+        <input placeholder="País (ej: cuba)s" bind:value={searchCountry}>
+        <input type="number" placeholder="Año exacto" bind:value={searchYear}>
+        <input type="number" placeholder="Desde el año..." bind:value={searchFrom}>
+        <input type="number" placeholder="Hasta el año..." bind:value={searchTo}>
+    </div>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
+        <input type="number" placeholder="Límite (Paginación)" bind:value={searchLimit}>
+        <input type="number" placeholder="Offset (Salto)" bind:value={searchOffset}>
+    </div>
+    <button onclick={getMilitaryDataColeccion}>Buscar</button>
+    <button onclick={limpiarBusqueda}>Limpiar filtros</button>
+</div>
 <div>
     <h3>Añadir nuevo registro</h3>
     <input placeholder="País" bind:value={actPais}>
