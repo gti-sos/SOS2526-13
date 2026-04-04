@@ -73,6 +73,7 @@ test("Borrar todos los datos", async ({ page }) => {
   await setup(page);
 
   await page.getByRole("button", {name: "Borrar datos", exact: true}).click();
+  await page.waitForTimeout(1000);
 
   const numDatos = await page.getByTestId("filas tabla").count();
   expect(numDatos).toBe(0);
@@ -85,7 +86,7 @@ test("Recuperar datos iniciales", async ({ page }) => {
 
   await page.getByRole("button", {name: "Cargar datos iniciales"}).click();
 
-  await page.getByTestId('filas tabla').first().waitFor();
+  await page.waitForSelector('[data-testid="filas tabla"]');
 
   const numDatos = await page.getByTestId("filas tabla").count();
   expect(numDatos).toBe(10);
@@ -103,7 +104,7 @@ test("Crear elemento y comprobar total de filas", async ({ page }) => {
   await page.getByPlaceholder("Precision", { exact: true }).fill("2024");
 
   await page.getByRole("button", { name: "Insertar", exact: true }).click();
-  await page.getByTestId('filas tabla').first().waitFor();
+  await page.waitForSelector('[data-testid="filas tabla"]');
   await page.waitForTimeout(1000);
   const numDatos = await page.getByTestId("filas tabla").count();
   expect(numDatos).toBe(11);
