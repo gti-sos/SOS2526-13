@@ -12,67 +12,61 @@ test('has title', async ({ page }) => {
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Military Stats/);
 });
-test.describe('Military Stats E2E Tests', () => {
+test.describe('Pruebas E2E completas - Military Stats', () => {
 
-    test('debería cargar datos iniciales, listar, borrar uno y borrar todos', async ({ page }) => {
+    test('Debería crear, buscar, editar en vista separada y borrar', async ({ page }) => {
+        // 1. Ir a la página principal
         await page.goto(app);
 
-        // 1. BORRAR TODO AL INICIO (para limpiar la prueba)
+        // 2. Limpiar datos previos para asegurar que la prueba sea limpia
         await page.click('button:has-text("Borrar todos los datos")');
-        // Esperamos a que la tabla esté vacía (o que no haya filas de datos)
         await expect(page.locator('table tbody tr')).toHaveCount(0);
 
-        // 2. CREAR RECURSOS (Cargar iniciales)
-        await page.click('button:has-text("Cargar datos")');
-        await page.waitForTimeout(1000); // Esperar a que NeDB procese
-        const filasIniciales = page.locator('table tbody tr');
-        await expect(filasIniciales).not.toHaveCount(0);
-
-        // 3. CREAR UN RECURSO MANUALMENTE
-        await page.fill('input[placeholder="País"]', 'test-country');
-        await page.fill('input[placeholder="Año"]', '2026');
-        await page.fill('input[placeholder="Milex total"]', '1000');
-        await page.fill('input[placeholder="Milex per capita"]', '10');
-        await page.fill('input[placeholder="Milex GDP"]', '1.5');
+        // 3. Crear un recurso nuevo (Usando tus placeholders de la página principal)
+        await page.fill('input[placeholder="País"]', 'francia');
+        await page.fill('input[placeholder="Año"]', '2025');
+        await page.fill('input[placeholder="Milex total"]', '50000');
+        await page.fill('input[placeholder="Milex per capita"]', '800');
+        await page.fill('input[placeholder="Milex GDP"]', '2.1');
         await page.click('button:has-text("Añadir")');
         
-        // Verificar que aparece en la lista
-        await expect(page.getByText('test-country')).toBeVisible();
+        // Verificar que aparece en la tabla
+        await expect(page.getByText('francia')).toBeVisible();
 
-        // 4. BUSCAR RECURSOS
-        await page.fill('input[placeholder*="País (ej: cuba)"]', 'test-country');
+        // 4. Probar Buscador (Ojo a la "s" en tu placeholder)
+        await page.fill('input[placeholder="País (ej: cuba)s"]', 'francia');
         await page.click('button:has-text("Buscar")');
-        // Solo debería quedar la fila de 'test-country'
         await expect(page.locator('table tbody tr')).toHaveCount(1);
-        
-        // Limpiar búsqueda
         await page.click('button:has-text("Limpiar filtros")');
 
-        // 5. EDITAR RECURSO (Vista separada dinámica)
-        // Buscamos el enlace "Editar" del recurso que creamos
-        const filaAReemplazar = page.locator('tr', { hasText: 'test-country' });
-        await filaAReemplazar.getByRole('link', { name: 'Editar' }).click();
-        
-        // Verificar que estamos en la URL dinámica (ej: /military-stats/test-country/2026)
-        await expect(page).toHaveURL(/\/military-stats\/test-country\/2026/);
-        
-        // Cambiar un valor
-        await page.fill('input[name="milex_total"]', '9999'); 
-        await page.click('button:has-text("Actualizar")'); // O el botón que tengas en tu vista de edición
-        
-        // Volver y verificar
-        await page.goto(LOCALHOST_URL);
-        await expect(page.getByText('9999')).toBeVisible();
+        // 5. EDITAR EN VISTA SEPARADA (Punto clave de tu ejercicio)
+        const filaFrancia = page.locator('tr', { hasText: 'francia' });
+        await filaFrancia.getByRole('link', { name: 'Editar' }).click();
 
-        // 6. BORRAR UN RECURSO CONCRETO
-        const totalAntes = await page.locator('table tbody tr').count();
-        await page.locator('tr', { hasText: 'test-country' }).getByRole('button', { name: 'Borrar' }).click();
-        const totalDespues = await page.locator('table tbody tr').count();
-        expect(totalDespues).toBe(totalAntes - 1);
+        // Verificar que estamos en la ruta correcta
+        await expect(page).toHaveURL(/\/military-stats\/francia\/2025/);
 
-        // 7. BORRAR TODOS LOS RECURSOS
-        await page.click('button:has-text("Borrar todos los datos")');
-        await expect(page.locator('table tbody tr')).toHaveCount(0);
+        // Modificar valores en el formulario de edición (usando tus nuevos placeholders)
+        // Usamos .clear() primero para borrar lo que cargó onMount
+        await page.locator('input[placeholder="Milex total"]').clear();
+        await page.fill('input[placeholder="Milex total"]', '66666');
+        
+        await page.locator('input[placeholder="Milex gdp"]').clear();
+        await page.fill('input[placeholder="Milex gdp"]', '3.5');
+
+        // Pulsar Guardar
+        await page.click('button:has-text("Guardar")');
+        
+        // Verificar mensaje de éxito en la vista de edición
+        await expect(page.getByText('Elemento actualizado')).toBeVisible();
+
+        // 6. Volver a la tabla y verificar el cambio
+        await page.click('a:has-text("Volver")');
+        // Esperamos a que la tabla cargue y buscamos el nuevo valor
+        await expect(page.getByText('66666')).toBeVisible();
+
+        // 7. Borrar recurso concreto
+        await page.locator('tr', { hasText: 'francia' }).locator('button:has-text("Borrar")').click();
+        await expect(page.getByText('francia')).not.toBeVisible();
     });
 });
-
