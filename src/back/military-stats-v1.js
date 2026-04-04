@@ -4,7 +4,7 @@ const db = new Datastore({ filename: "military-stats-v1.db", autoload: true });
 
 let BASE_API_URL = "/api/v1/military-stats";
 
-export function loadMilitaryStats(app) {
+export function loadMilitaryStats_v1(app) {
 
     const initialData = [
         { country: "poland", year: 2010, milex_total: 19710.8, milex_gdp: 1.84, milex_per_capita: 231.2 },

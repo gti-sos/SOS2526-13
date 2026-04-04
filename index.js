@@ -10,6 +10,8 @@ import {loadExportationsV1} from './src/back/exportations-stats-v1.js';
 
 import  {backendPMA_v1}  from './src/back/conflict-stats-v1.js';
 import  {backendPMA}  from './src/back/conflict-stats.js';
+
+import {loadMilitaryStats_v1} from './src/back/military-stats-v1.js'
 import {loadMilitaryStats} from './src/back/military-stats.js';
 
 import { dirname } from "path";
@@ -30,7 +32,9 @@ app.use(express.json());
 backendPMA(app)
 backendPMA_v1(app);
 loadExportations(app);
-loadExportationsV1(app)
+loadExportationsV1(app);
+
+loadMilitaryStats_v1(app);
 loadMilitaryStats(app);
 
 app.use(handler);
