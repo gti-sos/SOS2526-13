@@ -37,6 +37,9 @@
       <a href="api/v1/military-stats" target="_blank">
         api-military-stats
       </a>
+      <a href="api/v2/military-stats" target="_blank">
+        api-v2-military-stats
+      </a>
       by Camila España Vildoso
     </li>
     <li>
@@ -66,6 +69,11 @@
     <li>
       <a href="https://documenter.getpostman.com/view/52632390/2sBXigNECE" target="_blank">
         military-stats-api-v1
+      </a>
+    </li>
+     <li>
+      <a href="https://documenter.getpostman.com/view/52632390/2sBXiqDTxK" target="_blank">
+        military-stats-api-v2
       </a>
     </li>
     <li>
