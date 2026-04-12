@@ -24,7 +24,12 @@ jobs:
       
       - name: arrancar servidor
         run: npm start &
-  
+          
+      - name: Run coverage
+        run: npm run coverage
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright tests
