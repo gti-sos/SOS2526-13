@@ -37,6 +37,8 @@ loadExportationsV1(app);
 loadMilitaryStats_v1(app);
 loadMilitaryStats(app);
 
+app.use("/conflict-stats-vue", express.static(path.join(__dirname, "frontend-vue/dist")));
+
 app.use(handler);
 
 app.listen(port, () => {

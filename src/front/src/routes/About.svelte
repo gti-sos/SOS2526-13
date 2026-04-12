@@ -15,6 +15,7 @@
   <h2>🌐 Frontends</h2>
   <ul>
     <li><a href="/conflict-stats"> Frontend de Pablo Moraleda Alvarez </a></li>
+    <li><a href="/conflict-stats-vue"> Frontend de Pablo Moraleda Alvarez (Vue)</a></li>
     <li><a href="/military-stats"> Frontend Camila España Vildoso </a></li>
     <li><a href="/exportations-stats"> Frontend Claudia Páez Sollo </a></li>
   </ul>
