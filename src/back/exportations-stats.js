@@ -2,6 +2,7 @@ import dataStore from "nedb";
 
 let BASE_URL = '/api/v2/exportations-stats';
 let DOCS_URL = "https://documenter.getpostman.com/view/52406650/2sBXiomVBY";
+let DOCS_URL_RAILWAY = "https://documenter.getpostman.com/view/52406650/2sBXitDTFm"
 export function loadExportations(app){
     let db = new dataStore({filename:"exportations.db", autoload:true});
     let exportationsInitial =  [
@@ -159,5 +160,9 @@ export function loadExportations(app){
     app.get(BASE_URL + "/docs", (req, res) => {
     console.log("Getting DOCS");
     res.redirect(DOCS_URL);
+  });
+  app.get(BASE_URL + "/docsExtra", (req, res) => {
+    console.log("Getting DOCS");
+    res.redirect(DOCS_URL_RAILWAY);
   });
 }
