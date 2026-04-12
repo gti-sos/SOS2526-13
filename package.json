@@ -12,7 +12,9 @@
     "test-api-online": "npx newman run tests/api/api-test-exportations-stats.json -e tests/api/api-test-env-render.json && npx newman run tests/api/api-test-conflict-stats.json -e tests/api/api-test-env-render.json && npx newman run tests/api/api-test-military-stats.json -e tests/api/api-test-env-render.json",
     "test-local": "start-server-and-test start http://localhost:3000 test-api-local",
     "test-online": "start-server-and-test start http://localhost:3000 test-api-online",
-    "test": "npm run test-local",
+    "test-jest": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test": "nyc npm run test-jest && npm run test-local",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "test-exportations-stats": "npx newman run tests/api/api-test-exportations-stats.json -e tests/api/api-test-env-local.json",
     "test-conflict-stats": "npx newman run tests/api/api-test-conflict-stats.json -e tests/api/api-test-env-local.json",
     "test-military-stats": "npx newman run tests/api/api-test-military-stats.json -e tests/api/api-test-env-local.json"
@@ -40,6 +42,10 @@
     "@playwright/test": "^1.58.2",
     "@sveltejs/adapter-node": "^5.5.4",
     "@types/node": "^25.5.0",
-    "start-server-and-test": "^2.1.5"
+    "coveralls": "^3.1.1",
+    "jest": "^30.3.0",
+    "nyc": "^18.0.0",
+    "start-server-and-test": "^2.1.5",
+    "supertest": "^7.2.2"
   }
 }

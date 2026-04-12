@@ -1,5 +1,7 @@
 # SOS2526-13
 
+[![Coverage Status](https://coveralls.io/repos/github/USER/REPO/badge.svg)](https://coveralls.io/github/USER/REPO)
+
 - **Team**
    - Camila España Vildoso(https://github.com/Camiev04)
    - Claudia Páez Sollo(https://github.com/Clapaesol)
