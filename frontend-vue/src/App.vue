@@ -43,7 +43,7 @@ async function deleteRecurso(location, year) {
   await getData();
 }
 
-// INSERT
+// ---------------- INSERT ----------------
 const newLocation = ref('');
 const newYear = ref('');
 const newIntensity = ref('');
@@ -89,7 +89,58 @@ async function insertConflict() {
   }
 }
 
-// FILTROS
+// ---------------- EDIT ----------------
+const showEdit = ref(false);
+const editOriginal = ref({ location: '', year: '' });
+
+const editLocation = ref('');
+const editYear = ref('');
+const editIntensity = ref('');
+const editType = ref('');
+const editPrecision = ref('');
+
+function abrirEditar(c) {
+  showEdit.value = true;
+
+  editOriginal.value = { location: c.location, year: c.year };
+
+  editLocation.value = c.location;
+  editYear.value = c.year;
+  editIntensity.value = c.intensity_level;
+  editType.value = c.conflict_type;
+  editPrecision.value = c.start_precision;
+}
+
+async function updateConflict() {
+  const res = await fetch(
+    `${API}/${editOriginal.value.location}/${editOriginal.value.year}`,
+    {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        location: editLocation.value,
+        year: Number(editYear.value),
+        intensity_level: Number(editIntensity.value),
+        conflict_type: Number(editType.value),
+        start_precision: Number(editPrecision.value)
+      })
+    }
+  );
+
+  if (res.status === 200) {
+    mensaje.value = 'Actualizado';
+    showEdit.value = false;
+    await getData();
+  } else if (res.status === 400) {
+    mensaje.value = 'Datos incorrectos';
+  } else if (res.status === 404) {
+    mensaje.value = 'No encontrado';
+  } else {
+    mensaje.value = `Error ${res.status}`;
+  }
+}
+
+// ---------------- FILTROS ----------------
 const filterLocation = ref('');
 const filterYear = ref('');
 const filterIntensity = ref('');
@@ -181,6 +232,7 @@ onMounted(getData);
         <td>{{ c.start_precision }}</td>
         <td>
           <button @click="deleteRecurso(c.location, c.year)">Borrar</button>
+          <button @click="abrirEditar(c)">Editar</button>
         </td>
       </tr>
     </tbody>
@@ -189,6 +241,7 @@ onMounted(getData);
   <button @click="abrirInsertar">Insertar</button>
   <button @click="deleteData">Borrar todo</button>
 
+  <!-- INSERT -->
   <div v-if="showNew">
     <h2>Insertar</h2>
 
@@ -201,6 +254,22 @@ onMounted(getData);
     <br /><br />
     <button @click="showNew = false">Cancelar</button>
     <button @click="insertConflict">Insertar</button>
+  </div>
+
+  <!-- EDIT -->
+  <div v-if="showEdit">
+    <h2>Editar</h2>
+
+    <input v-model="editLocation" disabled />
+    <input v-model="editYear" type="number" disabled />
+
+    <input v-model="editIntensity" type="number" />
+    <input v-model="editType" type="number" />
+    <input v-model="editPrecision" type="number" />
+
+    <br /><br />
+    <button @click="showEdit = false">Cancelar</button>
+    <button @click="updateConflict">Actualizar</button>
   </div>
 
   <p><strong>{{ mensaje }}</strong></p>

@@ -5,7 +5,7 @@ let app = "http://localhost:3000";
 
 async function setup(page) {
     await page.goto(app);
-    await page.getByRole("link", { name: "Frontend de Pablo Moraleda Alvarez" }).click();
+    await page.getByRole("link", { name: "Frontend de Pablo Moraleda Alvarez", exact: true }).click();
     await page.getByRole("button", {name: "Borrar datos"}).click();
     await page.getByRole("button",{name: "Cargar datos iniciales"}).click();
 
@@ -15,7 +15,7 @@ async function setup(page) {
 //Página personal (título)
 test("Navegación a página con título", async ({ page }) => {
     await page.goto(app);
-    await page.getByRole("link", { name: "Frontend de Pablo Moraleda Alvarez" }).click();
+    await page.getByRole("link", { name: "Frontend de Pablo Moraleda Alvarez", exact: true }).click();
     await expect(page).toHaveTitle(/Conflict Stats/);
 });
 
@@ -82,7 +82,7 @@ test("Borrar todos los datos", async ({ page }) => {
 // Recuperar datos iniciales
 test("Recuperar datos iniciales", async ({ page }) => {
   await page.goto(app);
-  await page.getByRole("link", { name: "Frontend de Pablo Moraleda Alvarez" }).click();
+  await page.getByRole("link", { name: "Frontend de Pablo Moraleda Alvarez", exact: true }).click();
 
   await page.getByRole("button", {name: "Cargar datos iniciales"}).click();
 
