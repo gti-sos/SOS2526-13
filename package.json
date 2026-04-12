@@ -12,9 +12,9 @@
     "test-api-online": "npx newman run tests/api/api-test-exportations-stats.json -e tests/api/api-test-env-render.json && npx newman run tests/api/api-test-conflict-stats.json -e tests/api/api-test-env-render.json && npx newman run tests/api/api-test-military-stats.json -e tests/api/api-test-env-render.json",
     "test-local": "start-server-and-test start http://localhost:3000 test-api-local",
     "test-online": "start-server-and-test start http://localhost:3000 test-api-online",
-    "test-jest": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "test": "nyc npm run test-jest && npm run test-local",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "test-jest": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
+    "test": "npm run test-jest && npm run test-local",
+    "coverage": "type coverage\\lcov.info | coveralls",
     "test-exportations-stats": "npx newman run tests/api/api-test-exportations-stats.json -e tests/api/api-test-env-local.json",
     "test-conflict-stats": "npx newman run tests/api/api-test-conflict-stats.json -e tests/api/api-test-env-local.json",
     "test-military-stats": "npx newman run tests/api/api-test-military-stats.json -e tests/api/api-test-env-local.json"
