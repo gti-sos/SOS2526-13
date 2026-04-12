@@ -16,6 +16,8 @@
 - **Despliegue del sistema (front-end / back-end) en Railway (extra Claudia Páez Sollo)**
 - https://sos2526-13-production.up.railway.app
 - https://sos2526-13-production.up.railway.app/exportations-stats
+- **Despliegue por Pablo Moraleda ÁLvarez en Railway**
+- https://sos2526-13-pablomoraledalvarez-production-2815.up.railway.app/
 
 
 - **DOCS**
