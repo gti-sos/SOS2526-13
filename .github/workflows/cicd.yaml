@@ -19,25 +19,28 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      # 👉 Esto genera coverage (nyc + jest + newman)
       - name: Run tests
         run: npm test
-      
+
+      # 👉 NUEVO: subir coverage a Coveralls
+      - name: Upload coverage to Coveralls
+        uses: coverallsapp/github-action@v2
+        with:
+          path-to-lcov: coverage/lcov.info
+
       - name: arrancar servidor
         run: npm start &
-          
-      - name: Run coverage
-        run: npm run coverage
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-          
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+
       - name: Run Playwright tests
         run: npx playwright test
+
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
-
