@@ -1,6 +1,6 @@
 # SOS2526-13
 
-[![Coverage Status](https://coveralls.io/repos/github/gti-SOS/SOS2526-13/badge.svg)](https://coveralls.io/github/USER/REPO)
+[![Coverage Status](https://coveralls.io/repos/github/gti-SOS/SOS2526-13/badge.svg)](https://coveralls.io/github/gti-SOS/SOS2526-13)
 
 - **Team**
    - Camila España Vildoso(https://github.com/Camiev04)
