@@ -16,6 +16,7 @@ import {loadMilitaryStats} from './src/back/military-stats.js';
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+import { login, verifyToken } from './src/back/auth.js';
 
 const app = express();
 
@@ -38,6 +39,21 @@ loadMilitaryStats_v1(app);
 loadMilitaryStats(app);
 
 app.use("/conflict-stats-vue", express.static(path.join(__dirname, "frontend-vue/dist")));
+
+// JWT login
+app.post("/api/login-exportations", login);
+
+// endpoint protegido
+app.get(
+  "/api/v2/exportations-stats-secure",
+  verifyToken,
+  (req, res) => {
+    res.json({
+      message: "JWT OK",
+      data: "exportations stats protegidas"
+    });
+  }
+);
 
 app.use(handler);
 
