@@ -1,6 +1,7 @@
 # SOS2526-13
 
-[![Coverage Status](https://coveralls.io/repos/github/gti-SOS/SOS2526-13/badge.svg)](https://coveralls.io/github/gti-SOS/SOS2526-13)
+[![Known Vulnerabilities](https://snyk.io/test/github/gti-sos/SOS2526-13/badge.svg)](https://snyk.io/test/github/gti-sos/SOS2526-13)
+[![Coverage Status](https://coveralls.io/repos/github/gti-sos/SOS2526-13/badge.svg?branch=main)](https://coveralls.io/github/gti-sos/SOS2526-13?branch=main)
 
 - **Team**
    - Camila España Vildoso(https://github.com/Camiev04)
