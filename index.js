@@ -40,24 +40,8 @@ loadMilitaryStats(app);
 
 app.use("/conflict-stats-vue", express.static(path.join(__dirname, "frontend-vue/dist")));
 
-// JWT login
-app.post("/api/login-exportations", login);
-
-// endpoint protegido
-app.get(
-  "/api/v2/exportations-stats-secure",
-  verifyToken,
-  (req, res) => {
-    res.json({
-      message: "JWT OK",
-      data: "exportations stats protegidas"
-    });
-  }
-);
-
 app.use(handler);
 
 app.listen(port, () => {
-
     console.log(`server running on http://localhost:${port}`)
 });
