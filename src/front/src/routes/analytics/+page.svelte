@@ -88,8 +88,8 @@
             },
             series: [
                 { name: "Exportaciones", data: series1 },
-                { name: "Conflictos", data: series2 },
-                { name: "Gasto militar", data: series3 }
+                { name: "Gasto militar", data: series2 },
+                { name: "Conflictos", data: series3 }
             ]
         });
 
