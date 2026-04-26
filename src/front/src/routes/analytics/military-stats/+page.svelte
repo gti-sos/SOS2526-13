@@ -11,74 +11,66 @@
     }
 
     onMount(async () => {
-        if (!browser) return;
+    // 1. Carga de datos (fetch)
+    const res = await fetch(API);
+    const data = await res.json();
 
-        try {
-            const Highcharts = (await import("Highcharts")).default;
-            const Accessibility = (await import("highcharts/modules/accessibility")).default;
-            Accessibility(Highcharts);
+    // 2. Procesamiento de datos para gráfico de AREA
+    // Necesitamos años únicos y ordenados para el eje X
+    const years = [...new Set(data.map(d => d.year))].sort((a, b) => a - b);
+    
+    // Necesitamos identificar los países únicos para crear las series
+    const countries = [...new Set(data.map(d => d.country))];
 
-            const res = await fetch(API);
-            const data = await res.json();
-
-            // --- PROCESAMIENTO DE DATOS ---
-            // Ordenamos por año para que el gráfico de área fluya correctamente
-            data.sort((a, b) => a.year - b.year);
-
-            // Obtenemos años únicos para el eje X
-            const years = [...new Set(data.map(d => d.year))];
-
-            // Ejemplo: Mostramos los datos filtrados por un país o globales
-            // Aquí filtramos por "Spain" para el ejemplo, o puedes sumar todos los países
-            const cubaData = data.filter(d => d.country === "cuba");
-
-            const totalSeries = cubaData.map(d => d.milex_total);
-            const gdpSeries = cubaData.map(d => d.milex_gdp);
-
-            // --- CREACIÓN DEL GRÁFICO ---
-            Highcharts.chart("chart-container", {
-                chart: {
-                    type: 'area' 
-                },
-                title: {
-                    text: "Análisis de Gasto Militar (Cuba)"
-                },
-                subtitle: {
-                    text: "Gasto total y porcentaje sobre el PIB"
-                },
-                xAxis: {
-                    categories: years,
-                    title: { text: "Año" }
-                },
-                yAxis: [{
-                    title: { text: "Millones de USD" }
-                }, {
-                    title: { text: "% PIB" },
-                    opposite: true // Ponemos el porcentaje en el eje derecho
-                }],
-                accessibility: {
-                    enabled: true // REQUISITO: Debe ser accesible
-                },
-                tooltip: {
-                    shared: true
-                },
-                series: [{
-                    name: "Gasto Total",
-                    data: totalSeries,
-                    color: "#434348",
-                    yAxis: 0
-                }, {
-                    name: "% del PIB",
-                    data: gdpSeries,
-                    color: "#7cb5ec",
-                    yAxis: 1 // Usa el eje de la derecha
-                }]
-            });
-
-        } catch (e) {
-            console.error("Error cargando la gráfica de área:", e);
-        }
+    // Creamos una serie por cada país
+    const seriesData = countries.map(countryName => {
+        return {
+            name: countryName,
+            // Para cada año, buscamos el valor del país, si no existe ponemos 0
+            data: years.map(y => {
+                const found = data.find(d => d.country === countryName && d.year === y);
+                return found ? found.milex_total : 0;
+            })
+        };
     });
+
+    // 3. Configuración de Highcharts
+    Highcharts.chart("container", {
+        chart: {
+            type: "area" // Cambiado de 'pie' a 'area'
+        },
+        title: {
+            text: "Evolución del Gasto Militar Total"
+        },
+        xAxis: {
+            categories: years,
+            title: { text: "Año" }
+        },
+        yAxis: {
+            title: { text: "Milex Total (USD)" }
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.y:,.1f}</b> USD'
+        },
+        plotOptions: {
+            area: {
+                marker: {
+                    enabled: false,
+                    symbol: 'circle',
+                    radius: 2,
+                    states: {
+                        hover: { enabled: true }
+                    }
+                }
+            }
+        },
+        accessibility: {
+            enabled: true, // Requisito de accesibilidad
+            description: "Gráfico de área que muestra el gasto militar total de varios países entre 2010 y 2022"
+        },
+        series: seriesData
+    });
+});
 </script>
 
 <h1>Visualización de Gasto Militar</h1>
