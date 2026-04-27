@@ -3,69 +3,72 @@
     import { dev } from "$app/environment";
     import Highcharts from "highcharts";
 
-    // Importante: Para accesibilidad en Highcharts, a veces necesitas este módulo
-    // import accessibility from 'highcharts/modules/accessibility';
-    // if (typeof Highcharts === 'object') { accessibility(Highcharts); }
-
-    let chartContainer; // Referencia al div
+    let chartContainer;
     let API = "/api/v2/military-stats"; 
 
     if (dev) {
         API = "http://localhost:3000" + API;
     }
 
-    onMount(async () => {
+    // 1. Función para inicializar los datos si la DB está vacía
+    async function loadInitialData() {
+        console.log("Verificando/Cargando datos iniciales...");
         try {
-            const res = await fetch(API);
-            if (!res.ok) throw new Error("Error al cargar la API");
-            
-            const data = await res.json();
-
-            if (data && data.length > 0) {
-                const years = [...new Set(data.map(d => d.year))].sort((a, b) => a - b);
-                const countries = [...new Set(data.map(d => d.country))];
-
-                const seriesData = countries.map(countryName => {
-                    return {
-                        name: countryName,
-                        data: years.map(y => {
-                            const found = data.find(d => d.country === countryName && d.year === y);
-                            return found ? found.milex_total : 0;
-                        })
-                    };
-                });
-
-                // Pasamos chartContainer en lugar del string "container"
-                Highcharts.chart(chartContainer, {
-                    chart: { type: "area" },
-                    title: { text: "Evolución del Gasto Militar Total" },
-                    xAxis: {
-                        categories: years,
-                        title: { text: "Año" }
-                    },
-                    yAxis: {
-                        title: { text: "Milex Total (USD)" }
-                    },
-                    tooltip: {
-                        pointFormat: '{series.name}: <b>{point.y:,.1f}</b> USD'
-                    },
-                    series: seriesData
-                });
+            const res = await fetch(`${API}/loadInitialData`);
+            if (res.ok) {
+                console.log("Datos iniciales cargados con éxito.");
             } else {
-                console.warn("La API no devolvió datos.");
+                console.error("Error al ejecutar loadInitialData (puede que ya existan datos)");
             }
         } catch (error) {
-            console.error("Error detallado:", error);
+            console.error("Error de conexión al cargar datos iniciales:", error);
         }
+    }
+
+    async function loadGraph() {
+        try {
+            const res = await fetch(API);
+            const data = await res.json();
+
+            if (data.length === 0) {
+                console.warn("La API devolvió un array vacío.");
+                return;
+            }
+
+            const years = [...new Set(data.map(d => d.year))].sort((a, b) => a - b);
+            const countries = [...new Set(data.map(d => d.country))];
+
+            const seriesData = countries.map(countryName => {
+                return {
+                    name: countryName,
+                    data: years.map(y => {
+                        const found = data.find(d => d.country === countryName && d.year === y);
+                        return found ? found.milex_total : 0;
+                    })
+                };
+            });
+
+            Highcharts.chart(chartContainer, {
+                chart: { type: "area" },
+                title: { text: "Evolución del Gasto Militar Total" },
+                xAxis: { categories: years, title: { text: "Año" } },
+                yAxis: { title: { text: "Milex Total (USD)" } },
+                series: seriesData
+            });
+        } catch (error) {
+            console.error("Error al cargar el gráfico:", error);
+        }
+    }
+
+    onMount(async () => {
+        // Ejecutamos la secuencia lógica
+        await loadInitialData(); // Primero poblar la DB
+        await loadGraph();       // Luego pedir los datos y dibujar
     });
 </script>
 
 <h1>Visualización de Gasto Militar</h1>
 
-<div 
-    bind:this={chartContainer} 
-    style="height: 500px; border-radius: 10px; margin: 20px; border: 1px solid #ccc;"
->
-    Cargando gráfico...
+<div bind:this={chartContainer} style="height: 500px; margin: 20px; border: 1px solid #eee;">
+    Cargando datos y generando gráfico...
 </div>
-
