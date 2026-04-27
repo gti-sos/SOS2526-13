@@ -71,6 +71,6 @@
 <h1>Visualización de Gasto Militar</h1>
 
 <div 
-    id="chart-container" 
+    id="container" 
     style="height: 500px; border-radius: 10px; margin: 20px;"
 ></div>
