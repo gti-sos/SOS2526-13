@@ -1,9 +1,13 @@
 <script>
     import { onMount } from "svelte";
-    import { browser, dev } from "$app/environment";
+    import { dev } from "$app/environment";
     import Highcharts from "highcharts";
 
+    // Importante: Para accesibilidad en Highcharts, a veces necesitas este módulo
+    // import accessibility from 'highcharts/modules/accessibility';
+    // if (typeof Highcharts === 'object') { accessibility(Highcharts); }
 
+    let chartContainer; // Referencia al div
     let API = "/api/v2/military-stats"; 
 
     if (dev) {
@@ -11,66 +15,57 @@
     }
 
     onMount(async () => {
-    // 1. Carga de datos (fetch)
-    const res = await fetch(API);
-    const data = await res.json();
+        try {
+            const res = await fetch(API);
+            if (!res.ok) throw new Error("Error al cargar la API");
+            
+            const data = await res.json();
 
-    // 2. Procesamiento de datos para gráfico de AREA
-    const years = [...new Set(data.map(d => d.year))].sort((a, b) => a - b);
-    
-    const countries = [...new Set(data.map(d => d.country))];
+            if (data && data.length > 0) {
+                const years = [...new Set(data.map(d => d.year))].sort((a, b) => a - b);
+                const countries = [...new Set(data.map(d => d.country))];
 
-    const seriesData = countries.map(countryName => {
-        return {
-            name: countryName,
-            data: years.map(y => {
-                const found = data.find(d => d.country === countryName && d.year === y);
-                return found ? found.milex_total : 0;
-            })
-        };
-    });
+                const seriesData = countries.map(countryName => {
+                    return {
+                        name: countryName,
+                        data: years.map(y => {
+                            const found = data.find(d => d.country === countryName && d.year === y);
+                            return found ? found.milex_total : 0;
+                        })
+                    };
+                });
 
-    Highcharts.chart("container", {
-        chart: {
-            type: "area" // Cambiado de 'pie' a 'area'
-        },
-        title: {
-            text: "Evolución del Gasto Militar Total"
-        },
-        xAxis: {
-            categories: years,
-            title: { text: "Año" }
-        },
-        yAxis: {
-            title: { text: "Milex Total (USD)" }
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.y:,.1f}</b> USD'
-        },
-        plotOptions: {
-            area: {
-                marker: {
-                    enabled: false,
-                    symbol: 'circle',
-                    radius: 2,
-                    states: {
-                        hover: { enabled: true }
-                    }
-                }
+                // Pasamos chartContainer en lugar del string "container"
+                Highcharts.chart(chartContainer, {
+                    chart: { type: "area" },
+                    title: { text: "Evolución del Gasto Militar Total" },
+                    xAxis: {
+                        categories: years,
+                        title: { text: "Año" }
+                    },
+                    yAxis: {
+                        title: { text: "Milex Total (USD)" }
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.y:,.1f}</b> USD'
+                    },
+                    series: seriesData
+                });
+            } else {
+                console.warn("La API no devolvió datos.");
             }
-        },
-        accessibility: {
-            enabled: true, // Requisito de accesibilidad
-            description: "Gráfico de área que muestra el gasto militar total de varios países entre 2010 y 2022"
-        },
-        series: seriesData
+        } catch (error) {
+            console.error("Error detallado:", error);
+        }
     });
-});
 </script>
 
 <h1>Visualización de Gasto Militar</h1>
 
 <div 
-    id="container" 
-    style="height: 500px; border-radius: 10px; margin: 20px;"
-></div>
+    bind:this={chartContainer} 
+    style="height: 500px; border-radius: 10px; margin: 20px; border: 1px solid #ccc;"
+>
+    Cargando gráfico...
+</div>
+

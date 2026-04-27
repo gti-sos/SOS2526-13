@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "sos2526-13": "file:..",
     "vue": "^3.5.32"
   },
   "devDependencies": {
