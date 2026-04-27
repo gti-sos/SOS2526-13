@@ -16,17 +16,13 @@
     const data = await res.json();
 
     // 2. Procesamiento de datos para gráfico de AREA
-    // Necesitamos años únicos y ordenados para el eje X
     const years = [...new Set(data.map(d => d.year))].sort((a, b) => a - b);
     
-    // Necesitamos identificar los países únicos para crear las series
     const countries = [...new Set(data.map(d => d.country))];
 
-    // Creamos una serie por cada país
     const seriesData = countries.map(countryName => {
         return {
             name: countryName,
-            // Para cada año, buscamos el valor del país, si no existe ponemos 0
             data: years.map(y => {
                 const found = data.find(d => d.country === countryName && d.year === y);
                 return found ? found.milex_total : 0;
@@ -34,7 +30,6 @@
         };
     });
 
-    // 3. Configuración de Highcharts
     Highcharts.chart("container", {
         chart: {
             type: "area" // Cambiado de 'pie' a 'area'
