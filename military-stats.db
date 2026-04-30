@@ -1,10 +1,3 @@
-{"country":"poland","year":2010,"milex_total":19710.8,"milex_gdp":1.84,"milex_per_capita":231.2,"_id":"RZyofVjejOAukPlN"}
-{"country":"morocco","year":2022,"milex_total":4995,"milex_gdp":3.81,"milex_per_capita":132.7,"_id":"Vb8YqIS6lziJbiBN"}
-{"country":"cuba","year":2015,"milex_total":118.4,"milex_gdp":3.08,"milex_per_capita":10.5,"_id":"SlRaYeiOWUbccK4x"}
-{"country":"australia","year":2015,"milex_total":24046.2,"milex_gdp":1.95,"milex_per_capita":1011.7,"_id":"Fvmjqe2sD4jlbaQL"}
-{"country":"china","year":2010,"milex_total":0,"milex_gdp":1.73,"milex_per_capita":78.3,"_id":"TqWumaRCORe548cy"}
-{"country":"poland","year":2020,"milex_total":17431.8,"milex_gdp":2.26,"milex_per_capita":358.9,"_id":"VtpczRCY3dd0Us7G"}
-{"country":"morocco","year":2010,"milex_total":3160.8,"milex_gdp":3.39,"milex_per_capita":98,"_id":"raCgertx51JkKQDE"}
-{"country":"cuba","year":2018,"milex_total":128.6,"milex_gdp":2.88,"milex_per_capita":11.4,"_id":"JiISPI0PXpaskA1U"}
-{"country":"australia","year":2022,"milex_total":32445.3,"milex_gdp":1.88,"milex_per_capita":1244,"_id":"tsX21wgC3ubAYziA"}
-{"country":"china","year":2018,"milex_total":1604.4,"milex_gdp":1.67,"milex_per_capita":164.2,"_id":"szNlMuMGBOxktfnE"}
+{"country":"francia","year":2025,"milex_total":50000,"milex_gdp":2.1,"milex_per_capita":800,"_id":"2a9K1x1idp1CVvZM"}
+{"country":"francia","year":2025,"milex_total":66666,"milex_gdp":3.5,"milex_per_capita":800,"_id":"2a9K1x1idp1CVvZM"}
+{"$$deleted":true,"_id":"2a9K1x1idp1CVvZM"}

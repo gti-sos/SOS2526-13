@@ -22,7 +22,7 @@
 
             data.forEach(d => {
 
-                // TU API
+                //EXPORTATIONS
                 if (d.recipient) {
                     countries.add(d.recipient);
                 }
@@ -60,7 +60,7 @@
 
         let all = new Set([...c1, ...c2, ...c3]);
 
-        let categories = Array.from(all).slice(0, 12); // limitar visualmente
+        let categories = Array.from(all).slice(0, 20); 
 
         let series1 = buildPresence(categories, c1);
         let series2 = buildPresence(categories, c2);
