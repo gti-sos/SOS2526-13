@@ -4,7 +4,6 @@
 
 
     onMount(async () => {
-        // 1. Cambia la URL por tu endpoint de EV Sales
         const response = await fetch( "https://sos2526-16.onrender.com/api/v1/global-ev-sales");
         const data = await response.json();
 

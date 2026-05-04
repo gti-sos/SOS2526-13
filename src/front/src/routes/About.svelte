@@ -6,6 +6,7 @@
 		<a href="https://github.com/gti-sos/SOS2526-13" target="_blank">
 			Repositorio del grupo
 		</a>
+		<a href="/analytics">Gráfica grupal</a>
 	</section>
 
 	<section class="section">
@@ -46,6 +47,10 @@
 					<p>Documentación Postman</p>
 					<a href="https://documenter.getpostman.com/view/52632390/2sBXiqDTxK">API v2 docs</a>
 					<a href="https://documenter.getpostman.com/view/52632390/2sBXigNECE">API v1 docs</a>
+
+					<p>Gráfica</p>
+					<a href="/analytics/military-stats">Gráfica propia</a>
+				
 					<p>Integraciones</p>
 					<a href="/analytics/military-stats/global-ev-sales">global-ev-sales</a>
 					<a href="/analytics/military-stats/ozone-depleting-substance-consumptions">ozone-depleting-substance-consumptions</a>
