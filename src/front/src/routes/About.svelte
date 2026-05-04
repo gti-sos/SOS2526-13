@@ -52,8 +52,8 @@
 					<a href="/analytics/military-stats">Gráfica propia</a>
 				
 					<p>Integraciones</p>
-					<a href="/analytics/military-stats/global-ev-sales">global-ev-sales</a>
-					<a href="/analytics/military-stats/ozone-depleting-substance-consumptions">ozone-depleting-substance-consumptions</a>
+					<a href="/integrations/military-stats/global-ev-sales">global-ev-sales</a>
+					<a href="/integrations/military-stats/ozone-depleting-substance-consumptions">ozone-depleting-substance-consumptions</a>
 
 
 				</div>
