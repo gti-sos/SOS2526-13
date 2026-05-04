@@ -1,5 +1,7 @@
 <script>
     import { onMount } from "svelte";
+    import Highcharts from "highcharts";
+
 
     onMount(async () => {
         // 1. Cambia la URL por tu endpoint de EV Sales
