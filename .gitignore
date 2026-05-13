@@ -144,3 +144,6 @@ vite.config.ts.timestamp-*
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+frontend-vue/node_modules/
+src/front/node_modules/
