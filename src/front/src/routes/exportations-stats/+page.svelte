@@ -175,9 +175,9 @@
 {#if showSearch}
 	<h2>Buscar</h2>
 	<input placeholder="País destinatario" bind:value={searchRecipient} />
-	<input placeholder="Proveedor" bind:value={searchSupplier} />
+	<input placeholder="Proveedor" bind:value={searchSupplier} disabled />
 	<input placeholder="Año" bind:value={searchYear} />
-	<input placeholder="Valor TIV" bind:value={searchTiv} />
+	<input placeholder="Valor TIV" bind:value={searchTiv} disabled />
 	<br /><br />
 	<button data-testid="buscar-datos" onclick={buscar}>Buscar</button>
 	<button onclick={getData}>Resetear</button>
