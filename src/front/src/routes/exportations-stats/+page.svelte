@@ -180,7 +180,7 @@
 	<input placeholder="Valor TIV" bind:value={searchTiv} />
 	<br /><br />
 	<button data-testid="buscar-datos" onclick={buscar}>Buscar</button>
-	<button onclick={getData}>Reset</button>
+	<button onclick={getData}>Resetear</button>
 	<button onclick={() => (showSearch = false)}>Cancelar</button>
 {/if}
 

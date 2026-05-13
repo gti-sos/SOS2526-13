@@ -65,7 +65,7 @@ onMount(async () => {
         },
 
         title: {
-            text: "Ingredientes que aparecen con pollo"
+            text: "Visualización Ingredientes (Pollo)"
         },
 
         subtitle: {

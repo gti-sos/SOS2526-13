@@ -43,7 +43,7 @@ onMount(async () => {
     Highcharts.chart("wine", {
 
         title: {
-            text: "Flujo vino: Uva → Tipo → Region"
+            text: "Visualización de flujo del vino: Uva → Tipo → Region"
         },
 
         series: [{
