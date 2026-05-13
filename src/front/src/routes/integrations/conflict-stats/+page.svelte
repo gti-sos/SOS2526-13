@@ -18,7 +18,7 @@
 			<a href="./conflict-stats/open-meteo">Open Meteo Sevilla</a>
 		</li>
 		<li>
-			<a href="./conflict-stats/rest-countries">REST Countries</a>
+			<a href="./conflict-stats/pokeapi">API de Pokemones</a>
 		</li>
 		<li>
 			<a href="./conflict-stats/open-weather-map">Open Weather Map (con proxy)</a>

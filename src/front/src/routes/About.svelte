@@ -8,7 +8,6 @@
 		</a>
 		<a href="/analytics">Gráfica grupal</a>
 		<a href="/about">Videos</a>
-		<a href="/about">Videos</a>
 	</section>
 
 	<section class="section">
