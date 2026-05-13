@@ -43,6 +43,7 @@ export function loadExportations(app){
     //PROXY: Global-agriculture-climate-impacts
     app.get(BASE_URL + "/proxy/global-agriculture-climate-impacts", async (req, res) => {
         try {
+            await fetch("https://sos2526-22.onrender.com/api/v1/global-agriculture-climate-impacts/loadInitialData");
             const response = await fetch("https://sos2526-22.onrender.com/api/v1/global-agriculture-climate-impacts");
             const data = await response.json();
             res.json(data);

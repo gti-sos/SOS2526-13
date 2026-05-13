@@ -18,6 +18,7 @@ onMount(async () => {
 
     await loadScript("https://code.highcharts.com/highcharts.js");
     await loadScript("https://code.highcharts.com/modules/heatmap.js");
+    
 
     const res = await fetch(
         "/api/v2/exportations-stats/proxy/global-agriculture-climate-impacts"

@@ -18,7 +18,7 @@ onMount(async () => {
 
     await loadScript("https://code.highcharts.com/highcharts.js");
     await loadScript("https://code.highcharts.com/modules/sankey.js");
-
+    await fetch("https://sos2526-29.onrender.com/api/v1/wine-stats/loadInitialData");
     const res = await fetch(
         "https://sos2526-29.onrender.com/api/v1/wine-stats"
     );

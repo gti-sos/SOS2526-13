@@ -23,7 +23,7 @@ onMount(async () => {
 
     await loadScript("https://code.highcharts.com/highcharts.js");
     await loadScript("https://code.highcharts.com/modules/networkgraph.js");
-
+    await fetch("https://sos2526-18-cereal-productions-stable.onrender.com/api/v2/cereal-productions/loadInitialData");
     const res = await fetch(
         "https://sos2526-18-cereal-productions-stable.onrender.com/api/v2/cereal-productions"
     );

@@ -53,7 +53,7 @@
     }
 
     onMount(async () => {
-
+        await fetch("api/v2/military-stats/loadInitialData")
         let c1 = await getCountries(API1);
         let c2 = await getCountries(API2);
         let c3 = await getCountries(API3);
