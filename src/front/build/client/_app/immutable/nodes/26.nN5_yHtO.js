@@ -1,0 +1,9 @@
+import{a as u,f as h}from"../chunks/Cr3gpN3R.js";import{o as m}from"../chunks/J-xoz_hm.js";import{p as f,a as b}from"../chunks/POUC0KUS.js";var g=h(`<div id="cereal-network" style="
+        width: 100%;
+        height: 700px;
+        background: white;
+        border-radius: 14px;
+    "></div>`);function y(i,p){f(p,!0);function s(n){return new Promise(r=>{if(document.querySelector(`script[src="${n}"]`))return r();const e=document.createElement("script");e.src=n,e.onload=r,document.head.appendChild(e)})}m(async()=>{await s("https://code.highcharts.com/highcharts.js"),await s("https://code.highcharts.com/modules/networkgraph.js"),await fetch("https://sos2526-18-cereal-productions-stable.onrender.com/api/v2/cereal-productions/loadInitialData");const r=await(await fetch("https://sos2526-18-cereal-productions-stable.onrender.com/api/v2/cereal-productions")).json(),e={};r.forEach(t=>{const o=t.country||"Unknown";e[o]=(e[o]||0)+Number(t.cereal_production||0)});const a=Object.entries(e).map(([t,o])=>({name:t,value:o})).sort((t,o)=>o.value-t.value).slice(0,10),l=a.map(t=>({id:t.name,marker:{radius:Math.max(8,t.value/2e6)},value:t.value})),c=[];for(let t=0;t<a.length-1;t++)c.push({from:a[t].name,to:a[t+1].name});Highcharts.chart("cereal-network",{chart:{type:"networkgraph",backgroundColor:"#ffffff"},title:{text:"Produccion de cereales"},subtitle:{text:"Esta visualización representa en cada nodo el total de produccion de cereal por pais"},tooltip:{useHTML:!0,formatter(){return`
+                    <b>${this.point.id}</b><br/>
+                    Produccion: <b>${this.point.value}</b>
+                `}},plotOptions:{networkgraph:{keys:["from","to"],layoutAlgorithm:{enableSimulation:!0}}},series:[{data:c,nodes:l}],credits:{enabled:!1}})});var d=g();u(i,d),b()}export{y as component};

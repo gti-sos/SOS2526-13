@@ -1,0 +1,1 @@
+import{C as f,l as u,J as _,K as o,m as t,L as g,M as l,x as i,w as d,y as m,N as p}from"./POUC0KUS.js";function C(n,r){let s=null,y=t;var a;if(t){s=m;for(var e=p(document.head);e!==null&&(e.nodeType!==g||e.data!==n);)e=l(e);if(e===null)i(!1);else{var E=l(e);e.remove(),d(E)}}t||(a=document.head.appendChild(f()));try{u(()=>r(a),_|o)}finally{y&&(i(!0),d(s))}}export{C as h};
