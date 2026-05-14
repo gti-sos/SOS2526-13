@@ -82,11 +82,6 @@
 <main>
     <h1>USA Gas Price Integration</h1>
 
-    <p>
-        This view retrieves USA national gas price data from the U.S. EIA API using a custom proxy and
-        displays the result with a Highcharts spline chart.
-    </p>
-
     {#if loading}
         <p>Loading gas prices...</p>
     {/if}
