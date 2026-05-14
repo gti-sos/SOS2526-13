@@ -18,9 +18,6 @@
             const json = await res.json();
             console.log('EIA API response:', json);
 
-            // 1. Ahora leemos 'json.prices' en lugar de 'json.result'
-            // 2. Le damos la vuelta (reverse) porque la EIA devuelve primero la fecha más reciente
-            // y queremos que el gráfico vaya de más antiguo a más nuevo de izquierda a derecha.
             gasData = (json.prices || []).reverse();
 
             createChart();
