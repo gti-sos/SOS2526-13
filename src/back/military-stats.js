@@ -36,6 +36,10 @@ export function loadMilitaryStats(app) {
             }
         });
     });
+
+
+    // Gráfica con proxy
+
     let EIA_API_KEY = "iT3XDU9ATZzluBrITlt1crunfExMuL6oShAMqgm9";
  app.get(BASE_API_URL + "/proxy/gas-price", async (req, res) => {
     try {
@@ -76,6 +80,8 @@ export function loadMilitaryStats(app) {
         res.status(500).json({ error: "Proxy error" });
     }
 });
+
+//Get con filtros
 
    app.get(BASE_API_URL, (req, res) => {
         let query = {};
