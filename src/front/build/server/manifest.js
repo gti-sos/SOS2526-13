@@ -10,14 +10,14 @@ return {
 	assets: new Set(["robots.txt"]),
 	mimeTypes: {".txt":"text/plain"},
 	_: {
-		client: {start:"_app/immutable/entry/start.CmCLj_pm.js",app:"_app/immutable/entry/app.qhanfh2N.js",imports:["_app/immutable/entry/start.CmCLj_pm.js","_app/immutable/chunks/CCnEbggs.js","_app/immutable/chunks/POUC0KUS.js","_app/immutable/chunks/J-xoz_hm.js","_app/immutable/entry/app.qhanfh2N.js","_app/immutable/chunks/PPVm8Dsz.js","_app/immutable/chunks/POUC0KUS.js","_app/immutable/chunks/C7He8RFb.js","_app/immutable/chunks/Cr3gpN3R.js","_app/immutable/chunks/J-xoz_hm.js","_app/immutable/chunks/DNhcs3rL.js","_app/immutable/chunks/CtHl_d8L.js","_app/immutable/chunks/PTCA9BDJ.js"],stylesheets:[],fonts:[],uses_env_dynamic_public:false},
+		client: {start:"_app/immutable/entry/start.BcsJSaHV.js",app:"_app/immutable/entry/app.Cie0ftex.js",imports:["_app/immutable/entry/start.BcsJSaHV.js","_app/immutable/chunks/CVuEim6V.js","_app/immutable/chunks/POUC0KUS.js","_app/immutable/chunks/J-xoz_hm.js","_app/immutable/entry/app.Cie0ftex.js","_app/immutable/chunks/PPVm8Dsz.js","_app/immutable/chunks/POUC0KUS.js","_app/immutable/chunks/C7He8RFb.js","_app/immutable/chunks/Cr3gpN3R.js","_app/immutable/chunks/J-xoz_hm.js","_app/immutable/chunks/DNhcs3rL.js","_app/immutable/chunks/CtHl_d8L.js","_app/immutable/chunks/PTCA9BDJ.js"],stylesheets:[],fonts:[],uses_env_dynamic_public:false},
 		nodes: [
 			__memo(() => import('./chunks/0-y_jIjU99.js')),
-			__memo(() => import('./chunks/1-BntpguiD.js')),
+			__memo(() => import('./chunks/1-CzbnrGwN.js')),
 			__memo(() => import('./chunks/2-CXSJ-Uls.js')),
 			__memo(() => import('./chunks/3-CGpQSZE2.js')),
 			__memo(() => import('./chunks/4-BR-7C0DF.js')),
-			__memo(() => import('./chunks/5-BRVT2oji.js')),
+			__memo(() => import('./chunks/5-BwUKb2xi.js')),
 			__memo(() => import('./chunks/6-9ht6LieF.js')),
 			__memo(() => import('./chunks/7-BAuVJ8SR.js')),
 			__memo(() => import('./chunks/8-CU8AdJ9_.js')),
@@ -26,9 +26,9 @@ return {
 			__memo(() => import('./chunks/11-BhGAFEf1.js')),
 			__memo(() => import('./chunks/12-BrOiUPVE.js')),
 			__memo(() => import('./chunks/13-QYseOaKQ.js')),
-			__memo(() => import('./chunks/14-BDEX0V-9.js')),
+			__memo(() => import('./chunks/14-z778Gmu3.js')),
 			__memo(() => import('./chunks/15-BAeUpTtE.js')),
-			__memo(() => import('./chunks/16-fawBudQ_.js')),
+			__memo(() => import('./chunks/16-BVRutyYi.js')),
 			__memo(() => import('./chunks/17-ju3JCNrT.js')),
 			__memo(() => import('./chunks/18-B0KflCZ3.js')),
 			__memo(() => import('./chunks/19-DzwV7hBi.js')),
@@ -44,12 +44,12 @@ return {
 			__memo(() => import('./chunks/29-D7k6q0oL.js')),
 			__memo(() => import('./chunks/30-kq_SRykc.js')),
 			__memo(() => import('./chunks/31-D0Rbz2BS.js')),
-			__memo(() => import('./chunks/32-DoyrwISL.js')),
+			__memo(() => import('./chunks/32-C13b4IHh.js')),
 			__memo(() => import('./chunks/33-BvErKLNt.js')),
 			__memo(() => import('./chunks/34-DlnHGbFP.js')),
 			__memo(() => import('./chunks/35-CaFmFJRb.js')),
 			__memo(() => import('./chunks/36-abjFvSvL.js')),
-			__memo(() => import('./chunks/37-DEi_csUY.js'))
+			__memo(() => import('./chunks/37-CcuMWc1D.js'))
 		],
 		remotes: {
 			
@@ -245,8 +245,8 @@ return {
 				endpoint: null
 			},
 			{
-				id: "/integrations/military-stats/gas-price",
-				pattern: /^\/integrations\/military-stats\/gas-price\/?$/,
+				id: "/integrations/military-stats/gas-price-usa",
+				pattern: /^\/integrations\/military-stats\/gas-price-usa\/?$/,
 				params: [],
 				page: { layouts: [0,], errors: [1,], leaf: 32 },
 				endpoint: null

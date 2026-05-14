@@ -1,8 +1,0 @@
-import{a as n,f as l}from"../chunks/ECAtQKQH.js";import{o as p}from"../chunks/CrQtcPS-.js";import{p as c,a as d}from"../chunks/BimC49nZ.js";import{H as h}from"../chunks/DNyrlCSP.js";var m=l('<main><div id="ghibli-container" class="svelte-ynsxlv"></div></main>');function v(a,r){c(r,!0);let i=[];p(async()=>{try{const e=await fetch("https://ghibliapi.vercel.app/films");if(!e.ok)throw new Error("No se pudo acceder a la API");i=await e.json();const s=i.map(t=>({x:parseInt(t.release_date),y:parseInt(t.rt_score),name:t.title,originalTitle:t.original_title,description:t.description.substring(0,100)+"..."}));h.chart("ghibli-container",{chart:{type:"scatter",zoomType:"xy"},title:{text:"Películas de Studio Ghibli: Calidad vs. Tiempo"},subtitle:{text:"Fuente: ghibliapi.vercel.app"},xAxis:{title:{text:"Año de Lanzamiento"},gridLineWidth:1},yAxis:{title:{text:"Puntuación (Rotten Tomatoes)"},min:0,max:105},legend:{enabled:!1},tooltip:{useHTML:!0,formatter(){return`
-                            <div style="width: 200px; white-space: normal;">
-                                <b>${this.point.name}</b> (${this.x})<br/>
-                                <i>${this.point.originalTitle}</i><br/>
-                                <b>Puntuación:</b> ${this.y}%<br/><br/>
-                                <small>${this.point.description}</small>
-                            </div>
-                        `}},plotOptions:{scatter:{marker:{radius:7,states:{hover:{enabled:!0,lineColor:"rgb(100,100,100)"}}}}},series:[{name:"Películas",color:"rgba(33, 150, 243, 0.5)",data:s}]})}catch(e){console.error("Error cargando Ghibli:",e)}});var o=m();n(a,o),d()}export{v as component};

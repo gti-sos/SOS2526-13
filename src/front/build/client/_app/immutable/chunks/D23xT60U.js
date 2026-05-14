@@ -1,1 +1,0 @@
-import{l as y,m as o,a5 as u,a6 as _,o as t,C as g,a4 as l,z as i,q as d,A as m,v as p}from"./BimC49nZ.js";function C(n,r){let a=null,E=t;var s;if(t){a=m;for(var e=p(document.head);e!==null&&(e.nodeType!==g||e.data!==n);)e=l(e);if(e===null)i(!1);else{var f=l(e);e.remove(),d(f)}}t||(s=document.head.appendChild(y()));try{o(()=>r(s),u|_)}finally{E&&(i(!0),d(a))}}export{C as h};
