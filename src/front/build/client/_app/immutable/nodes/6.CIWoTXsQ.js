@@ -1,1 +1,0 @@
-import{a as e,f as l}from"../chunks/Cr3gpN3R.js";import{n as r}from"../chunks/POUC0KUS.js";var i=l('<h2>Videos</h2> <li><a href="" target="_blank">Video Pablo Moraleda Alvarez</a></li> <li><a href="" target="_blank">Video Claudia Paez Sollo</a></li> <li><a href="" target="_blank">Video Camila España Vildoso</a></li>',1);function f(a){var o=i();r(6),e(a,o)}export{f as component};

@@ -88,6 +88,5 @@
     {#if error}
         <p class="error">Error: {error}</p>
     {/if}
-
     <div id="container"></div>
 </main>
