@@ -16,9 +16,12 @@
             }
 
             const json = await res.json();
-            console.log('Gas API response:', json);
+            console.log('EIA API response:', json);
 
-            gasData = json.result || [];
+            // 1. Ahora leemos 'json.prices' en lugar de 'json.result'
+            // 2. Le damos la vuelta (reverse) porque la EIA devuelve primero la fecha más reciente
+            // y queremos que el gráfico vaya de más antiguo a más nuevo de izquierda a derecha.
+            gasData = (json.prices || []).reverse();
 
             createChart();
         } catch (e) {
@@ -28,75 +31,47 @@
         }
     });
 
-    function parsePrice(price) {
-        return Number(String(price).replace('$', '')) || 0;
-    }
-
     function createChart() {
         const Highcharts = window.Highcharts;
 
-        const topStates = gasData
-            .map((state) => ({
-                name: state.name,
-                regular: parsePrice(state.regular),
-                midGrade: parsePrice(state.midGrade),
-                premium: parsePrice(state.premium),
-                diesel: parsePrice(state.diesel)
-            }))
-            .filter((s) => s.regular > 0)
-            .sort((a, b) => b.regular - a.regular)
-            .slice(0, 10);
-
         Highcharts.chart('container', {
             chart: {
-                // Cambiado de 'column' a 'spline'
                 type: 'spline'
             },
 
             title: {
-                text: 'Top 10 USA States by Gas Price'
+                text: 'USA National Gas Prices (Last 4 Weeks)'
             },
 
             subtitle: {
-                text: 'Data obtained from RapidAPI through my own proxy'
+                text: 'Data obtained from EIA API through my own proxy'
             },
 
             xAxis: {
-                categories: topStates.map((s) => s.name),
+                // El eje X ahora son las fechas (periodos)
+                categories: gasData.map((d) => d.period),
                 title: {
-                    text: 'State'
+                    text: 'Date'
                 }
             },
 
             yAxis: {
-                min: 0,
                 title: {
-                    text: 'Price in USD'
+                    text: 'Price (USD per Gallon)'
                 }
             },
 
             tooltip: {
                 shared: true,
                 valuePrefix: '$',
-                crosshairs: true // Añadido para mejorar la lectura en gráficos de líneas
+                crosshairs: true
             },
 
             series: [
                 {
-                    name: 'Regular',
-                    data: topStates.map((s) => s.regular)
-                },
-                {
-                    name: 'MidGrade',
-                    data: topStates.map((s) => s.midGrade)
-                },
-                {
-                    name: 'Premium',
-                    data: topStates.map((s) => s.premium)
-                },
-                {
-                    name: 'Diesel',
-                    data: topStates.map((s) => s.diesel)
+                    name: 'All Grades Gas Price',
+                    // El eje Y ahora son los precios
+                    data: gasData.map((d) => d.price)
                 }
             ]
         });
@@ -111,8 +86,8 @@
     <h1>USA Gas Price Integration</h1>
 
     <p>
-        This view retrieves USA gas price data from RapidAPI using a custom proxy and
-        displays the result with a Highcharts <strong>spline</strong> chart.
+        This view retrieves USA national gas price data from the U.S. EIA API using a custom proxy and
+        displays the result with a Highcharts spline chart.
     </p>
 
     {#if loading}
