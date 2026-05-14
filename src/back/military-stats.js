@@ -39,7 +39,7 @@ export function loadMilitaryStats(app) {
     app.get(BASE_API_URL + "/proxy/gas-price", async (req, res) => {
   try {
     const response = await fetch(
-      "https://gas-price.p.rapidapi.com/allUsaPrice",
+      "https://gas-price.p.rapidapi.com/allUsaPrice/?limit=5",
       {
         method: "GET",
         headers: {
