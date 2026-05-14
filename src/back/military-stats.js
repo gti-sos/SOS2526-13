@@ -36,30 +36,45 @@ export function loadMilitaryStats(app) {
             }
         });
     });
-    app.get(BASE_API_URL + "/proxy/gas-price", async (req, res) => {
-  try {
-    const response = await fetch(
-      "https://gas-price.p.rapidapi.com/allUsaPrice/?limit=5",
-      {
-        method: "GET",
-        headers: {
-          "x-rapidapi-host": "gas-price.p.rapidapi.com",
-          "x-rapidapi-key": "071862938bmshab9c401ecf590c2p12a14cjsnc5771649ff18"
+    let EIA_API_KEY = "iT3XDU9ATZzluBrITlt1crunfExMuL6oShAMqgm9";
+ app.get(BASE_API_URL + "/proxy/gas-price", async (req, res) => {
+    try {
+        const url = new URL("https://api.eia.gov/v2/petroleum/pri/gnd/data/");
+
+        url.searchParams.set("api_key", EIA_API_KEY);
+        url.searchParams.set("frequency", "weekly");
+        url.searchParams.set("data[0]", "value");
+        url.searchParams.set("facets[product][]", "EPM0");
+        url.searchParams.set("facets[duoarea][]", "NUS");
+        url.searchParams.set("sort[0][column]", "period");
+        url.searchParams.set("sort[0][direction]", "desc");
+        url.searchParams.set("length", "4");
+
+        const response = await fetch(url.toString());
+
+        if (!response.ok) {
+            return res.status(response.status).json({ error: "Error EIA API", status: response.status });
         }
-      }
-    );
 
-    if (!response.ok) {
-      return res.status(response.status).json({ error: "Error RapidAPI" });
+        const raw = await response.json();
+
+        const data = {
+            prices: raw.response.data.map(entry => ({
+                period: entry.period,
+                area: entry.duoarea,
+                product: entry.product,
+                price: parseFloat(entry.value),
+                unit: "dollars per gallon"
+            })),
+            updatedAt: new Date().toISOString()
+        };
+
+        res.json(data);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Proxy error" });
     }
-
-    const data = await response.json();
-    res.json(data);
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Proxy error" });
-  }
 });
 
    app.get(BASE_API_URL, (req, res) => {
