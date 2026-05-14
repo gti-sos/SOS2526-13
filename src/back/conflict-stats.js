@@ -29,7 +29,7 @@ export function backendPMA(app) {
 
     const OWM_API_KEY = '6e8210d096f4ac5a9fcab569e10499bf';
 
-    app.get('/api/v1/proxy/weather', async (req, res) => {
+    app.get('/api/v2/proxy/weather', async (req, res) => {
         const { lat = '37.38', lon = '-5.97', units = 'metric', lang = 'es' } = req.query;
 
         const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=${units}&lang=${lang}&cnt=40&appid=${OWM_API_KEY}`;

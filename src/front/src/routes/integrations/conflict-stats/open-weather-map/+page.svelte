@@ -16,7 +16,7 @@
 			document.head.appendChild(script);
 		});
 
-		const res = await fetch('/api/v1/proxy/weather?lat=37.38&lon=-5.97');
+		const res = await fetch('/api/v2/proxy/weather?lat=37.38&lon=-5.97');
 		const data = await res.json();
 
 		console.log('Data recibida:', data); // <-- ver qué llega
