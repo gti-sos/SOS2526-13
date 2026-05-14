@@ -64,7 +64,7 @@
 					<a href="/integrations/military-stats/ozone-depleting-substance-consumptions">Sustancias que agotan la capa de ozono</a>
 					<a href="/integrations/military-stats/studio-ghibli">Estudio Ghibli</a>
 					<a href="/integrations/military-stats/coffee-ingredients">Ingredientes del café</a>
-					<a href="/integrations/military-stats/gas-price">Precio del gas en USA</a>
+					<a href="/integrations/military-stats/gas-price-usa">Precio del gas en USA</a>
 
 				</div>
 			</div>
